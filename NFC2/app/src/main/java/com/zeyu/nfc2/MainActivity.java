@@ -27,7 +27,6 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
 public class MainActivity extends AppCompatActivity {
-    //    private final String ERR_WR = "Error Writing/Reading";
     private final String ERR_No_Tag = "No Tag Detected";
     private final String SUCC_W = "Write Success";
     NfcAdapter adapter;
@@ -56,13 +55,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try{
-                    if (myTag == null){
+                    if (myTag == null){ //if no tag is present
                         Toast.makeText(MainActivity.this, ERR_No_Tag, Toast.LENGTH_SHORT).show();
                     }
-                    else{
+                    else{ //tag is there
                         write(""+ET_message.getText(), myTag);
                         Toast.makeText(MainActivity.this, SUCC_W, Toast.LENGTH_SHORT).show();
-//                        onNewIntent(getIntent());
+                        ET_message.setText("");
                     }
                 }catch (Exception e){
                     Toast.makeText(MainActivity.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -71,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         adapter = NfcAdapter.getDefaultAdapter(this);
-        if(adapter == null){
+        if(adapter == null){ //adapter will only be null if the device does not support NFC at all
             Toast.makeText(MainActivity.this, "Unsupported Device", Toast.LENGTH_SHORT).show();
             finish();
         }
@@ -79,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
         tagDetected.addCategory(Intent.CATEGORY_DEFAULT);
         filters = new IntentFilter[]{tagDetected};
-        tagDetection = new Thread(){
+        tagDetection = new Thread(){ //read what's inside the tag and display tag content on screen
             public void run(){
                 readIntent(getIntent());
             }
@@ -96,12 +95,12 @@ public class MainActivity extends AppCompatActivity {
             Parcelable[] msgs = in.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
             NdefMessage[] ndefMsgs = null;
             if (msgs != null) {
-                ndefMsgs = new NdefMessage[msgs.length];
+                ndefMsgs = new NdefMessage[msgs.length]; //make message
                 for (int i = 0; i < msgs.length; i++) {
                     ndefMsgs[i] = (NdefMessage) msgs[i];
                 }
             }
-            buildTagViews(ndefMsgs);
+            buildTagViews(ndefMsgs); //decode the NdefMessage and display it on a TextView
         }
 
     }
@@ -110,22 +109,20 @@ public class MainActivity extends AppCompatActivity {
         if(m == null || m.length == 0) return;
 
         String text = "";
-//        if(m.length == 2) return;
         byte[] payload = (m.length > 1) ? m[1].getRecords()[0].getPayload() : m[0].getRecords()[0].getPayload();
-        String textEncoding = "UTF-8";
+        String textEncoding = "UTF-8"; //The encoding method we use for the NDEF message
         int len = payload[0] & 0063;
-
         try{
             text = new String(payload, len+1, payload.length-len-1, textEncoding);
         } catch (Exception e) {
             Toast.makeText(MainActivity.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-
         TV_content.setText(text);
     }
 
     private void write(String text, Tag tag) throws Exception{
-        NdefRecord[] records = {createRecord(text), NdefRecord.createApplicationRecord("com.zeyu.nfc2"), };
+        NdefRecord[] records = {createRecord(text), //first element is the actual message
+                NdefRecord.createApplicationRecord("com.zeyu.nfc2"), }; //second element is an application record which tells what app to open upon detection of the tag
         NdefMessage m = new NdefMessage(records);
 
         Ndef ndef = Ndef.get(tag);
@@ -134,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
         ndef.close();
     }
 
-    private NdefRecord createRecord(String text){
+    private NdefRecord createRecord(String text){ //convert text to bytes and make it into a NdefRecord
         String lang = "en";
         byte[] textBytes = text.getBytes();
         byte[] langBytes = lang.getBytes(StandardCharsets.US_ASCII);
@@ -147,7 +144,8 @@ public class MainActivity extends AppCompatActivity {
         System.arraycopy(langBytes, 0, payload, 1, langLength);
         System.arraycopy(textBytes, 0, payload, 1+langLength, textLength);
 
-        return new NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_TEXT, new byte[0], payload);
+        return new NdefRecord(NdefRecord.TNF_WELL_KNOWN,
+                NdefRecord.RTD_TEXT, new byte[0], payload);
     }
 
     @Override
