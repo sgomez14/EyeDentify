@@ -1,4 +1,4 @@
-## Instruction for Using NFC app. 
+## Instruction for Using NFC app  
 - We gave some tags to the professor I think he will pass them to you guys to test our app.  
   
 ## To test writing to a tag
