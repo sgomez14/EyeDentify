@@ -1,0 +1,4 @@
+#Mon Apr 04 20:27:50 EDT 2022
+base.0=C\:\\Users\\santi09\\CS501Code\\FinalProject\\EyeDentify\\MiniResearch\\cloudsight-android-sdk\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+renamed.0=classes.dex
+path.0=classes.dex

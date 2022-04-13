@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">EyeDentify GUI Draft</string>
+    <string name="scan_item">Scan Item with Camera</string>
+    <string name="tag_item">Tag Item</string>
+    <string name="item_description_label">Item Description</string>
+    <string name="item_description">Can of chicken noodle soup with red and white label.</string>
+    <string name="keywords_label">Item Keywords</string>
+    <string name="keywords">campbell\ncondensed\nchicken\nnoodle\nsoup</string>
+    <string name="pair_with_tag">Pair with Tag</string>
+    <string name="imageContentDescription">Image of scanned item.</string>
+    <string name="add_photo">Add Photo</string>
+    <string name="add_voice_memo">Add Voice Memo</string>
+    <string name="textContentDescription">Text field for item description.</string>
+    <string name="keywordContentDescription">Text field for keywords about the item.</string>
+    <string name="speak_description">Speak Description</string>
+    <string name="speak_keywords">Speak Keyword</string>
+</resources>

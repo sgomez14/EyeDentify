@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tvBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textSize="20sp"
+        android:text="Text Here!" />
+
+    <TextView
+        android:id="@+id/tvConf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvBox"
+        android:layout_centerHorizontal="true"
+        android:textSize="12sp"
+        android:text="Text Here!" />
+    <Button
+        android:id="@+id/btnStart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tvBox"
+        android:layout_centerHorizontal="true"
+        android:text="start listen"
+        android:textSize="24sp" />
+    <Button
+        android:id="@+id/btnSpeak"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="start speak"
+        android:textSize="24sp" />
+
+
+    <EditText
+        android:id="@+id/etSpeak"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="type here"
+        android:layout_below="@id/btnSpeak"
+        android:textSize="24sp" />
+
+</RelativeLayout>

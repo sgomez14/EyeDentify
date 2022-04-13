@@ -1,0 +1,173 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:2:1-25:12
+INJECTED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:2:1-25:12
+INJECTED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:2:1-25:12
+INJECTED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:2:1-25:12
+MERGED from [:cloudsight] C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\cloudsight\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
+MERGED from [androidx.appcompat:appcompat:1.0.2] C:\Users\santi09\.gradle\caches\transforms-3\8d240a4f3d63e00f5539ab740281f778\transformed\appcompat-1.0.2\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\santi09\.gradle\caches\transforms-3\1115f7c3ee44518dcd266a3e4de8413c\transformed\constraintlayout-1.1.3\AndroidManifest.xml:2:1-11:12
+MERGED from [androidx.fragment:fragment:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\46c31382dde86a60a43763e88fa5e2bc\transformed\fragment-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\ae1391c05022f24030b3459580b6cf04\transformed\vectordrawable-animated-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\051b149862107a170628ebb0fa214227\transformed\legacy-support-core-ui-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\6aab3b11836e18c263be3a542ebcf766\transformed\legacy-support-core-utils-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.0.1] C:\Users\santi09\.gradle\caches\transforms-3\63996db92227bb25813d120a947833fa\transformed\vectordrawable-1.0.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\865ff83c11d207a48da98f1b11f320f8\transformed\loader-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\d60bf579b964a722f8cb44f81fad0ee0\transformed\viewpager-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\4ed15aa92334c43e25173527e20dd77a\transformed\coordinatorlayout-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\e700c5f89b2ce5cafc1c01fbcd2425ea\transformed\drawerlayout-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\152b5713d8cce10f255ed2580c7d4a7f\transformed\slidingpanelayout-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\4cf6ad0c78359a2eb415f8a7066aad5b\transformed\customview-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\63f60ae2c7201a65f52fc47d2f781afd\transformed\swiperefreshlayout-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\b11ab9df44e6e26b8336fd2e0dc6fd51\transformed\asynclayoutinflater-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core:1.0.1] C:\Users\santi09\.gradle\caches\transforms-3\5a1ed73504fae475ca85e8d36a6548ed\transformed\core-1.0.1\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\e018852893eb080f3cefb749f448cd30\transformed\versionedparcelable-1.0.0\AndroidManifest.xml:17:1-25:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\b5d39852e6a666256f87ee42d2b48944\transformed\cursoradapter-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.0.0] C:\Users\santi09\.gradle\caches\transforms-3\8489c4c7a19c4546a4411d6c69221d51\transformed\lifecycle-runtime-2.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\099ec21cb31cf6c527e845124037106b\transformed\documentfile-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\42e3b2b67944f4744bed163492aa1591\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.print:print:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\c35deb218a42f6b1ccb34889e38f5e8d\transformed\print-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.0.0] C:\Users\santi09\.gradle\caches\transforms-3\2c2cf9abb98348ee5039709affc53ed0\transformed\lifecycle-viewmodel-2.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\santi09\.gradle\caches\transforms-3\b97a8f40b63810244ab41e2fa0059751\transformed\lifecycle-livedata-2.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\santi09\.gradle\caches\transforms-3\eba8815810195b995247da5a5ada6795\transformed\lifecycle-livedata-core-2.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\santi09\.gradle\caches\transforms-3\4f2bc8f8bbec378cd02f580539dcfaa1\transformed\core-runtime-2.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\00cc0f5b3215ee1f60046e4e5c8104d7\transformed\interpolator-1.0.0\AndroidManifest.xml:17:1-22:12
+INJECTED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:2:1-25:12
+INJECTED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:2:1-25:12
+INJECTED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:2:1-25:12
+	package
+		ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:3:5-36
+		INJECTED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:2:1-25:12
+		INJECTED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:2:1-25:12
+		INJECTED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:2:11-69
+uses-permission#android.permission.INTERNET
+ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:5:5-66
+	android:name
+		ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:5:22-64
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:6:5-79
+	android:name
+		ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:6:22-77
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:7:5-80
+	android:name
+		ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:7:22-78
+uses-permission#android.permission.CAMERA
+ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:8:5-64
+	android:name
+		ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:8:22-62
+application
+ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:9:5-23:19
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\santi09\.gradle\caches\transforms-3\1115f7c3ee44518dcd266a3e4de8413c\transformed\constraintlayout-1.1.3\AndroidManifest.xml:9:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\santi09\.gradle\caches\transforms-3\1115f7c3ee44518dcd266a3e4de8413c\transformed\constraintlayout-1.1.3\AndroidManifest.xml:9:5-20
+MERGED from [androidx.core:core:1.0.1] C:\Users\santi09\.gradle\caches\transforms-3\5a1ed73504fae475ca85e8d36a6548ed\transformed\core-1.0.1\AndroidManifest.xml:22:5-89
+MERGED from [androidx.core:core:1.0.1] C:\Users\santi09\.gradle\caches\transforms-3\5a1ed73504fae475ca85e8d36a6548ed\transformed\core-1.0.1\AndroidManifest.xml:22:5-89
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\e018852893eb080f3cefb749f448cd30\transformed\versionedparcelable-1.0.0\AndroidManifest.xml:22:5-23:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\e018852893eb080f3cefb749f448cd30\transformed\versionedparcelable-1.0.0\AndroidManifest.xml:22:5-23:19
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.0.1] C:\Users\santi09\.gradle\caches\transforms-3\5a1ed73504fae475ca85e8d36a6548ed\transformed\core-1.0.1\AndroidManifest.xml:22:18-86
+	android:supportsRtl
+		ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:14:9-35
+	android:label
+		ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:12:9-41
+	android:roundIcon
+		ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:13:9-54
+	android:icon
+		ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:11:9-43
+	android:allowBackup
+		ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:10:9-35
+	android:theme
+		ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:15:9-40
+activity#ai.cloudsight.demoapp.MainActivity
+ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:16:9-22:20
+	android:name
+		ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:16:19-47
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:17:13-21:29
+action#android.intent.action.MAIN
+ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:18:17-69
+	android:name
+		ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:18:25-66
+category#android.intent.category.LAUNCHER
+ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:20:17-77
+	android:name
+		ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml:20:27-74
+uses-sdk
+INJECTED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml
+MERGED from [:cloudsight] C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\cloudsight\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:cloudsight] C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\cloudsight\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.appcompat:appcompat:1.0.2] C:\Users\santi09\.gradle\caches\transforms-3\8d240a4f3d63e00f5539ab740281f778\transformed\appcompat-1.0.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat:1.0.2] C:\Users\santi09\.gradle\caches\transforms-3\8d240a4f3d63e00f5539ab740281f778\transformed\appcompat-1.0.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\santi09\.gradle\caches\transforms-3\1115f7c3ee44518dcd266a3e4de8413c\transformed\constraintlayout-1.1.3\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\santi09\.gradle\caches\transforms-3\1115f7c3ee44518dcd266a3e4de8413c\transformed\constraintlayout-1.1.3\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.fragment:fragment:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\46c31382dde86a60a43763e88fa5e2bc\transformed\fragment-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.fragment:fragment:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\46c31382dde86a60a43763e88fa5e2bc\transformed\fragment-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\ae1391c05022f24030b3459580b6cf04\transformed\vectordrawable-animated-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\ae1391c05022f24030b3459580b6cf04\transformed\vectordrawable-animated-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\051b149862107a170628ebb0fa214227\transformed\legacy-support-core-ui-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\051b149862107a170628ebb0fa214227\transformed\legacy-support-core-ui-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\6aab3b11836e18c263be3a542ebcf766\transformed\legacy-support-core-utils-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\6aab3b11836e18c263be3a542ebcf766\transformed\legacy-support-core-utils-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable:1.0.1] C:\Users\santi09\.gradle\caches\transforms-3\63996db92227bb25813d120a947833fa\transformed\vectordrawable-1.0.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable:1.0.1] C:\Users\santi09\.gradle\caches\transforms-3\63996db92227bb25813d120a947833fa\transformed\vectordrawable-1.0.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\865ff83c11d207a48da98f1b11f320f8\transformed\loader-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\865ff83c11d207a48da98f1b11f320f8\transformed\loader-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\d60bf579b964a722f8cb44f81fad0ee0\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\d60bf579b964a722f8cb44f81fad0ee0\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\4ed15aa92334c43e25173527e20dd77a\transformed\coordinatorlayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\4ed15aa92334c43e25173527e20dd77a\transformed\coordinatorlayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\e700c5f89b2ce5cafc1c01fbcd2425ea\transformed\drawerlayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\e700c5f89b2ce5cafc1c01fbcd2425ea\transformed\drawerlayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\152b5713d8cce10f255ed2580c7d4a7f\transformed\slidingpanelayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\152b5713d8cce10f255ed2580c7d4a7f\transformed\slidingpanelayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\4cf6ad0c78359a2eb415f8a7066aad5b\transformed\customview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\4cf6ad0c78359a2eb415f8a7066aad5b\transformed\customview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\63f60ae2c7201a65f52fc47d2f781afd\transformed\swiperefreshlayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\63f60ae2c7201a65f52fc47d2f781afd\transformed\swiperefreshlayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\b11ab9df44e6e26b8336fd2e0dc6fd51\transformed\asynclayoutinflater-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\b11ab9df44e6e26b8336fd2e0dc6fd51\transformed\asynclayoutinflater-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.0.1] C:\Users\santi09\.gradle\caches\transforms-3\5a1ed73504fae475ca85e8d36a6548ed\transformed\core-1.0.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.0.1] C:\Users\santi09\.gradle\caches\transforms-3\5a1ed73504fae475ca85e8d36a6548ed\transformed\core-1.0.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\e018852893eb080f3cefb749f448cd30\transformed\versionedparcelable-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\e018852893eb080f3cefb749f448cd30\transformed\versionedparcelable-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\b5d39852e6a666256f87ee42d2b48944\transformed\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\b5d39852e6a666256f87ee42d2b48944\transformed\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.0.0] C:\Users\santi09\.gradle\caches\transforms-3\8489c4c7a19c4546a4411d6c69221d51\transformed\lifecycle-runtime-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.0.0] C:\Users\santi09\.gradle\caches\transforms-3\8489c4c7a19c4546a4411d6c69221d51\transformed\lifecycle-runtime-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\099ec21cb31cf6c527e845124037106b\transformed\documentfile-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\099ec21cb31cf6c527e845124037106b\transformed\documentfile-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\42e3b2b67944f4744bed163492aa1591\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\42e3b2b67944f4744bed163492aa1591\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\c35deb218a42f6b1ccb34889e38f5e8d\transformed\print-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\c35deb218a42f6b1ccb34889e38f5e8d\transformed\print-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.0.0] C:\Users\santi09\.gradle\caches\transforms-3\2c2cf9abb98348ee5039709affc53ed0\transformed\lifecycle-viewmodel-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.0.0] C:\Users\santi09\.gradle\caches\transforms-3\2c2cf9abb98348ee5039709affc53ed0\transformed\lifecycle-viewmodel-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\santi09\.gradle\caches\transforms-3\b97a8f40b63810244ab41e2fa0059751\transformed\lifecycle-livedata-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\santi09\.gradle\caches\transforms-3\b97a8f40b63810244ab41e2fa0059751\transformed\lifecycle-livedata-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\santi09\.gradle\caches\transforms-3\eba8815810195b995247da5a5ada6795\transformed\lifecycle-livedata-core-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\santi09\.gradle\caches\transforms-3\eba8815810195b995247da5a5ada6795\transformed\lifecycle-livedata-core-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\santi09\.gradle\caches\transforms-3\4f2bc8f8bbec378cd02f580539dcfaa1\transformed\core-runtime-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\santi09\.gradle\caches\transforms-3\4f2bc8f8bbec378cd02f580539dcfaa1\transformed\core-runtime-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\00cc0f5b3215ee1f60046e4e5c8104d7\transformed\interpolator-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\santi09\.gradle\caches\transforms-3\00cc0f5b3215ee1f60046e4e5c8104d7\transformed\interpolator-1.0.0\AndroidManifest.xml:20:5-44
+INJECTED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\santi09\CS501Code\FinalProject\EyeDentify\MiniResearch\cloudsight-android-sdk\app\src\main\AndroidManifest.xml

@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">MLKit</string>
+    <string name="txtScroll">Hello! Capture or chooose an image from gallery to perform OCR</string>
+    <string name="capture">Capture</string>
+    <string name="copy">Copy</string>
+</resources>
