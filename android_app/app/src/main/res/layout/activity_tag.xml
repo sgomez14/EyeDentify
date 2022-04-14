@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".TagActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="729dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imgScannedItem"
+            android:layout_width="match_parent"
+            android:layout_height="215dp"
+            android:contentDescription="@string/imageContentDescription"
+            app:srcCompat="@drawable/can_of_soup"
+            tools:srcCompat="@drawable/can_of_soup" />
+
+
+        <TextView
+            android:id="@+id/tvDescriptionLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:labelFor="@id/tvDescription"
+            android:text="@string/item_description_label"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+<!--        <TextView-->
+<!--            android:id="@+id/tvDescription"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="3"-->
+<!--            android:text="@string/item_description"-->
+<!--            android:textSize="20sp" />-->
+
+        <EditText
+            android:id="@+id/edtItemDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="@string/textContentDescription"
+            android:inputType="textMultiLine"
+            android:textColorHint="#546E7A"
+            tools:ignore="DuplicateSpeakableTextCheck"
+            android:importantForAutofill="no" />
+
+        <TextView
+            android:id="@+id/tvWordsDetectedLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:labelFor="@id/tvWordsDetected"
+            android:text="@string/keywords_label"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+<!--        <TextView-->
+<!--            android:id="@+id/tvWordsDetected"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="3"-->
+<!--            android:text="@string/keywords"-->
+<!--            android:textSize="20sp" />-->
+
+        <EditText
+            android:id="@+id/edtItemKeywords"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="@string/keywordContentDescription"
+            android:inputType="textMultiLine"
+            android:textColorHint="#546E7A"
+            tools:ignore="DuplicateSpeakableTextCheck"
+            android:importantForAutofill="no" />
+
+        <Button
+            android:id="@+id/btnAddPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:background="#F44336"
+            android:text="@string/scan_item"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/btnAddVoiceMemo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:background="#FF9800"
+            android:text="@string/add_voice_memo"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/btnPairTag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:background="@color/teal_200"
+            android:text="@string/pair_with_tag"
+            android:textSize="24sp" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
