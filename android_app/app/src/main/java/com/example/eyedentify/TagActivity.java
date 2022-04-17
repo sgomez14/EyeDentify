@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import java.util.*;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -15,6 +16,7 @@ import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.media.audiofx.AudioEffect;
+import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.os.Bundle;
@@ -61,6 +63,7 @@ public class TagActivity extends AppCompatActivity {
         etDescription = findViewById(R.id.edtItemDescription);
         etKeywords = findViewById(R.id.edtItemKeywords);
         boolean gotHereWithTag;
+        mFileName = "";
         nfc = NFC.makeNFC(this);
         adapter = nfc.adapter;
         nfc.readIntent(getIntent());
@@ -136,7 +139,16 @@ public class TagActivity extends AppCompatActivity {
                         textToSpeech.speak(speech, TextToSpeech.QUEUE_FLUSH, null, null);
                     }
                 };
-                speakDescription.start();
+                if(infoArray[3].equals("na")){
+//                    speakDescription.start();
+                }
+                else{
+                    ContextWrapper cw = new ContextWrapper(getApplicationContext());
+                    File musicDir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
+                    File f = new File(musicDir, infoArray[3]+".mp3");
+                    MediaPlayer mp = MediaPlayer.create(this, Uri.parse(f.getPath()));
+                    mp.start();
+                }
             }
             else{
                 Toast.makeText(this, "Invalid Information in Tag", Toast.LENGTH_SHORT).show();
@@ -153,13 +165,16 @@ public class TagActivity extends AppCompatActivity {
         btnPairTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String msg = "img%"+etDescription.getText()+"%"+etKeywords.getText()+"%audio";
+                String msg = "img%"+etDescription.getText()+"%"+etKeywords.getText()+"%"+(mFileName.equals("") ? "na" : mFileName);
                 try {
                     nfc.write(msg);
                     Toast.makeText(TagActivity.this, "Pair Success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TagActivity.this, mFileName, Toast.LENGTH_SHORT).show();
+                    mFileName = "";
                 } catch (Exception e) {
                     Toast.makeText(TagActivity.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 
@@ -169,8 +184,9 @@ public class TagActivity extends AppCompatActivity {
     private String getRecordingPath(){
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
         File musicDir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
-        File f = new File(musicDir, "testFile.mp3");
-        Toast.makeText(this, f.getPath(), Toast.LENGTH_SHORT).show();
+        mFileName = UUID.randomUUID().toString();
+        Toast.makeText(TagActivity.this, mFileName, Toast.LENGTH_SHORT).show();
+        File f = new File(musicDir, mFileName+".mp3");
         return f.getPath();
     }
 
@@ -184,8 +200,6 @@ public class TagActivity extends AppCompatActivity {
             // the background color of text view.
             // we are here initializing our filename variable
             // with the path of the recorded audio file.
-            mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
-            mFileName += "/AudioRecording.mp4";
 
             // below method is used to initialize
             // the media recorder clss
@@ -231,8 +245,10 @@ public class TagActivity extends AppCompatActivity {
         nfc.readIntent(intent);
         if(NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())){
             nfc.myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            Toast.makeText(this, nfc.myTagInfo, Toast.LENGTH_SHORT).show();
-//            startActivity(new Intent(MainActivity.this, TagActivity.class));
+            if(nfc.myTagInfo!= null){
+                Toast.makeText(this, nfc.myTagInfo, Toast.LENGTH_SHORT).show();
+
+            }
         }
     }
 

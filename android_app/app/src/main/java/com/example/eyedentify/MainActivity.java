@@ -48,12 +48,10 @@ public class MainActivity extends AppCompatActivity {
         nfc.readIntent(intent);
         if(NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())){
             nfc.myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            if(nfc.myTagInfo.split("%").length == 4){
+            if(nfc.myTagInfo != null && nfc.myTagInfo.split("%").length == 4){
                 startActivity(new Intent(MainActivity.this, TagActivity.class).putExtra("tagInfo", nfc.myTagInfo));
             }
             else{
-                TTS t = new TTS(this);
-//                t.startSpeaking("Incompatible Information in Tag");
                 Toast.makeText(this, "Cannot Parse Information in Tag", Toast.LENGTH_SHORT).show();
             }
         }
