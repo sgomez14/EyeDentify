@@ -24,12 +24,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/main_btn_scan_item"
+            android:background="@color/purple_200"
             android:isScrollContainer="false"
             android:text="@string/scan_item"
             android:textColor="@color/black"
             android:textSize="34sp"
-            android:layout_margin="5dp"
             app:icon="@android:drawable/ic_menu_camera"
             app:iconGravity="textTop"
             app:iconSize="60dp" />
@@ -39,10 +38,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/main_btn_tag_item"
+            android:background="@color/teal_200"
             android:text="@string/tag_item"
             android:textSize="34sp"
-            android:layout_margin="5dp"
             app:iconGravity="top" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

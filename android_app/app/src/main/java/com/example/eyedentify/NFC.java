@@ -73,11 +73,11 @@ public class NFC {
         return text;
     }
 
-    public void write(String text) throws Exception{
-        NdefRecord[] records = {createRecord(text), NdefRecord.createApplicationRecord("com.example.eyedentify"), };
+    public void write(String text, Tag tag) throws Exception{
+        NdefRecord[] records = {createRecord(text), NdefRecord.createApplicationRecord("com.zeyu.nfc2"), };
         NdefMessage m = new NdefMessage(records);
 
-        Ndef ndef = Ndef.get(myTag);
+        Ndef ndef = Ndef.get(tag);
         ndef.connect();
         ndef.writeNdefMessage(m);
         ndef.close();

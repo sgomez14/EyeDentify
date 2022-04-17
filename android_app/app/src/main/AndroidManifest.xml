@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.eyedentify">
-    <uses-permission android:name="android.permission.NFC"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.Manifest.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -20,7 +17,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.nfc.action.NDEF_DISCOVERED " />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
