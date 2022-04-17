@@ -16,7 +16,7 @@ public class MLKit {
 
 
     // 1) Call Google ML Kit TextRecognizer: https://developers.google.com/android/reference/com/google/mlkit/vision/text/TextRecognizer
-    public String getTextFromImage(Bitmap bitmap, Context context) {
+    public static String getTextFromImage(Bitmap bitmap, Context context) {
 
         String textFromImage = "";
 
