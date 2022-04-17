@@ -28,7 +28,6 @@ public class TTS {
 //                }
                 if (status == TextToSpeech.SUCCESS){
                     textToSpeech.setLanguage(Locale.US);
-                    Toast.makeText(context, "called", Toast.LENGTH_SHORT).show();
                 }
 
             }
