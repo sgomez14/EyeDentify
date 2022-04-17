@@ -17,7 +17,8 @@
             android:layout_height="215dp"
             android:contentDescription="@string/imageContentDescription"
             app:srcCompat="@drawable/can_of_soup"
-            tools:srcCompat="@drawable/can_of_soup" />
+            tools:srcCompat="@drawable/can_of_soup"
+            android:layout_margin="5dp"/>
 
 
         <TextView
@@ -28,7 +29,8 @@
             android:labelFor="@+id/tvDescription"
             android:text="@string/item_description_label"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_margin="5dp"/>
 
 <!--        <TextView-->
 <!--            android:id="@+id/tvDescription"-->
@@ -49,7 +51,8 @@
             android:inputType="textMultiLine"
             android:textColorHint="#546E7A"
             tools:ignore="DuplicateSpeakableTextCheck"
-            android:importantForAutofill="no" />
+            android:importantForAutofill="no"
+            android:layout_margin="5dp"/>
 
         <TextView
             android:id="@+id/tvWordsDetectedLabel"
@@ -59,7 +62,8 @@
             android:labelFor="@+id/tvWordsDetected"
             android:text="@string/keywords_label"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_margin="5dp"/>
 
 <!--        <TextView-->
 <!--            android:id="@+id/tvWordsDetected"-->
@@ -80,7 +84,8 @@
             android:inputType="textMultiLine"
             android:textColorHint="#546E7A"
             tools:ignore="DuplicateSpeakableTextCheck"
-            android:importantForAutofill="no" />
+            android:importantForAutofill="no"
+            android:layout_margin="5dp"/>
 
         <Button
             android:id="@+id/btnAddPhoto"
