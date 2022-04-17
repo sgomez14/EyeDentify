@@ -1,5 +1,6 @@
 package com.example.eyedentify;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -8,21 +9,29 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.nfc.NfcAdapter;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int PERMISSION_CODE = 1000;
     private static final int REQUEST_CAMERA_CODE = 100;
     private static final int IMAGE_CAPTURE_CODE = 101;
     Uri image_uri;
@@ -31,16 +40,6 @@ public class MainActivity extends AppCompatActivity {
     private String cloudSightResult;
     private String mlkitResult;
 
-import android.app.PendingIntent;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.nfc.NfcAdapter;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
-
-public class MainActivity extends AppCompatActivity {
 
     private Button btnTagItem;
     private NFC nfc;
@@ -49,12 +48,24 @@ public class MainActivity extends AppCompatActivity {
     NfcAdapter adapter;
     boolean writeMode;
 
+    private Button btnScanItem;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnTagItem = findViewById(R.id.btnTagItem);
+        // 1) Request camera access permission
+        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{
+                    Manifest.permission.CAMERA
+            }, REQUEST_CAMERA_CODE);
+        }
+
+        btnTagItem = (Button) findViewById(R.id.btnTagItem);
+        btnScanItem = (Button) findViewById(R.id.btnScanItem);
+
+        // stuff related to NFC
         nfc = NFC.makeNFC(this);
         adapter = nfc.adapter;
         nfc.readIntent(getIntent());
@@ -70,14 +81,52 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // 1) Request camera access permission
-        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{
-                    Manifest.permission.CAMERA
-            }, REQUEST_CAMERA_CODE);
+        btnScanItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                    if(checkSelfPermission(Manifest.permission.CAMERA) ==
+                            PackageManager.PERMISSION_DENIED ||
+                            checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+                                    PackageManager.PERMISSION_DENIED
+                    ){
+                        String[] permission = {Manifest.permission.CAMERA , Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                        requestPermissions(permission, PERMISSION_CODE);
+
+                    } else{
+                        openCamera();
+
+                    }
+                } else{
+
+                    openCamera();
+
+                }
+
+            }
+        });
+
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case PERMISSION_CODE: {
+                if (grantResults.length > 0 && grantResults[0] ==
+                        PackageManager.PERMISSION_GRANTED) {
+                    openCamera();
+
+                } else {
+
+                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+
+                }
+            }
         }
-
-
     }
 
     // 4) After photo is taken, come back to the app
@@ -89,16 +138,18 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == IMAGE_CAPTURE_CODE) {
             if (resultCode == RESULT_OK) {
                 // Get picture data and save as Uri format
-                Uri resultUri = data.getData();
+//                Uri resultUri = data.getData();
                 try{
 
-                    File imageFile = new File(getPath(resultUri)); // convert image to File for CloudSight
+                    File imageFile = new File(getPath(image_uri)); // convert image to File for CloudSight
 
-                    cloudSightResult = CloudSight.uploadImageRequest(imageFile); // pass to cloudsight
-
+                    CloudSight cloudSight = new CloudSight(imageFile); // pass to cloudsight
+                    cloudSightResult = cloudSight.getCloudSightResult();
 
                     Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath()); // convert image to bitmap for MLKit
                     mlkitResult = MLKit.getTextFromImage(imageBitmap, this); // pass image to MLKit
+
+                    newActivityWithImageResults(cloudSightResult, mlkitResult); // go to activity to display results
                 }
                 catch (Exception e) {
                     Log.d("EyeDentify", e.getMessage());
@@ -165,5 +216,17 @@ public class MainActivity extends AppCompatActivity {
     private void writeModeOn(){
         writeMode = true;
         adapter.enableForegroundDispatch(this, pendingIntent, filters, null);
+    }
+
+    private void newActivityWithImageResults(String cloudSightResult, String mlkitResult){
+        Intent resultsActivity = new Intent(MainActivity.this, TagActivity.class);
+        resultsActivity.putExtra("cameraResults", "image results"); // indicate the source of the intent
+        Bundle resultsBundle = new Bundle();
+        resultsBundle.putString("cloudSightResult", cloudSightResult);
+        resultsBundle.putString("mlkitResult", mlkitResult);
+        resultsActivity.putExtras(resultsBundle);
+        startActivity(resultsActivity);
+
+
     }
 }

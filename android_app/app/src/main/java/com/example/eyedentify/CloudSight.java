@@ -9,15 +9,16 @@ import ai.cloudsight.androidsdk.CloudSightResponse;
 
 public class CloudSight {
     final public static String CLOUDSIGHT_ERROR = "CloudSightFailed";
+    String cloudSightResult = CLOUDSIGHT_ERROR;
 
     // 1) Constructor
-    public CloudSight (File file, TextView statusTextView, TextView resultTextView) {
-        uploadImageRequest(file/*, statusTextView, resultTextView*/);
+    public CloudSight (File file/*, TextView statusTextView, TextView resultTextView*/) {
+        cloudSightResult = uploadImageRequest(file/*, statusTextView, resultTextView*/);
     }
 
     // 2) Upload the image request to CloudSight API
-    public static String uploadImageRequest (File file/*, TextView statusTextView, TextView resultTextView*/) {
-        final String[] cloudSightResult = {CLOUDSIGHT_ERROR};
+    public String uploadImageRequest (File file/*, TextView statusTextView, TextView resultTextView*/) {
+        Log.e("enterin CS request", "checking entering cloudsight result");
         // 3) Instantiate client with key pass to connect to CloudSight API
         CloudSightClient client = new CloudSightClient().init("iTabmDiyViBULrkoBBCVHA");
 
@@ -33,7 +34,8 @@ public class CloudSight {
                 Log.d("EyeDentify ", "imageUploaded");
 //                statusTextView.setText("Status: " + response.getStatus());
 //                resultTextView.setText("Result: " + response.getName());
-                cloudSightResult[0] = response.getName(); // return the string result
+                cloudSightResult = response.getName(); // return the string result
+                Log.d("EyeDentify ImgUpload:", response.getName());
             }
 
             @Override
@@ -41,15 +43,16 @@ public class CloudSight {
                 Log.d("EyeDentify ", "imageRecognized");
 //                statusTextView.setText("Status: " + response.getStatus());
 //                resultTextView.setText("Result: " + response.getName());
-                cloudSightResult[0] = response.getName(); // return the string result
+                cloudSightResult = response.getName(); // return the string result
+                Log.d("EyeDentify CSImage", response.getName());
             }
 
             // 7) Failure case
             @Override
             public void imageRecognitionFailed(String reason) {
-                Log.d("EyeDentify ", "imageRecognitionFailed");
+                Log.d("EyeDentify CSFailed", "imageRecognitionFailed");
 //                statusTextView.setText("Status: " + reason);
-                Log.d("Mandy ", reason);
+                Log.d("EyeDentify CSFailed", reason);
 
             }
 
@@ -61,6 +64,10 @@ public class CloudSight {
             }
         });
 
-        return cloudSightResult[0]; // return the result of CloudSight call
+        return cloudSightResult; // return the result of CloudSight call
+    }
+
+    public String getCloudSightResult(){
+        return cloudSightResult;
     }
 }
