@@ -17,7 +17,8 @@
             android:layout_height="215dp"
             android:contentDescription="@string/imageContentDescription"
             app:srcCompat="@drawable/can_of_soup"
-            tools:srcCompat="@drawable/can_of_soup" />
+            tools:srcCompat="@drawable/can_of_soup"
+            android:layout_margin="5dp"/>
 
 
         <TextView
@@ -28,7 +29,8 @@
             android:labelFor="@+id/tvDescription"
             android:text="@string/item_description_label"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_margin="5dp"/>
 
 <!--        <TextView-->
 <!--            android:id="@+id/tvDescription"-->
@@ -49,7 +51,8 @@
             android:inputType="textMultiLine"
             android:textColorHint="#546E7A"
             tools:ignore="DuplicateSpeakableTextCheck"
-            android:importantForAutofill="no" />
+            android:importantForAutofill="no"
+            android:layout_margin="5dp"/>
 
         <TextView
             android:id="@+id/tvWordsDetectedLabel"
@@ -59,7 +62,8 @@
             android:labelFor="@+id/tvWordsDetected"
             android:text="@string/keywords_label"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_margin="5dp"/>
 
 <!--        <TextView-->
 <!--            android:id="@+id/tvWordsDetected"-->
@@ -80,33 +84,37 @@
             android:inputType="textMultiLine"
             android:textColorHint="#546E7A"
             tools:ignore="DuplicateSpeakableTextCheck"
-            android:importantForAutofill="no" />
+            android:importantForAutofill="no"
+            android:layout_margin="5dp"/>
 
         <Button
             android:id="@+id/btnAddPhoto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="7"
-            android:background="#F44336"
+            android:background="@drawable/tag_btn_add_photo"
             android:text="@string/scan_item"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:layout_margin="2dp"/>
 
         <Button
             android:id="@+id/btnAddVoiceMemo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="7"
-            android:background="#FF9800"
+            android:background="@drawable/tag_btn_add_voice_memo"
             android:text="@string/add_voice_memo"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:layout_margin="2dp"/>
 
         <Button
             android:id="@+id/btnPairTag"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="7"
-            android:background="@color/teal_200"
+            android:background="@drawable/tag_btn_pair_tag"
             android:text="@string/pair_with_tag"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:layout_margin="2dp"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
