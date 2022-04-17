@@ -1,4 +1,4 @@
-package com.example.speech2text2;
+package com.example.eyedentify;
 
 import android.content.Context;
 import android.speech.tts.TextToSpeech;

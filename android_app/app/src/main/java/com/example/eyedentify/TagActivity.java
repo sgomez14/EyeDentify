@@ -22,6 +22,8 @@ public class TagActivity extends AppCompatActivity {
     IntentFilter filters[];
     NfcAdapter adapter;
     boolean writeMode;
+    TTS tts ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,7 @@ public class TagActivity extends AppCompatActivity {
         IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
         tagDetected.addCategory(Intent.CATEGORY_DEFAULT);
         filters = new IntentFilter[]{tagDetected};
+        tts = new TTS(this);
         //checking if arrived at this page with tag or with button
         if (getIntent().hasExtra("tagInfo")) {
             String message = getIntent().getExtras().getString("tagInfo");
@@ -53,6 +56,10 @@ public class TagActivity extends AppCompatActivity {
             if(infoArray.length == 4){
                 etDescription.setText(infoArray[1]);
                 etKeywords.setText(infoArray[2]);
+                tts.startSpeaking(infoArray[1]);
+            }
+            else{
+                Toast.makeText(this, "Invalid Information in Tag", Toast.LENGTH_SHORT).show();
             }
 
 

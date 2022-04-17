@@ -1,4 +1,4 @@
-package com.example.speech2text2;
+package com.example.eyedentify;
 
 import android.Manifest;
 import android.app.Activity;
