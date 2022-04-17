@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "EyeDentify"
-include ':app'
+include ':app', ':cloudsight'
