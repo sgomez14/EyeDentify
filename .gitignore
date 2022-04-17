@@ -1,4 +1,4 @@
-
+NFC2
 MiniResearch/TTS-STT/local.properties
 MiniResearch/TTS-STT/app/build/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin
 MiniResearch/TTS-STT/app/build/outputs/logs/manifest-merger-debug-report.txt
@@ -1719,3 +1719,4 @@ MiniResearch/GUIDraft/.idea/gradle.xml
 MiniResearch/GUIDraft/.idea/misc.xml
 MiniResearch/GUIDraft/.idea/vcs.xml
 MiniResearch/GUIDraft/.idea/compiler.xml
+NFC2/.gradle/7.2/fileHashes/fileHashes.lock
