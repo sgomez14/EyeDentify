@@ -11,8 +11,11 @@
         <entry key="app/src/main/res/drawable/empty_tall_divider.xml" value="0.2415" />
         <entry key="app/src/main/res/drawable/main_btn_scan_item.xml" value="0.2415" />
         <entry key="app/src/main/res/drawable/main_btn_tag_item.xml" value="0.2415" />
+        <entry key="app/src/main/res/drawable/tag_btn_add_photo.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/tag_btn_add_voice_memo.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/tag_btn_pair_tag.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.32395833333333335" />
-        <entry key="app/src/main/res/layout/activity_tag.xml" value="0.26197916666666665" />
+        <entry key="app/src/main/res/layout/activity_tag.xml" value="0.22" />
       </map>
     </option>
   </component>
