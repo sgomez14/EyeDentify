@@ -21,6 +21,7 @@ import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +29,9 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -146,7 +150,9 @@ public class MainActivity extends AppCompatActivity {
                     CloudSight cloudSight = new CloudSight(imageFile); // pass to cloudsight
                     cloudSightResult = cloudSight.getCloudSightResult();
 
-                    Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath()); // convert image to bitmap for MLKit
+                    //Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath()); // convert image to bitmap for MLKit
+                    Bitmap imageBitmap = convertUriToBitmap(image_uri);
+                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.can_of_soup);
                     mlkitResult = MLKit.getTextFromImage(imageBitmap, this); // pass image to MLKit
 
                     newActivityWithImageResults(cloudSightResult, mlkitResult); // go to activity to display results
@@ -183,6 +189,22 @@ public class MainActivity extends AppCompatActivity {
         cursor.close();
         return s;
         
+    }
+
+    private Bitmap convertUriToBitmap(Uri uri) throws IOException {
+        try {
+            ParcelFileDescriptor parcelFileDescriptor;
+            parcelFileDescriptor = getContentResolver().openFileDescriptor(uri, "r");
+            FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+            Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+            parcelFileDescriptor.close();
+            return image;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace(); // make into log
+        } catch (IOException e) {
+            e.printStackTrace();  // make into log
+        }
+        return null;
     }
 
     @Override
@@ -222,8 +244,8 @@ public class MainActivity extends AppCompatActivity {
         Intent resultsActivity = new Intent(MainActivity.this, TagActivity.class);
         resultsActivity.putExtra("cameraResults", "image results"); // indicate the source of the intent
         Bundle resultsBundle = new Bundle();
-        resultsBundle.putString("cloudSightResult", cloudSightResult);
-        resultsBundle.putString("mlkitResult", mlkitResult);
+        resultsBundle.putString("cloudSightResult", "cloud sight results");//cloudSightResult);
+        resultsBundle.putString("mlkitResult", "mlkit results");//mlkitResult);
         resultsActivity.putExtras(resultsBundle);
         startActivity(resultsActivity);
 

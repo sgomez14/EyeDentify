@@ -71,6 +71,13 @@ public class TagActivity extends AppCompatActivity {
             //enable fields if with a button
             edtItemDescription.setEnabled(true);
             edtItemKeywords.setEnabled(true);
+
+            Bundle imageResults = getIntent().getExtras();
+            String cloudSightResult = imageResults.getString("cloudSightResult");
+            String mlkitResult = imageResults.getString("mlkitResult");
+
+            edtItemDescription.setText(cloudSightResult); // CloudSight provides descriptive sentence
+            edtItemKeywords.setText(mlkitResult); // MLKit provides words detect on the object
         }
 
         btnPairTag.setOnClickListener(new View.OnClickListener() {
