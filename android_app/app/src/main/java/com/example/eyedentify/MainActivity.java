@@ -11,6 +11,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -60,12 +61,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Log.d("Mandy: ", "onCreate");
         // 1) Request camera access permission
         if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{
                     Manifest.permission.CAMERA
             }, REQUEST_CAMERA_CODE);
         }
+
+        Log.d("Mandy: ", "asked for camera permission");
 
         btnTagItem = (Button) findViewById(R.id.btnTagItem);
         btnScanItem = (Button) findViewById(R.id.btnScanItem);
@@ -79,12 +83,17 @@ public class MainActivity extends AppCompatActivity {
         tagDetected.addCategory(Intent.CATEGORY_DEFAULT);
         filters = new IntentFilter[]{tagDetected};
 
+        Log.d("Mandy: ", "finished stuff related to NFC");
+
+
         btnTagItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, TagActivity.class));
             }
         });
+
+        Log.d("Mandy: ", "btnTagItem");
 
         btnScanItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,14 +120,14 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
+        Log.d("Mandy: ", "btnScanItem");
 
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
+        Log.d("Mandy: ", "onRequestPermissionsResult");
         switch (requestCode) {
             case PERMISSION_CODE: {
                 if (grantResults.length > 0 && grantResults[0] ==
@@ -138,31 +147,25 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        Log.d("Mandy: ", "onActivityResult");
         // Confirm requestCode and resultCode are valid
-        if (requestCode == IMAGE_CAPTURE_CODE) {
-            if (resultCode == RESULT_OK) {
-                // Get picture data and save as Uri format
-//                Uri resultUri = data.getData();
-                try{
+        if (requestCode == IMAGE_CAPTURE_CODE && resultCode == RESULT_OK) {
+            try{
+                // convert image to File image recognition sdks
+                File imageFile = new File(getPath(image_uri));
 
-                    File imageFile = new File(getPath(image_uri)); // convert image to File for CloudSight
+                // convert imageFile to bitmap for ML kit
+                Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile.toString());
+                imageBitmap = rotateBitmap90(imageBitmap);
+                // pass image bitmap to MLKit class
+                mlkitResult = MLKit.getTextFromImage(imageBitmap, this); // pass image to MLKit
 
-                    CloudSight cloudSight = new CloudSight(imageFile); // pass to cloudsight
-                    cloudSightResult = cloudSight.getCloudSightResult();
+                // pass image file to CloudSight class
+                new CloudSight(MainActivity.this, mlkitResult, imageFile);
 
-                    //Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath()); // convert image to bitmap for MLKit
-                    Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile.toString());
-                    imageBitmap = rotateBitmap90(imageBitmap);
-//                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.can_of_soup);
-                    mlkitResult = MLKit.getTextFromImage(imageBitmap, this); // pass image to MLKit
-
-                    newActivityWithImageResults(cloudSightResult, mlkitResult, imageFile); // go to activity to display results
-                }
-                catch (Exception e) {
-                    Log.d("EyeDentify", e.getMessage());
-                }
-
+            }
+            catch (Exception e) {
+                Log.d("EyeDentify", e.getMessage());
             }
         }
     }
@@ -242,16 +245,21 @@ public class MainActivity extends AppCompatActivity {
         adapter.enableForegroundDispatch(this, pendingIntent, filters, null);
     }
 
-    private void newActivityWithImageResults(String cloudSightResult, String mlkitResult, File imageFile){
-        Intent resultsActivity = new Intent(MainActivity.this, TagActivity.class);
-        resultsActivity.putExtra("cameraResults", "image results"); // indicate the source of the intent
+    /*
+    newActivityWithImageResults is called from CloudSight imageRecognized call back function
+    This makes sure that TagActivity gets initiated immediately after cloudsight responds,
+    guaranteeing real time response.
+    */
+    public void newActivityWithImageResults(Context context, String cloudSightResult, String mlkitResult, File imageFile){
+        Intent resultsActivity = new Intent(context, TagActivity.class);
+        // indicate the source of the intent
+        resultsActivity.putExtra("cameraResults", "image results");
         Bundle resultsBundle = new Bundle();
-        resultsBundle.putString("cloudSightResult", "cloud sight results");//cloudSightResult);
-        resultsBundle.putString("mlkitResult", mlkitResult);//mlkitResult);
+        resultsBundle.putString("cloudSightResult", cloudSightResult);
+        resultsBundle.putString("mlkitResult", mlkitResult);
         resultsBundle.putString("imageFile", imageFile.toString());
         resultsActivity.putExtras(resultsBundle);
-        startActivity(resultsActivity);
-
+        context.startActivity(resultsActivity);
     }
 
     public static Bitmap rotateBitmap90 (Bitmap imageBitmap){
