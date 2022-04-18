@@ -1,14 +1,10 @@
 package com.example.eyedentify;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
-
 import android.Manifest;
-import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
@@ -23,17 +19,12 @@ import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
     // Strings to save results from image recognition algorithms
     private String cloudSightResult;
     private String mlkitResult;
-
 
     private Button btnTagItem;
     private NFC nfc;
@@ -61,15 +51,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d("Mandy: ", "onCreate");
         // 1) Request camera access permission
         if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{
                     Manifest.permission.CAMERA
             }, REQUEST_CAMERA_CODE);
         }
-
-        Log.d("Mandy: ", "asked for camera permission");
 
         btnTagItem = (Button) findViewById(R.id.btnTagItem);
         btnScanItem = (Button) findViewById(R.id.btnScanItem);
@@ -83,9 +70,8 @@ public class MainActivity extends AppCompatActivity {
         tagDetected.addCategory(Intent.CATEGORY_DEFAULT);
         filters = new IntentFilter[]{tagDetected};
 
-        Log.d("Mandy: ", "finished stuff related to NFC");
 
-
+        // Tag item button listener
         btnTagItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,12 +79,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Log.d("Mandy: ", "btnTagItem");
-
+        // Scan item button listener
         btnScanItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                     if(checkSelfPermission(Manifest.permission.CAMERA) ==
                             PackageManager.PERMISSION_DENIED ||
@@ -107,37 +91,27 @@ public class MainActivity extends AppCompatActivity {
                     ){
                         String[] permission = {Manifest.permission.CAMERA , Manifest.permission.WRITE_EXTERNAL_STORAGE};
                         requestPermissions(permission, PERMISSION_CODE);
-
                     } else{
                         openCamera();
-
                     }
                 } else{
 
                     openCamera();
-
                 }
-
             }
         });
-        Log.d("Mandy: ", "btnScanItem");
-
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        Log.d("Mandy: ", "onRequestPermissionsResult");
         switch (requestCode) {
             case PERMISSION_CODE: {
                 if (grantResults.length > 0 && grantResults[0] ==
                         PackageManager.PERMISSION_GRANTED) {
                     openCamera();
-
                 } else {
-
                     Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
-
                 }
             }
         }
@@ -147,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("Mandy: ", "onActivityResult");
         // Confirm requestCode and resultCode are valid
         if (requestCode == IMAGE_CAPTURE_CODE && resultCode == RESULT_OK) {
             try{
@@ -165,11 +138,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
             catch (Exception e) {
-                Log.d("EyeDentify", e.getMessage());
+                Log.d("EyeDentify debug", e.getMessage());
             }
         }
     }
-
 
     private void openCamera() {
         ContentValues values = new ContentValues();
@@ -194,22 +166,6 @@ public class MainActivity extends AppCompatActivity {
         cursor.close();
         return s;
         
-    }
-
-    private Bitmap convertUriToBitmap(Uri uri) throws IOException {
-        try {
-            ParcelFileDescriptor parcelFileDescriptor;
-            parcelFileDescriptor = getContentResolver().openFileDescriptor(uri, "r");
-            FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
-            Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
-            parcelFileDescriptor.close();
-            return image;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace(); // make into log
-        } catch (IOException e) {
-            e.printStackTrace();  // make into log
-        }
-        return null;
     }
 
     @Override
