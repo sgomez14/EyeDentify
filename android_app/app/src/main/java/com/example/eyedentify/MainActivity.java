@@ -17,6 +17,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.os.Build;
@@ -151,11 +152,12 @@ public class MainActivity extends AppCompatActivity {
                     cloudSightResult = cloudSight.getCloudSightResult();
 
                     //Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath()); // convert image to bitmap for MLKit
-                    Bitmap imageBitmap = convertUriToBitmap(image_uri);
-                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.can_of_soup);
+                    Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile.toString());
+                    imageBitmap = rotateBitmap90(imageBitmap);
+//                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.can_of_soup);
                     mlkitResult = MLKit.getTextFromImage(imageBitmap, this); // pass image to MLKit
 
-                    newActivityWithImageResults(cloudSightResult, mlkitResult); // go to activity to display results
+                    newActivityWithImageResults(cloudSightResult, mlkitResult, imageFile); // go to activity to display results
                 }
                 catch (Exception e) {
                     Log.d("EyeDentify", e.getMessage());
@@ -240,15 +242,24 @@ public class MainActivity extends AppCompatActivity {
         adapter.enableForegroundDispatch(this, pendingIntent, filters, null);
     }
 
-    private void newActivityWithImageResults(String cloudSightResult, String mlkitResult){
+    private void newActivityWithImageResults(String cloudSightResult, String mlkitResult, File imageFile){
         Intent resultsActivity = new Intent(MainActivity.this, TagActivity.class);
         resultsActivity.putExtra("cameraResults", "image results"); // indicate the source of the intent
         Bundle resultsBundle = new Bundle();
         resultsBundle.putString("cloudSightResult", "cloud sight results");//cloudSightResult);
-        resultsBundle.putString("mlkitResult", "mlkit results");//mlkitResult);
+        resultsBundle.putString("mlkitResult", mlkitResult);//mlkitResult);
+        resultsBundle.putString("imageFile", imageFile.toString());
         resultsActivity.putExtras(resultsBundle);
         startActivity(resultsActivity);
 
+    }
+
+    public static Bitmap rotateBitmap90 (Bitmap imageBitmap){
+        Matrix matrixForRotation = new Matrix();
+        matrixForRotation.postRotate(90); // assuming rotating in clockwise direction
+        Bitmap rotatedBitmap = Bitmap.createBitmap(imageBitmap, 0,0, imageBitmap.getWidth(),
+                imageBitmap.getHeight(), matrixForRotation, true);
+        return rotatedBitmap;
 
     }
 }

@@ -35,7 +35,7 @@ public class CloudSight {
 //                statusTextView.setText("Status: " + response.getStatus());
 //                resultTextView.setText("Result: " + response.getName());
                 cloudSightResult = response.getName(); // return the string result
-                Log.d("EyeDentify ImgUpload:", response.getName());
+//                Log.d("EyeDentify ImgUpload:", response.getName());
             }
 
             @Override
