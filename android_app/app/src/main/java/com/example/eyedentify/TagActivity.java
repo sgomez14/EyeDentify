@@ -9,9 +9,11 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -46,7 +48,8 @@ public class TagActivity extends AppCompatActivity {
     TTS tts ;
     private TextToSpeech textToSpeech;
     private String mFileName;
-
+    private SharedPreferences sp;
+    private SharedPreferences.Editor editor;
     private MediaPlayer mPlayer;
     MediaRecorder mRecorder = new MediaRecorder();
 
@@ -56,7 +59,8 @@ public class TagActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tag);
-
+        sp = getSharedPreferences("eyedentify", Context.MODE_PRIVATE);
+        editor = sp.edit();
         btnPairTag = (Button) findViewById(R.id.btnPairTag);
         btnAddPhoto = findViewById(R.id.btnAddPhoto);
         btnAddVoiceMemo = findViewById(R.id.btnAddVoiceMemo);
@@ -94,6 +98,7 @@ public class TagActivity extends AppCompatActivity {
                     mRecorder.stop();
                     mRecorder.release();
                     mRecorder = null;
+                    Toast.makeText(TagActivity.this, "Recording Complete", Toast.LENGTH_SHORT).show();
                     return true;
                 }
                 return false;
@@ -116,17 +121,13 @@ public class TagActivity extends AppCompatActivity {
             //disable fields if with a tag
             etDescription.setEnabled(false);
             etKeywords.setEnabled(false);
-            //info array, [0] = img, [1] = description, [2] = keywords, [3] = audio
+            //info array, [0] = img, [1] = description+keywords, [2] = audio
             String[] infoArray = message.split("%");
-            if(infoArray.length == 4){
-                etDescription.setText(infoArray[1]);
-                etKeywords.setText(infoArray[2]);
-//                try {
-//                    TimeUnit.SECONDS.sleep(2);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-                textToSpeech.speak(infoArray[2], TextToSpeech.QUEUE_FLUSH, null, null);
+            if(infoArray.length == 3){
+                String[] info = sp.getString(infoArray[1], null).split("%");
+                etDescription.setText(info[0]);
+                etKeywords.setText(info[1]);
+//                textToSpeech.speak(infoArray[2], TextToSpeech.QUEUE_FLUSH, null, null);
                 Thread speakDescription = new Thread(){
                     public void run(){
                         try {
@@ -134,18 +135,18 @@ public class TagActivity extends AppCompatActivity {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        String speech = "You just came across "+infoArray[1]+
-                                "and possible words are " + infoArray[2];
+                        String speech = "You just came across "+info[0]+
+                                ", and possible words are " + info[1];
                         textToSpeech.speak(speech, TextToSpeech.QUEUE_FLUSH, null, null);
                     }
                 };
-                if(infoArray[3].equals("na")){
-//                    speakDescription.start();
+                if(infoArray[2].equals("na")){
+                    speakDescription.start();
                 }
                 else{
                     ContextWrapper cw = new ContextWrapper(getApplicationContext());
                     File musicDir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
-                    File f = new File(musicDir, infoArray[3]+".mp3");
+                    File f = new File(musicDir, infoArray[2]+".mp3");
                     MediaPlayer mp = MediaPlayer.create(this, Uri.parse(f.getPath()));
                     mp.start();
                 }
@@ -165,16 +166,16 @@ public class TagActivity extends AppCompatActivity {
         btnPairTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String msg = "img%"+etDescription.getText()+"%"+etKeywords.getText()+"%"+(mFileName.equals("") ? "na" : mFileName);
+                String unique = UUID.randomUUID().toString();
+                editor.putString(unique, etDescription.getText()+"%"+etKeywords.getText());
+                String msg = "img%"+unique+"%"+(mFileName.equals("") ? "na" : mFileName);
                 try {
                     nfc.write(msg);
-                    Toast.makeText(TagActivity.this, "Pair Success", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(TagActivity.this, mFileName, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TagActivity.this, "Write Success", Toast.LENGTH_SHORT).show();
                     mFileName = "";
                 } catch (Exception e) {
                     Toast.makeText(TagActivity.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
 
@@ -185,7 +186,6 @@ public class TagActivity extends AppCompatActivity {
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
         File musicDir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
         mFileName = UUID.randomUUID().toString();
-        Toast.makeText(TagActivity.this, mFileName, Toast.LENGTH_SHORT).show();
         File f = new File(musicDir, mFileName+".mp3");
         return f.getPath();
     }
@@ -247,7 +247,6 @@ public class TagActivity extends AppCompatActivity {
             nfc.myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
             if(nfc.myTagInfo!= null){
                 Toast.makeText(this, nfc.myTagInfo, Toast.LENGTH_SHORT).show();
-
             }
         }
     }
