@@ -168,6 +168,7 @@ public class TagActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String unique = UUID.randomUUID().toString();
                 editor.putString(unique, etDescription.getText()+"%"+etKeywords.getText());
+                editor.commit();
                 String msg = "img%"+unique+"%"+(mFileName.equals("") ? "na" : mFileName);
                 try {
                     nfc.write(msg);
