@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         nfc.readIntent(intent);
         if(NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())){
             nfc.myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            if(nfc.myTagInfo != null && nfc.myTagInfo.split("%").length == 4){
+            if(nfc.myTagInfo != null && nfc.myTagInfo.split("%").length == 3){
                 startActivity(new Intent(MainActivity.this, TagActivity.class).putExtra("tagInfo", nfc.myTagInfo));
             }
             else{
