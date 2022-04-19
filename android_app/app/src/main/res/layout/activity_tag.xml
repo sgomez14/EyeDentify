@@ -9,10 +9,12 @@
     <LinearLayout
 
 
-        android:layout_width="350dp"
+        android:layout_width="400dp"
         android:layout_height="700dp"
+        android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="10dp"
+        android:layout_marginTop="50dp"
         android:orientation="vertical"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
@@ -53,7 +55,7 @@
         <EditText
             android:id="@+id/edtItemDescription"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_margin="5dp"
             android:layout_weight="7"
             android:ems="10"
@@ -86,7 +88,7 @@
         <EditText
             android:id="@+id/edtItemKeywords"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             android:layout_margin="5dp"
             android:layout_weight="7"
             android:ems="10"
@@ -95,6 +97,12 @@
             android:importantForAutofill="no"
             android:inputType="textMultiLine"
             android:textColorHint="#546E7A"
+            android:enabled="true"
+            android:minLines="3"
+            android:maxEms="4"
+            android:isScrollContainer="true"
+            android:scrollbars="vertical"
+            android:focusable="true"
             tools:ignore="DuplicateSpeakableTextCheck" />
 
         <Button

@@ -14,8 +14,8 @@
         <entry key="app/src/main/res/drawable/tag_btn_add_photo.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/tag_btn_add_voice_memo.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/tag_btn_pair_tag.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.31896551724137934" />
-        <entry key="app/src/main/res/layout/activity_tag.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_tag.xml" value="0.1" />
       </map>
     </option>
   </component>
