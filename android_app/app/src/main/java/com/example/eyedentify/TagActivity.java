@@ -160,7 +160,7 @@ public class TagActivity extends AppCompatActivity {
             //info array, [0] = img, [1] = description+keywords, [2] = audio
             String[] infoArray = message.split("%");
             if(infoArray.length == 3){
-                String[] info = sp.getString(infoArray[1], null).split("%");
+                String[] info = sp.getString(infoArray[1], null).split("%%%");
                 edtItemDescription.setText(info[0]);
                 edtItemKeywords.setText(info[1]);
 //                textToSpeech.speak(infoArray[2], TextToSpeech.QUEUE_FLUSH, null, null);
@@ -216,7 +216,7 @@ public class TagActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String unique = UUID.randomUUID().toString();
-                editor.putString(unique, edtItemDescription.getText()+"%"+edtItemKeywords.getText());
+                editor.putString(unique, edtItemDescription.getText()+"%%%"+edtItemKeywords.getText());
                 editor.commit();
                 String msg = "img%"+unique+"%"+(mFileName.equals("") ? "na" : mFileName);
                 startActivity(new Intent(TagActivity.this, NFCPairingActivity.class).putExtra("tagInfo", msg));
@@ -332,6 +332,7 @@ public class TagActivity extends AppCompatActivity {
 
         return result == PackageManager.PERMISSION_GRANTED && result1  == PackageManager.PERMISSION_GRANTED && result2  == PackageManager.PERMISSION_GRANTED ;
     }
+
     private void RequestPermissions() {
         // this method is used to request the
         // permission for audio recording and storage.

@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
     IntentFilter filters[];
     NfcAdapter adapter;
     boolean writeMode;
-
     private Button btnScanItem;
 
     @Override
