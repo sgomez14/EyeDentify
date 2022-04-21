@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.File;
+import java.util.Locale;
 
 public class ResultActivity extends AppCompatActivity {
     Button btnEditTag;
@@ -52,6 +53,15 @@ public class ResultActivity extends AppCompatActivity {
         IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
         tagDetected.addCategory(Intent.CATEGORY_DEFAULT);
         filters = new IntentFilter[]{tagDetected};
+        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS){
+                    textToSpeech.setLanguage(Locale.US);
+                }
+
+            }
+        });
 
         if (getIntent().hasExtra("tagInfo")) {
             String message = getIntent().getExtras().getString("tagInfo");
@@ -62,10 +72,9 @@ public class ResultActivity extends AppCompatActivity {
             //info array, [0] = img, [1] = description+keywords, [2] = audio
             String[] infoArray = message.split("%");
             if(infoArray.length == 3){
-                String[] info = sp.getString(infoArray[1], null).split("%");
+                String[] info = sp.getString(infoArray[1], null).split("%%%");
                 edtItemDescription.setText(info[0]);
                 edtItemKeywords.setText(info[1]);
-//                textToSpeech.speak(infoArray[2], TextToSpeech.QUEUE_FLUSH, null, null);
                 Thread speakDescription = new Thread(){
                     public void run(){
                         try {
@@ -107,7 +116,7 @@ public class ResultActivity extends AppCompatActivity {
         if(NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())){
             nfc.myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
             if(nfc.myTagInfo != null && nfc.myTagInfo.split("%").length == 3){
-                startActivity(new Intent(ResultActivity.this, ResultActivity.class).putExtra("tagInfo", nfc.myTagInfo));
+//                startActivity(new Intent(ResultActivity.this, ResultActivity.class).putExtra("tagInfo", nfc.myTagInfo));
             }
             else{
                 Toast.makeText(this, "Cannot Parse Information in Tag", Toast.LENGTH_SHORT).show();

@@ -219,14 +219,21 @@ public class TagActivity extends AppCompatActivity {
                 editor.putString(unique, edtItemDescription.getText()+"%%%"+edtItemKeywords.getText());
                 editor.commit();
                 String msg = "img%"+unique+"%"+(mFileName.equals("") ? "na" : mFileName);
-                startActivity(new Intent(TagActivity.this, NFCPairingActivity.class).putExtra("tagInfo", msg));
-//                try {
-//                    nfc.write(msg);
-//                    Toast.makeText(TagActivity.this, "Write Success", Toast.LENGTH_SHORT).show();
-//                    mFileName = "";
-//                } catch (Exception e) {
-//                    Toast.makeText(TagActivity.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
-//                }
+
+                //uncomment the line below to go to listening and tagging activity
+                //=================================================================
+//                startActivity(new Intent(TagActivity.this, NFCPairingActivity.class).putExtra("tagInfo", msg));
+                //=================================================================
+                //uncomment the lines below to write to tag directly
+                //=================================================================
+                try {
+                    nfc.write(msg);
+                    Toast.makeText(TagActivity.this, "Write Success", Toast.LENGTH_SHORT).show();
+                    mFileName = "";
+                } catch (Exception e) {
+                    Toast.makeText(TagActivity.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+                //=================================================================
             }
         });
 
