@@ -7,7 +7,6 @@ import androidx.core.content.ContextCompat;
 
 import java.util.*;
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.ContentValues;
@@ -21,7 +20,6 @@ import android.database.Cursor;
 import android.graphics.Matrix;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
-import android.media.audiofx.AudioEffect;
 import android.net.Uri;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -42,7 +40,6 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
 public class TagActivity extends AppCompatActivity {
 
@@ -76,7 +73,7 @@ public class TagActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tag);
         sp = getSharedPreferences("eyedentify", Context.MODE_PRIVATE);
         editor = sp.edit();
-        btnPairTag = (Button) findViewById(R.id.btnPairTag);
+        btnPairTag = (Button) findViewById(R.id.btnEditTag);
         btnAddVoiceMemo = findViewById(R.id.btnAddVoiceMemo);
         btnAddPhoto = findViewById(R.id.btnAddPhoto);
         edtItemDescription = (EditText) findViewById(R.id.edtItemDescription);
@@ -222,13 +219,14 @@ public class TagActivity extends AppCompatActivity {
                 editor.putString(unique, edtItemDescription.getText()+"%"+edtItemKeywords.getText());
                 editor.commit();
                 String msg = "img%"+unique+"%"+(mFileName.equals("") ? "na" : mFileName);
-                try {
-                    nfc.write(msg);
-                    Toast.makeText(TagActivity.this, "Write Success", Toast.LENGTH_SHORT).show();
-                    mFileName = "";
-                } catch (Exception e) {
-                    Toast.makeText(TagActivity.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
+                startActivity(new Intent(TagActivity.this, NFCPairingActivity.class).putExtra("tagInfo", msg));
+//                try {
+//                    nfc.write(msg);
+//                    Toast.makeText(TagActivity.this, "Write Success", Toast.LENGTH_SHORT).show();
+//                    mFileName = "";
+//                } catch (Exception e) {
+//                    Toast.makeText(TagActivity.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+//                }
             }
         });
 
@@ -299,7 +297,7 @@ public class TagActivity extends AppCompatActivity {
         if(NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())){
             nfc.myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
             if(nfc.myTagInfo!= null){
-                Toast.makeText(this, nfc.myTagInfo, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Please go Back to Previous Page to Scan a Tag", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -382,6 +380,9 @@ public class TagActivity extends AppCompatActivity {
 
                 // pass image file to CloudSight class
                 new CloudSight(TagActivity.this, mlkitResult, imageFile);
+
+                Intent loadResults = new Intent(this, ImageRecognitionPendingActivity.class);
+                startActivity(loadResults);
 
             }
             catch (Exception e) {

@@ -41,8 +41,7 @@ public class CloudSight {
             @Override
             public void imageRecognized(CloudSightResponse response) {
                 Log.d("Cloudsight debug", response.getName());
-                MainActivity mainActivity = new MainActivity();
-                mainActivity.newActivityWithImageResults(context, response.getName(), mlkitResult, file);
+                Utilities.newActivityWithImageResults(context, response.getName(), mlkitResult, file);
             }
 
             // 7) Failure case
