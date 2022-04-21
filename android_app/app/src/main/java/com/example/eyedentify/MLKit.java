@@ -16,16 +16,16 @@ public class MLKit {
 
 
     // 1) Call Google ML Kit TextRecognizer: https://developers.google.com/android/reference/com/google/mlkit/vision/text/TextRecognizer
-    public String getTextFromImage(Bitmap bitmap, Context context) {
+    public static String getTextFromImage(Bitmap bitmap, Context context) {
 
-        String textFromImage = "";
+        String textFromImage;
 
         // 2) Create an instance of TextRecognizer
         TextRecognizer textRecognizer = new TextRecognizer.Builder(context).build();
 
         // 3) Confirm TextRecognizer is operational, otherwise log error
         if (!textRecognizer.isOperational()) {
-            Log.d("Mandy", "Error Occured");
+            Log.d("EyeDentify", "Error Occured");
 
             textFromImage = TextRecognizerError;
         }
