@@ -136,6 +136,9 @@ public class MainActivity extends AppCompatActivity {
                 // pass image file to CloudSight class
                 new CloudSight(MainActivity.this, mlkitResult, imageFile);
 
+                Intent loadResults = new Intent(this, ImageRecognitionPendingActivity.class);
+                startActivity(loadResults);
+
             }
             catch (Exception e) {
                 Log.d("EyeDentify debug", e.getMessage());
