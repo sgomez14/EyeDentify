@@ -224,7 +224,7 @@ public class TagActivity extends AppCompatActivity {
                 //=================================================================
 //                startActivity(new Intent(TagActivity.this, NFCPairingActivity.class).putExtra("tagInfo", msg));
                 //=================================================================
-                //uncomment the line below to write to tag directly
+                //uncomment the lines below to write to tag directly
                 //=================================================================
                 try {
                     nfc.write(msg);
