@@ -8,6 +8,11 @@ import java.io.File;
 
 public class Utilities {
 
+    /*
+    newActivityWithImageResults is called from CloudSight imageRecognized call back function
+    This makes sure that TagActivity gets initiated immediately after cloudsight responds,
+    guaranteeing real time response.
+    */
     public static void newActivityWithImageResults(Context context, String cloudSightResult, String mlkitResult, File imageFile){
         Intent resultsActivity = new Intent(context, TagActivity.class);
         // indicate the source of the intent

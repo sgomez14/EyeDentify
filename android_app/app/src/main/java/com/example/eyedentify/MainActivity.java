@@ -208,23 +208,6 @@ public class MainActivity extends AppCompatActivity {
         adapter.enableForegroundDispatch(this, pendingIntent, filters, null);
     }
 
-    /*
-    newActivityWithImageResults is called from CloudSight imageRecognized call back function
-    This makes sure that TagActivity gets initiated immediately after cloudsight responds,
-    guaranteeing real time response.
-    */
-    public void newActivityWithImageResults(Context context, String cloudSightResult, String mlkitResult, File imageFile){
-        Intent resultsActivity = new Intent(context, TagActivity.class);
-        // indicate the source of the intent
-        resultsActivity.putExtra("cameraResults", "image results");
-        Bundle resultsBundle = new Bundle();
-        resultsBundle.putString("cloudSightResult", cloudSightResult);
-        resultsBundle.putString("mlkitResult", mlkitResult);
-        resultsBundle.putString("imageFile", imageFile.toString());
-        resultsActivity.putExtras(resultsBundle);
-        context.startActivity(resultsActivity);
-    }
-
     public static Bitmap rotateBitmap90 (Bitmap imageBitmap){
         Matrix matrixForRotation = new Matrix();
         matrixForRotation.postRotate(90); // assuming rotating in clockwise direction
