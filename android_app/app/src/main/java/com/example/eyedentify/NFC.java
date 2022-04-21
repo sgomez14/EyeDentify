@@ -74,7 +74,7 @@ public class NFC {
     }
 
     public void write(String text) throws Exception{
-        NdefRecord[] records = {createRecord(text), NdefRecord.createApplicationRecord("com.example.eyedentify"), };
+        NdefRecord[] records = {createRecord(text), NdefRecord.createApplicationRecord("com.example.eyedentify") };
         NdefMessage m = new NdefMessage(records);
 
         Ndef ndef = Ndef.get(myTag);
