@@ -332,6 +332,7 @@ public class TagActivity extends AppCompatActivity {
 
         return result == PackageManager.PERMISSION_GRANTED && result1  == PackageManager.PERMISSION_GRANTED && result2  == PackageManager.PERMISSION_GRANTED ;
     }
+
     private void RequestPermissions() {
         // this method is used to request the
         // permission for audio recording and storage.
