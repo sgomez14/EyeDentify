@@ -95,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
                         openCamera();
                     }
                 } else{
-
                     openCamera();
                 }
             }
@@ -229,6 +228,5 @@ public class MainActivity extends AppCompatActivity {
         Bitmap rotatedBitmap = Bitmap.createBitmap(imageBitmap, 0,0, imageBitmap.getWidth(),
                 imageBitmap.getHeight(), matrixForRotation, true);
         return rotatedBitmap;
-
     }
 }

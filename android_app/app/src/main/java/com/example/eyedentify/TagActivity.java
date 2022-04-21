@@ -1,5 +1,6 @@
 package com.example.eyedentify;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -9,12 +10,15 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Matrix;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.media.audiofx.AudioEffect;
@@ -25,6 +29,7 @@ import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -41,7 +46,14 @@ import java.util.concurrent.TimeUnit;
 
 public class TagActivity extends AppCompatActivity {
 
-    private Button btnPairTag, btnAddVoiceMemo;
+    private static final int PERMISSION_CODE = 1000;
+    private static final int REQUEST_CAMERA_CODE = 100;
+    private static final int IMAGE_CAPTURE_CODE = 101;
+    Uri image_uri;
+    private String cloudSightResult;
+    private String mlkitResult;
+
+    private Button btnPairTag, btnAddVoiceMemo, btnAddPhoto;
     private EditText edtItemDescription, edtItemKeywords;
     private ImageView imgScannedItem;
     private NFC nfc;
@@ -66,7 +78,7 @@ public class TagActivity extends AppCompatActivity {
         editor = sp.edit();
         btnPairTag = (Button) findViewById(R.id.btnPairTag);
         btnAddVoiceMemo = findViewById(R.id.btnAddVoiceMemo);
-
+        btnAddPhoto = findViewById(R.id.btnAddPhoto);
         edtItemDescription = (EditText) findViewById(R.id.edtItemDescription);
         edtItemKeywords = (EditText) findViewById(R.id.edtItemKeywords);
         imgScannedItem = (ImageView) findViewById(R.id.imgScannedItem);
@@ -90,6 +102,7 @@ public class TagActivity extends AppCompatActivity {
 //        mr.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
 //        mr.setOutputFile(Environment.getExternalStorageDirectory() + File.separator
 //                + Environment.DIRECTORY_DCIM + File.separator + "FILE_NAME.mp3");
+
         btnAddVoiceMemo.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -107,6 +120,26 @@ public class TagActivity extends AppCompatActivity {
                     return true;
                 }
                 return false;
+            }
+        });
+
+        btnAddPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                    if(checkSelfPermission(Manifest.permission.CAMERA) ==
+                            PackageManager.PERMISSION_DENIED ||
+                            checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+                                    PackageManager.PERMISSION_DENIED
+                    ){
+                        String[] permission = {Manifest.permission.CAMERA , Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                        requestPermissions(permission, PERMISSION_CODE);
+                    } else{
+                        openCamera();
+                    }
+                } else{
+                    openCamera();
+                }
             }
         });
         textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
@@ -167,7 +200,7 @@ public class TagActivity extends AppCompatActivity {
             String mlkitResult = imageResults.getString("mlkitResult");
             String imageFile = imageResults.getString("imageFile");
             Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile);
-            imageBitmap = MainActivity.rotateBitmap90(imageBitmap); // rotate the bitmap 90 degrees
+            imageBitmap = TagActivity.rotateBitmap90(imageBitmap); // rotate the bitmap 90 degrees
 
             edtItemDescription.setText(cloudSightResult); // CloudSight provides descriptive sentence
             edtItemKeywords.setText(mlkitResult); // MLKit provides words detect on the object
@@ -314,5 +347,90 @@ public class TagActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case PERMISSION_CODE: {
+                if (grantResults.length > 0 && grantResults[0] ==
+                        PackageManager.PERMISSION_GRANTED) {
+                    openCamera();
+                } else {
+                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
+    // 4) After photo is taken, come back to the app
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Confirm requestCode and resultCode are valid
+        if (requestCode == IMAGE_CAPTURE_CODE && resultCode == RESULT_OK) {
+            try{
+                // convert image to File image recognition sdks
+                File imageFile = new File(getPath(image_uri));
+
+                // convert imageFile to bitmap for ML kit
+                Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile.toString());
+                imageBitmap = rotateBitmap90(imageBitmap);
+                // pass image bitmap to MLKit class
+                mlkitResult = MLKit.getTextFromImage(imageBitmap, this); // pass image to MLKit
+
+                // pass image file to CloudSight class
+                new CloudSight(TagActivity.this, mlkitResult, imageFile);
+
+            }
+            catch (Exception e) {
+                Log.d("EyeDentify debug", e.getMessage());
+            }
+        }
+    }
+
+    public String getPath(Uri uri) {
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+        if (cursor == null) return null;
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String s = cursor.getString(column_index);
+        cursor.close();
+        return s;
+
+    }
+
+    private void openCamera() {
+        ContentValues values = new ContentValues();
+
+        values.put(MediaStore.Images.Media.TITLE, "New Picture");
+        values.put(MediaStore.Images.Media.DESCRIPTION, "From The Camera");
+        image_uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri);
+        startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE);
+    }
+
+    public void newActivityWithImageResults(Context context, String cloudSightResult, String mlkitResult, File imageFile){
+        Intent resultsActivity = new Intent(context, TagActivity.class);
+        // indicate the source of the intent
+        resultsActivity.putExtra("cameraResults", "image results");
+        Bundle resultsBundle = new Bundle();
+        resultsBundle.putString("cloudSightResult", cloudSightResult);
+        resultsBundle.putString("mlkitResult", mlkitResult);
+        resultsBundle.putString("imageFile", imageFile.toString());
+        resultsActivity.putExtras(resultsBundle);
+        context.startActivity(resultsActivity);
+    }
+
+    public static Bitmap rotateBitmap90 (Bitmap imageBitmap){
+        Matrix matrixForRotation = new Matrix();
+        matrixForRotation.postRotate(90); // assuming rotating in clockwise direction
+        Bitmap rotatedBitmap = Bitmap.createBitmap(imageBitmap, 0,0, imageBitmap.getWidth(),
+                imageBitmap.getHeight(), matrixForRotation, true);
+        return rotatedBitmap;
     }
 }
