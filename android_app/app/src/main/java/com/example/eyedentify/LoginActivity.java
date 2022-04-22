@@ -31,6 +31,14 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //check if user already logged in before displaying login activity
+        mAuth = FirebaseAuth.getInstance();
+
+        if(mAuth.getCurrentUser() != null){
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
+
         setContentView(R.layout.activity_login2);
 
 
@@ -40,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
         btnCreate = findViewById(R.id.btnCreate);
         btnGuest = findViewById(R.id.btnGuest);
 
-        mAuth = FirebaseAuth.getInstance();
 
 
 
