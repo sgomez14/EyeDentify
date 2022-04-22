@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import java.io.FileOutputStream;
 import java.util.*;
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.ContentValues;
@@ -46,6 +48,7 @@ public class TagActivity extends AppCompatActivity {
     private static final int PERMISSION_CODE = 1000;
     private static final int REQUEST_CAMERA_CODE = 100;
     private static final int IMAGE_CAPTURE_CODE = 101;
+
     Uri image_uri;
     private String cloudSightResult;
     private String mlkitResult;
@@ -60,13 +63,14 @@ public class TagActivity extends AppCompatActivity {
     boolean writeMode;
     TTS tts ;
     private TextToSpeech textToSpeech;
-    private String mFileName;
+    private String mFileName, iFileName;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private MediaPlayer mPlayer;
     MediaRecorder mRecorder = new MediaRecorder();
 
 
+    @SuppressLint("WrongThread")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +86,7 @@ public class TagActivity extends AppCompatActivity {
 
         boolean gotHereWithTag;
         mFileName = "";
+        iFileName = "";
         nfc = NFC.makeNFC(this);
         adapter = nfc.adapter;
         nfc.readIntent(getIntent());
@@ -176,6 +181,17 @@ public class TagActivity extends AppCompatActivity {
                         textToSpeech.speak(speech, TextToSpeech.QUEUE_FLUSH, null, null);
                     }
                 };
+                if(infoArray[0].equals("na")){
+                    //TODO: default image
+                }
+                else{
+                    ContextWrapper cw = new ContextWrapper(getApplicationContext());
+                    File imgDir = cw.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+//                    File f = new File(imgDir, infoArray[0]+".png");
+                    String imgFileName = imgDir+"/"+infoArray[0]+".png";
+                    Toast.makeText(this, imgFileName, Toast.LENGTH_SHORT).show();
+                    imgScannedItem.setImageBitmap(BitmapFactory.decodeFile(imgFileName));
+                }
                 if(infoArray[2].equals("na")){
                     speakDescription.start();
                 }
@@ -202,6 +218,12 @@ public class TagActivity extends AppCompatActivity {
             edtItemDescription.setText(cloudSightResult); // CloudSight provides descriptive sentence
             edtItemKeywords.setText(mlkitResult); // MLKit provides words detect on the object
             imgScannedItem.setImageBitmap(imageBitmap);
+            try (FileOutputStream out = new FileOutputStream(getImagePath())) {
+                imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
+                // PNG is a lossless format, the compression factor (100) is ignored
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         else { // arrived at this activity via the "Tag Item" button
             gotHereWithTag = false;
@@ -218,7 +240,7 @@ public class TagActivity extends AppCompatActivity {
                 String unique = UUID.randomUUID().toString();
                 editor.putString(unique, edtItemDescription.getText()+"%%%"+edtItemKeywords.getText());
                 editor.commit();
-                String msg = "img%"+unique+"%"+(mFileName.equals("") ? "na" : mFileName);
+                String msg = (iFileName.equals("") ? "na" : iFileName) + "%" + unique+ "%" + (mFileName.equals("") ? "na" : mFileName);
 
                 //uncomment the line below to go to listening and tagging activity
                 //=================================================================
@@ -245,6 +267,14 @@ public class TagActivity extends AppCompatActivity {
         File musicDir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
         mFileName = UUID.randomUUID().toString();
         File f = new File(musicDir, mFileName+".mp3");
+        return f.getPath();
+    }
+
+    private String getImagePath(){
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        File imgDir = cw.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        iFileName = UUID.randomUUID().toString();
+        File f = new File(imgDir, iFileName+".png");
         return f.getPath();
     }
 

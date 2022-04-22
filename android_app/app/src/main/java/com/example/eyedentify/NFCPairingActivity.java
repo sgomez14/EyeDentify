@@ -44,22 +44,16 @@ public class NFCPairingActivity extends AppCompatActivity {
 
     @Override
     protected void onNewIntent(Intent intent){
-        Log.d("Mandy", "onNewIntent ");
         super.onNewIntent(intent);
         setIntent(intent);
         nfc.readIntent(intent);
-        Log.d("Mandy", "readIntent ");
         if(NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())){
             nfc.myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            Log.d("Mandy", "nfc.myTag ");
             if(nfc.myTag != null){
-                Log.d("Mandy", "nfc.myTagInfo ");
 //                startActivity(new Intent(ResultActivity.this, ResultActivity.class).putExtra("tagInfo", nfc.myTagInfo));
                 try {
-                    Log.d("Mandy", "try");
                     Toast.makeText(this, uniqueIdToSPStorage, Toast.LENGTH_LONG).show();
                     nfc.write(uniqueIdToSPStorage);
-                    Log.d("Mandy", "nfc.write(uniqueIdToSPStorage);");
                     startActivity(new Intent(NFCPairingActivity.this, ResultActivity.class).putExtra("tagInfo", uniqueIdToSPStorage));
                 } catch (Exception exception) {
                     exception.printStackTrace();

@@ -8,6 +8,7 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
@@ -17,6 +18,7 @@ import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -32,6 +34,7 @@ public class ResultActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private EditText edtItemDescription, edtItemKeywords;
     private TextToSpeech textToSpeech;
+    private ImageView imgScannedItem;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +43,7 @@ public class ResultActivity extends AppCompatActivity {
         btnEditTag = findViewById(R.id.btnEditTag);
         edtItemDescription = (EditText) findViewById(R.id.edtItemDescription);
         edtItemKeywords = (EditText) findViewById(R.id.edtItemKeywords);
+        imgScannedItem = findViewById(R.id.imgScannedItem);
         btnEditTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,6 +90,17 @@ public class ResultActivity extends AppCompatActivity {
                         textToSpeech.speak(speech, TextToSpeech.QUEUE_FLUSH, null, null);
                     }
                 };
+                if(infoArray[0].equals("na")){
+                    //TODO: default image
+                }
+                else{
+                    ContextWrapper cw = new ContextWrapper(getApplicationContext());
+                    File imgDir = cw.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+//                    File f = new File(imgDir, infoArray[0]+".png");
+                    String imgFileName = imgDir+"/"+infoArray[0]+".png";
+                    Toast.makeText(this, imgFileName, Toast.LENGTH_SHORT).show();
+                    imgScannedItem.setImageBitmap(BitmapFactory.decodeFile(imgFileName));
+                }
                 if(infoArray[2].equals("na")){
                     speakDescription.start();
                 }
