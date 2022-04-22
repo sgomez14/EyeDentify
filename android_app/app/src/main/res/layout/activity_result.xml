@@ -37,15 +37,16 @@
         <!--            android:text="@string/item_description"-->
         <!--            android:textSize="20sp" />-->
 
-        <EditText
+        <TextView
             android:id="@+id/edtItemDescription"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="5dp"
             android:layout_weight="7"
             android:ems="10"
+            android:textSize="20sp"
+            android:textColor="@color/black"
             android:gravity="start|top"
-            android:hint="@string/textContentDescription"
             android:importantForAutofill="no"
             android:inputType="textMultiLine"
             android:textColorHint="#546E7A"
@@ -70,17 +71,18 @@
         <!--            android:text="@string/keywords"-->
         <!--            android:textSize="20sp" />-->
 
-        <EditText
+        <TextView
             android:id="@+id/edtItemKeywords"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_margin="5dp"
             android:layout_weight="7"
             android:ems="10"
+            android:textSize="20sp"
+            android:textColor="@color/black"
             android:enabled="true"
             android:focusable="true"
             android:gravity="start|top"
-            android:hint="@string/keywordContentDescription"
             android:importantForAutofill="no"
             android:inputType="textMultiLine"
             android:isScrollContainer="true"
