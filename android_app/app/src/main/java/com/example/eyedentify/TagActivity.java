@@ -222,17 +222,17 @@ public class TagActivity extends AppCompatActivity {
 
                 //uncomment the line below to go to listening and tagging activity
                 //=================================================================
-//                startActivity(new Intent(TagActivity.this, NFCPairingActivity.class).putExtra("tagInfo", msg));
+                startActivity(new Intent(TagActivity.this, NFCPairingActivity.class).putExtra("tagInfo", msg));
                 //=================================================================
                 //uncomment the lines below to write to tag directly
                 //=================================================================
-                try {
-                    nfc.write(msg);
-                    Toast.makeText(TagActivity.this, "Write Success", Toast.LENGTH_SHORT).show();
-                    mFileName = "";
-                } catch (Exception e) {
-                    Toast.makeText(TagActivity.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
+//                try {
+//                    nfc.write(msg);
+//                    Toast.makeText(TagActivity.this, "Write Success", Toast.LENGTH_SHORT).show();
+//                    mFileName = "";
+//                } catch (Exception e) {
+//                    Toast.makeText(TagActivity.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+//                }
                 //=================================================================
             }
         });

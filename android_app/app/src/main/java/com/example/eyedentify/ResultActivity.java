@@ -59,7 +59,6 @@ public class ResultActivity extends AppCompatActivity {
                 if (status == TextToSpeech.SUCCESS){
                     textToSpeech.setLanguage(Locale.US);
                 }
-
             }
         });
 
