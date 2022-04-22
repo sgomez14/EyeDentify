@@ -1,43 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
     android:paddingTop="20dp"
     android:paddingBottom="20dp"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="274dp"
-        android:layout_height="257dp"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/eyedentify" />
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:elevation="10dp"
+        app:cardCornerRadius="25dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="275dp"
+            android:layout_height="275dp"
+            android:layout_centerHorizontal="false"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/eyedentify_logo_black_gold" />
+    </androidx.cardview.widget.CardView>
 
 
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleLarge"
-        android:layout_width="149dp"
-        android:layout_height="176dp"
-        android:layout_below="@+id/imageView"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="70dp"
-        android:layout_marginBottom="262dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
         android:progressDrawable="@drawable/circular_progress_bar" />
 
     <TextView
         android:id="@+id/loadLabel"
-        android:layout_width="336dp"
-        android:layout_height="129dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="63dp"
-        android:text="LOADING IMAGE"
-        android:textAlignment="center"
-        android:textSize="34sp" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
 
-</RelativeLayout>
+        android:layout_weight="1"
+        android:text="@string/image_results_loading"
+        android:textAlignment="center"
+        android:textSize="60sp" />
+
+</LinearLayout>
