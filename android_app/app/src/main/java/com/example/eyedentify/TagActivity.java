@@ -166,8 +166,12 @@ public class TagActivity extends AppCompatActivity {
             String[] infoArray = message.split("%");
             if(infoArray.length == 3){
                 String[] info = sp.getString(infoArray[1], null).split("%%%");
-                edtItemDescription.setText(info[0]);
-                edtItemKeywords.setText(info[1]);
+                if(info.length == 2){
+                    edtItemDescription.setText(info[0]);
+                    edtItemKeywords.setText(info[1]);
+                }else if(info.length == 1){
+                    edtItemDescription.setText(info[0]);
+                }
 //                textToSpeech.speak(infoArray[2], TextToSpeech.QUEUE_FLUSH, null, null);
                 Thread speakDescription = new Thread(){
                     public void run(){
