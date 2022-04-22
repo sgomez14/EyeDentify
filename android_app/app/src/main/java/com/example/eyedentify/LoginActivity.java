@@ -26,10 +26,13 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnGuest;
     private FirebaseAuth mAuth;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+
+        setContentView(R.layout.activity_login2);
+
 
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
@@ -38,6 +41,8 @@ public class LoginActivity extends AppCompatActivity {
         btnGuest = findViewById(R.id.btnGuest);
 
         mAuth = FirebaseAuth.getInstance();
+
+
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
