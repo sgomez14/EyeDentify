@@ -86,4 +86,9 @@ public class NFCPairingActivity extends AppCompatActivity {
         writeMode = true;
         adapter.enableForegroundDispatch(this, pendingIntent, filters, null);
     }
+
+    @Override
+    public void onBackPressed() {
+        //does nothing on back press
+    }
 }

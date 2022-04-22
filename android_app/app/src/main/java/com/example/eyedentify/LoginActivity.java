@@ -3,6 +3,7 @@ package com.example.eyedentify;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -53,9 +54,6 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         btnCreate = findViewById(R.id.btnCreate);
         //btnGuest = findViewById(R.id.btnGuest);
-
-
-
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,9 +183,21 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void launch_main_activity(){
+    private void go_back_to_main_activity(){
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        launch_main_activity();
+    }
+
+    public void launch_main_activity(){
         Intent main_activity = new Intent(getApplicationContext(), MainActivity.class);
         //put user data in bundle here, if we do anything with user data
         startActivity(main_activity);
+        finish();
     }
 }

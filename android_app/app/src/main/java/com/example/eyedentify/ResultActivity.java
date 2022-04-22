@@ -180,11 +180,18 @@ public class ResultActivity extends AppCompatActivity {
         adapter.enableForegroundDispatch(this, pendingIntent, filters, null);
     }
 
-    private boolean spContainsAll(String[] arr){
-        if(!sp.contains(arr[0]) && !arr[0].equals("na")) return false;
-        if(!sp.contains(arr[1])) return false;
-        if(!sp.contains(arr[2]) && !arr[2].equals("na")) return false;
-        return true;
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        launch_main_activity();
+    }
+
+    public void launch_main_activity(){
+        Intent main_activity = new Intent(getApplicationContext(), MainActivity.class);
+        //put user data in bundle here, if we do anything with user data
+        startActivity(main_activity);
+        finish();
     }
 
 }

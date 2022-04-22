@@ -1,48 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
-
-    <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="729dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="45dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="20dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
         <Button
             android:id="@+id/btnScanItem"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/main_btn_scan_item"
+            android:background="@drawable/purplestripe"
             android:isScrollContainer="false"
             android:text="@string/scan_item"
             android:textColor="@color/black"
             android:textSize="34sp"
-            android:layout_margin="5dp"
-            app:icon="@android:drawable/ic_menu_camera"
-            app:iconGravity="textTop"
-            app:iconSize="60dp" />
+            android:layout_margin="5dp" />
 
         <Button
             android:id="@+id/btnTagItem"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/main_btn_tag_item"
+            android:background="@drawable/yellowdiamond"
             android:text="@string/tag_item"
             android:textSize="34sp"
             android:layout_margin="5dp"
             app:iconGravity="top" />
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
