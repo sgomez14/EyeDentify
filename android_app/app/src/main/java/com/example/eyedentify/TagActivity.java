@@ -241,6 +241,10 @@ public class TagActivity extends AppCompatActivity {
         btnPairTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(edtItemDescription.getText().toString().isEmpty() && mFileName.equals("")){
+                    Toast.makeText(TagActivity.this, "Please fill out item description or voice memo to pair a tag.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 String unique = UUID.randomUUID().toString();
                 editor.putString(unique, edtItemDescription.getText()+"%%%"+edtItemKeywords.getText());
                 editor.commit();
