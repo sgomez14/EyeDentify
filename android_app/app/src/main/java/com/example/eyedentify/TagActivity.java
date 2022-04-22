@@ -251,6 +251,9 @@ public class TagActivity extends AppCompatActivity {
                 editor.commit();
                 //uncomment the line below to go to listening and tagging activity
                 //=================================================================
+                editor.remove("audioPath");
+                editor.remove("imgPath");
+                editor.commit();
                 startActivity(new Intent(TagActivity.this, NFCPairingActivity.class).putExtra("tagInfo", u));
                 //=================================================================
                 //uncomment the lines below to write to tag directly
