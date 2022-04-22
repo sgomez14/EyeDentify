@@ -84,9 +84,12 @@ public class TagActivity extends AppCompatActivity {
         edtItemKeywords = (EditText) findViewById(R.id.edtItemKeywords);
         imgScannedItem = (ImageView) findViewById(R.id.imgScannedItem);
 
-        boolean gotHereWithTag;
         mFileName = "";
         iFileName = "";
+        if(sp.contains("audioPath"))
+            mFileName = sp.getString("audioPath", null);
+        if(sp.contains("imgPath"))
+            iFileName = sp.getString("imgPath", null);
         nfc = NFC.makeNFC(this);
         adapter = nfc.adapter;
         nfc.readIntent(getIntent());
@@ -115,11 +118,16 @@ public class TagActivity extends AppCompatActivity {
                 }
                 if(event.getAction() == MotionEvent.ACTION_UP){
                     // Stop recording and save file
-                    mRecorder.stop();
-                    mRecorder.release();
-                    mRecorder = null;
-                    Toast.makeText(TagActivity.this, "Recording Complete", Toast.LENGTH_SHORT).show();
-                    return true;
+                    try{
+                        mRecorder.stop();
+                        mRecorder.release();
+                        mRecorder = null;
+                        Toast.makeText(TagActivity.this, "Recording Complete", Toast.LENGTH_SHORT).show();
+                        return true;
+                    } catch (Exception e){
+                        Toast.makeText(TagActivity.this, "Recorder Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
                 }
                 return false;
             }
@@ -155,13 +163,9 @@ public class TagActivity extends AppCompatActivity {
         });
 
         //checking if arrived at this page with tag or with button
-        if (getIntent().hasExtra("tagInfo")) {
-            String message = getIntent().getExtras().getString("tagInfo");
+        if (getIntent().hasExtra("tagInfo") && sp.contains(getIntent().getExtras().getString("tagInfo"))) {
+            String message = sp.getString(getIntent().getExtras().getString("tagInfo"), null);
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-            gotHereWithTag = true;
-            //disable fields if with a tag
-            edtItemDescription.setEnabled(false);
-            edtItemKeywords.setEnabled(false);
             //info array, [0] = img, [1] = description+keywords, [2] = audio
             String[] infoArray = message.split("%");
             if(infoArray.length == 3){
@@ -196,15 +200,8 @@ public class TagActivity extends AppCompatActivity {
                     Toast.makeText(this, imgFileName, Toast.LENGTH_SHORT).show();
                     imgScannedItem.setImageBitmap(BitmapFactory.decodeFile(imgFileName));
                 }
-                if(infoArray[2].equals("na")){
-                    speakDescription.start();
-                }
-                else{
-                    ContextWrapper cw = new ContextWrapper(getApplicationContext());
-                    File musicDir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
-                    File f = new File(musicDir, infoArray[2]+".mp3");
-                    MediaPlayer mp = MediaPlayer.create(this, Uri.parse(f.getPath()));
-                    mp.start();
+                if(!infoArray[2].equals("na")){
+                    mFileName = infoArray[2];
                 }
             }
             else{
@@ -226,14 +223,8 @@ public class TagActivity extends AppCompatActivity {
                 imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
                 // PNG is a lossless format, the compression factor (100) is ignored
             } catch (IOException e) {
-                e.printStackTrace();
+                Toast.makeText(this, "File Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        }
-        else { // arrived at this activity via the "Tag Item" button
-            gotHereWithTag = false;
-            //enable fields if with a button
-            edtItemDescription.setEnabled(true);
-            edtItemKeywords.setEnabled(true);
         }
 
 
@@ -249,10 +240,15 @@ public class TagActivity extends AppCompatActivity {
                 editor.putString(unique, edtItemDescription.getText()+"%%%"+edtItemKeywords.getText());
                 editor.commit();
                 String msg = (iFileName.equals("") ? "na" : iFileName) + "%" + unique+ "%" + (mFileName.equals("") ? "na" : mFileName);
-
+                String u = UUID.randomUUID().toString();
+                editor.putString(u, msg);
+                editor.commit();
                 //uncomment the line below to go to listening and tagging activity
                 //=================================================================
-                startActivity(new Intent(TagActivity.this, NFCPairingActivity.class).putExtra("tagInfo", msg));
+                editor.remove("audioPath");
+                editor.remove("imgPath");
+                editor.commit();
+                startActivity(new Intent(TagActivity.this, NFCPairingActivity.class).putExtra("tagInfo", u));
                 //=================================================================
                 //uncomment the lines below to write to tag directly
                 //=================================================================
@@ -269,11 +265,12 @@ public class TagActivity extends AppCompatActivity {
 
     }
 
-
     private String getRecordingPath(){
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
         File musicDir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
         mFileName = UUID.randomUUID().toString();
+        editor.putString("audioPath", mFileName);
+        editor.commit();
         File f = new File(musicDir, mFileName+".mp3");
         return f.getPath();
     }
@@ -282,6 +279,8 @@ public class TagActivity extends AppCompatActivity {
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
         File imgDir = cw.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         iFileName = UUID.randomUUID().toString();
+        editor.putString("imgPath", iFileName);
+        editor.commit();
         File f = new File(imgDir, iFileName+".png");
         return f.getPath();
     }
@@ -469,4 +468,19 @@ public class TagActivity extends AppCompatActivity {
                 imageBitmap.getHeight(), matrixForRotation, true);
         return rotatedBitmap;
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        launch_main_activity();
+    }
+
+    public void launch_main_activity() {
+        Intent main_activity = new Intent(getApplicationContext(), MainActivity.class);
+        //put user data in bundle here, if we do anything with user data
+        startActivity(main_activity);
+        finish();
+    }
+
 }

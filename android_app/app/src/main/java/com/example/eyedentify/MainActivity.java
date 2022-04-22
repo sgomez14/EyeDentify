@@ -11,6 +11,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CAMERA_CODE = 100;
     private static final int IMAGE_CAPTURE_CODE = 101;
     Uri image_uri;
+    private SharedPreferences sp;
 
     // Strings to save results from image recognition algorithms
     private String cloudSightResult;
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        sp = getSharedPreferences("eyedentify", Context.MODE_PRIVATE);
         // 1) Request camera access permission
         if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{
@@ -178,11 +180,18 @@ public class MainActivity extends AppCompatActivity {
         nfc.readIntent(intent);
         if(NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())){
             nfc.myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            if(nfc.myTagInfo != null && nfc.myTagInfo.split("%").length == 3){
+            if(nfc.myTagInfo != null && sp.contains(nfc.myTagInfo) && sp.getString(nfc.myTagInfo, null).split("%").length == 3){
+
                 startActivity(new Intent(MainActivity.this, ResultActivity.class).putExtra("tagInfo", nfc.myTagInfo));
             }
-            else{
-                Toast.makeText(this, "Cannot Parse Information in Tag", Toast.LENGTH_SHORT).show();
+            else {
+//                assert nfc.myTagInfo != null;
+//                if(nfc.myTagInfo == null){
+//                    Toast.makeText(this, "Empty Tag", Toast.LENGTH_SHORT).show();
+//                }
+//                else{
+                    Toast.makeText(this, "Cannot Read Information in Tag", Toast.LENGTH_SHORT).show();
+//                }
             }
         }
     }
@@ -216,4 +225,10 @@ public class MainActivity extends AppCompatActivity {
                 imageBitmap.getHeight(), matrixForRotation, true);
         return rotatedBitmap;
     }
+    @Override
+    public void onBackPressed() {
+        // pressing back on main_activity closes app
+        finish();
+    }
+
 }

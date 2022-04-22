@@ -19,12 +19,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.util.Locale;
 
 public class ResultActivity extends AppCompatActivity {
+
     Button btnEditTag;
     private NFC nfc;
     PendingIntent pendingIntent;
@@ -32,22 +34,26 @@ public class ResultActivity extends AppCompatActivity {
     NfcAdapter adapter;
     boolean writeMode;
     private SharedPreferences sp;
-    private EditText edtItemDescription, edtItemKeywords;
+    private SharedPreferences.Editor editor;
+    private TextView edtItemDescription, edtItemKeywords;
     private TextToSpeech textToSpeech;
     private ImageView imgScannedItem;
+    Thread speakDescription;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
         sp = getSharedPreferences("eyedentify", Context.MODE_PRIVATE);
+        editor = sp.edit();
         btnEditTag = findViewById(R.id.btnEditTag);
-        edtItemDescription = (EditText) findViewById(R.id.edtItemDescription);
-        edtItemKeywords = (EditText) findViewById(R.id.edtItemKeywords);
+        edtItemDescription = findViewById(R.id.edtItemDescription);
+        edtItemKeywords = findViewById(R.id.edtItemKeywords);
         imgScannedItem = findViewById(R.id.imgScannedItem);
         btnEditTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ResultActivity.this, TagActivity.class));
+                startActivity(new Intent(ResultActivity.this, TagActivity.class).putExtra("tagInfo", getIntent().getExtras().getString("tagInfo")));
             }
         });
         nfc = NFC.makeNFC(this);
@@ -66,14 +72,11 @@ public class ResultActivity extends AppCompatActivity {
             }
         });
 
-        if (getIntent().hasExtra("tagInfo")) {
-            String message = getIntent().getExtras().getString("tagInfo");
-            //disable fields if with a tag
-            edtItemDescription.setEnabled(false);
-            edtItemKeywords.setEnabled(false);
+        if (getIntent().hasExtra("tagInfo") && sp.contains(getIntent().getExtras().getString("tagInfo"))) {
+            String message = sp.getString(getIntent().getExtras().getString("tagInfo"), null);
             //info array, [0] = img, [1] = description+keywords, [2] = audio
             String[] infoArray = message.split("%");
-            Thread speakDescription = new Thread(){
+            speakDescription = new Thread(){
                 public void run(){}
             };
             if(infoArray.length == 3){
@@ -84,7 +87,7 @@ public class ResultActivity extends AppCompatActivity {
                     speakDescription = new Thread(){
                         public void run(){
                             try {
-                                Thread.sleep(500);
+                                Thread.sleep(200);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -130,11 +133,11 @@ public class ResultActivity extends AppCompatActivity {
                 }
             }
             else{
-                Toast.makeText(this, "Invalid Information in Tag", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Likely missing files", Toast.LENGTH_SHORT).show();
             }
         }
         else{
-            Toast.makeText(this, "You should not be here but for some reason you are", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Cannot read from tag", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -177,5 +180,18 @@ public class ResultActivity extends AppCompatActivity {
         adapter.enableForegroundDispatch(this, pendingIntent, filters, null);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        launch_main_activity();
+    }
+
+    public void launch_main_activity(){
+        Intent main_activity = new Intent(getApplicationContext(), MainActivity.class);
+        //put user data in bundle here, if we do anything with user data
+        startActivity(main_activity);
+        finish();
+    }
 
 }
