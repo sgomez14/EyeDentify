@@ -27,7 +27,7 @@ public class NFCPairingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pairing);
         if (getIntent().hasExtra("tagInfo")) {
-            String uniqueIdToSPStorage = getIntent().getExtras().getString("tagInfo");
+            uniqueIdToSPStorage = getIntent().getExtras().getString("tagInfo");
             Toast.makeText(this, uniqueIdToSPStorage, Toast.LENGTH_SHORT).show();
         }
         Log.d("Mandy", "uniqueIdToSPStorage " + uniqueIdToSPStorage);
@@ -63,9 +63,9 @@ public class NFCPairingActivity extends AppCompatActivity {
 //                startActivity(new Intent(ResultActivity.this, ResultActivity.class).putExtra("tagInfo", nfc.myTagInfo));
                 try {
                     Log.d("Mandy", "try");
+                    Toast.makeText(this, uniqueIdToSPStorage, Toast.LENGTH_LONG).show();
                     nfc.write(uniqueIdToSPStorage);
                     Log.d("Mandy", "nfc.write(uniqueIdToSPStorage);");
-                    Toast.makeText(this, uniqueIdToSPStorage, Toast.LENGTH_LONG).show();
                     startActivity(new Intent(NFCPairingActivity.this, ResultActivity.class).putExtra("tagInfo", uniqueIdToSPStorage));
                 } catch (Exception exception) {
                     exception.printStackTrace();
