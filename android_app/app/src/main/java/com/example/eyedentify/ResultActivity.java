@@ -38,6 +38,8 @@ public class ResultActivity extends AppCompatActivity {
     private TextView edtItemDescription, edtItemKeywords;
     private TextToSpeech textToSpeech;
     private ImageView imgScannedItem;
+    Thread speakDescription;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,11 +72,11 @@ public class ResultActivity extends AppCompatActivity {
             }
         });
 
-        if (getIntent().hasExtra("tagInfo")) {
+        if (getIntent().hasExtra("tagInfo") && sp.contains(getIntent().getExtras().getString("tagInfo"))) {
             String message = sp.getString(getIntent().getExtras().getString("tagInfo"), null);
             //info array, [0] = img, [1] = description+keywords, [2] = audio
             String[] infoArray = message.split("%");
-            Thread speakDescription = new Thread(){
+            speakDescription = new Thread(){
                 public void run(){}
             };
             if(infoArray.length == 3){
@@ -131,11 +133,11 @@ public class ResultActivity extends AppCompatActivity {
                 }
             }
             else{
-                Toast.makeText(this, "Invalid Information in Tag", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Likely missing files", Toast.LENGTH_SHORT).show();
             }
         }
         else{
-            Toast.makeText(this, "You should not be here but for some reason you are", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Cannot read from tag", Toast.LENGTH_SHORT).show();
         }
 
     }

@@ -86,8 +86,10 @@ public class TagActivity extends AppCompatActivity {
 
         mFileName = "";
         iFileName = "";
-        mFileName = sp.getString("audioPath", null);
-        iFileName = sp.getString("imgPath", null);
+        if(sp.contains("audioPath"))
+            mFileName = sp.getString("audioPath", null);
+        if(sp.contains("imgPath"))
+            iFileName = sp.getString("imgPath", null);
         nfc = NFC.makeNFC(this);
         adapter = nfc.adapter;
         nfc.readIntent(getIntent());
@@ -161,8 +163,7 @@ public class TagActivity extends AppCompatActivity {
         });
 
         //checking if arrived at this page with tag or with button
-        if (getIntent().hasExtra("tagInfo")) {
-
+        if (getIntent().hasExtra("tagInfo") && sp.contains(getIntent().getExtras().getString("tagInfo"))) {
             String message = sp.getString(getIntent().getExtras().getString("tagInfo"), null);
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
             //info array, [0] = img, [1] = description+keywords, [2] = audio
@@ -199,16 +200,9 @@ public class TagActivity extends AppCompatActivity {
                     Toast.makeText(this, imgFileName, Toast.LENGTH_SHORT).show();
                     imgScannedItem.setImageBitmap(BitmapFactory.decodeFile(imgFileName));
                 }
-//                if(infoArray[2].equals("na")){
-//                    speakDescription.start();
-//                }
-//                else{
-//                    ContextWrapper cw = new ContextWrapper(getApplicationContext());
-//                    File musicDir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
-//                    File f = new File(musicDir, infoArray[2]+".mp3");
-//                    MediaPlayer mp = MediaPlayer.create(this, Uri.parse(f.getPath()));
-//                    mp.start();
-//                }
+                if(!infoArray[2].equals("na")){
+                    mFileName = infoArray[2];
+                }
             }
             else{
                 Toast.makeText(this, "Invalid Information in Tag", Toast.LENGTH_SHORT).show();
@@ -229,7 +223,7 @@ public class TagActivity extends AppCompatActivity {
                 imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
                 // PNG is a lossless format, the compression factor (100) is ignored
             } catch (IOException e) {
-                e.printStackTrace();
+                Toast.makeText(this, "File Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
 
