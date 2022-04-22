@@ -68,28 +68,46 @@ public class ResultActivity extends AppCompatActivity {
 
         if (getIntent().hasExtra("tagInfo")) {
             String message = getIntent().getExtras().getString("tagInfo");
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
             //disable fields if with a tag
             edtItemDescription.setEnabled(false);
             edtItemKeywords.setEnabled(false);
             //info array, [0] = img, [1] = description+keywords, [2] = audio
             String[] infoArray = message.split("%");
+            Thread speakDescription = new Thread(){
+                public void run(){}
+            };
             if(infoArray.length == 3){
                 String[] info = sp.getString(infoArray[1], null).split("%%%");
-                edtItemDescription.setText(info[0]);
-                edtItemKeywords.setText(info[1]);
-                Thread speakDescription = new Thread(){
-                    public void run(){
-                        try {
-                            Thread.sleep(500);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
+                if(info.length == 2){
+                    edtItemDescription.setText(info[0]);
+                    edtItemKeywords.setText(info[1]);
+                    speakDescription = new Thread(){
+                        public void run(){
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            String speech = "You just came across "+info[0]+
+                                    ", and possible words are " + info[1];
+                            textToSpeech.speak(speech, TextToSpeech.QUEUE_FLUSH, null, null);
                         }
-                        String speech = "You just came across "+info[0]+
-                                ", and possible words are " + info[1];
-                        textToSpeech.speak(speech, TextToSpeech.QUEUE_FLUSH, null, null);
-                    }
-                };
+                    };
+                }else if (info.length == 1){
+                    edtItemDescription.setText(info[0]);
+                    speakDescription = new Thread(){
+                        public void run(){
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            String speech = "You just came across "+info[0];
+                            textToSpeech.speak(speech, TextToSpeech.QUEUE_FLUSH, null, null);
+                        }
+                    };
+                }
+
                 if(infoArray[0].equals("na")){
                     //TODO: default image
                 }
@@ -98,7 +116,6 @@ public class ResultActivity extends AppCompatActivity {
                     File imgDir = cw.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
 //                    File f = new File(imgDir, infoArray[0]+".png");
                     String imgFileName = imgDir+"/"+infoArray[0]+".png";
-                    Toast.makeText(this, imgFileName, Toast.LENGTH_SHORT).show();
                     imgScannedItem.setImageBitmap(BitmapFactory.decodeFile(imgFileName));
                 }
                 if(infoArray[2].equals("na")){
@@ -130,7 +147,7 @@ public class ResultActivity extends AppCompatActivity {
         if(NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())){
             nfc.myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
             if(nfc.myTagInfo != null && nfc.myTagInfo.split("%").length == 3){
-//                startActivity(new Intent(ResultActivity.this, ResultActivity.class).putExtra("tagInfo", nfc.myTagInfo));
+                startActivity(new Intent(ResultActivity.this, ResultActivity.class).putExtra("tagInfo", nfc.myTagInfo));
             }
             else{
                 Toast.makeText(this, "Cannot Parse Information in Tag", Toast.LENGTH_SHORT).show();
