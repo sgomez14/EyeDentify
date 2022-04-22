@@ -1,16 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ImageRecognitionPendingActivity">
+    tools:context=".MainActivity">
+
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="149dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginBottom="48dp"
+        android:progressDrawable="@drawable/circular_progress_bar"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="233dp"
+        android:layout_height="188dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginBottom="44dp"
+        app:layout_constraintBottom_toTopOf="@+id/progressBar"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:srcCompat="@drawable/eyedentify" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Loading Results"
-        tools:layout_editor_absoluteX="155dp"
-        tools:layout_editor_absoluteY="310dp" />
+        android:layout_width="217dp"
+        android:layout_height="88dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginBottom="172dp"
+        android:text="LOADING IMAGE"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
