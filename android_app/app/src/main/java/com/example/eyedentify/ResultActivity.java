@@ -47,7 +47,7 @@ public class ResultActivity extends AppCompatActivity {
         btnEditTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ResultActivity.this, TagActivity.class));
+                startActivity(new Intent(ResultActivity.this, TagActivity.class).putExtra("tagInfo", getIntent().getExtras().getString("tagInfo")));
             }
         });
         nfc = NFC.makeNFC(this);
@@ -84,7 +84,7 @@ public class ResultActivity extends AppCompatActivity {
                     speakDescription = new Thread(){
                         public void run(){
                             try {
-                                Thread.sleep(500);
+                                Thread.sleep(200);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }

@@ -84,8 +84,7 @@ public class TagActivity extends AppCompatActivity {
         edtItemKeywords = (EditText) findViewById(R.id.edtItemKeywords);
         imgScannedItem = (ImageView) findViewById(R.id.imgScannedItem);
 
-        boolean gotHereWithTag;
-        mFileName = "";
+        mFileName = sp.getString("audioPath", null);
         iFileName = "";
         nfc = NFC.makeNFC(this);
         adapter = nfc.adapter;
@@ -115,11 +114,16 @@ public class TagActivity extends AppCompatActivity {
                 }
                 if(event.getAction() == MotionEvent.ACTION_UP){
                     // Stop recording and save file
-                    mRecorder.stop();
-                    mRecorder.release();
-                    mRecorder = null;
-                    Toast.makeText(TagActivity.this, "Recording Complete", Toast.LENGTH_SHORT).show();
-                    return true;
+                    try{
+                        mRecorder.stop();
+                        mRecorder.release();
+                        mRecorder = null;
+                        Toast.makeText(TagActivity.this, "Recording Complete", Toast.LENGTH_SHORT).show();
+                        return true;
+                    } catch (Exception e){
+                        Toast.makeText(TagActivity.this, "Recorder Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
                 }
                 return false;
             }
@@ -158,10 +162,6 @@ public class TagActivity extends AppCompatActivity {
         if (getIntent().hasExtra("tagInfo")) {
             String message = getIntent().getExtras().getString("tagInfo");
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-            gotHereWithTag = true;
-            //disable fields if with a tag
-            edtItemDescription.setEnabled(false);
-            edtItemKeywords.setEnabled(false);
             //info array, [0] = img, [1] = description+keywords, [2] = audio
             String[] infoArray = message.split("%");
             if(infoArray.length == 3){
@@ -196,16 +196,16 @@ public class TagActivity extends AppCompatActivity {
                     Toast.makeText(this, imgFileName, Toast.LENGTH_SHORT).show();
                     imgScannedItem.setImageBitmap(BitmapFactory.decodeFile(imgFileName));
                 }
-                if(infoArray[2].equals("na")){
-                    speakDescription.start();
-                }
-                else{
-                    ContextWrapper cw = new ContextWrapper(getApplicationContext());
-                    File musicDir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
-                    File f = new File(musicDir, infoArray[2]+".mp3");
-                    MediaPlayer mp = MediaPlayer.create(this, Uri.parse(f.getPath()));
-                    mp.start();
-                }
+//                if(infoArray[2].equals("na")){
+//                    speakDescription.start();
+//                }
+//                else{
+//                    ContextWrapper cw = new ContextWrapper(getApplicationContext());
+//                    File musicDir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
+//                    File f = new File(musicDir, infoArray[2]+".mp3");
+//                    MediaPlayer mp = MediaPlayer.create(this, Uri.parse(f.getPath()));
+//                    mp.start();
+//                }
             }
             else{
                 Toast.makeText(this, "Invalid Information in Tag", Toast.LENGTH_SHORT).show();
@@ -228,12 +228,6 @@ public class TagActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        else { // arrived at this activity via the "Tag Item" button
-            gotHereWithTag = false;
-            //enable fields if with a button
-            edtItemDescription.setEnabled(true);
-            edtItemKeywords.setEnabled(true);
         }
 
 
@@ -274,6 +268,8 @@ public class TagActivity extends AppCompatActivity {
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
         File musicDir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
         mFileName = UUID.randomUUID().toString();
+        editor.putString("audioPath", mFileName);
+        editor.commit();
         File f = new File(musicDir, mFileName+".mp3");
         return f.getPath();
     }
@@ -468,5 +464,12 @@ public class TagActivity extends AppCompatActivity {
         Bitmap rotatedBitmap = Bitmap.createBitmap(imageBitmap, 0,0, imageBitmap.getWidth(),
                 imageBitmap.getHeight(), matrixForRotation, true);
         return rotatedBitmap;
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        editor.putString("audioPath", mFileName);
+        editor.commit();
     }
 }

@@ -179,8 +179,14 @@ public class MainActivity extends AppCompatActivity {
             if(nfc.myTagInfo != null && nfc.myTagInfo.split("%").length == 3){
                 startActivity(new Intent(MainActivity.this, ResultActivity.class).putExtra("tagInfo", nfc.myTagInfo));
             }
-            else{
-                Toast.makeText(this, "Cannot Parse Information in Tag", Toast.LENGTH_SHORT).show();
+            else {
+//                assert nfc.myTagInfo != null;
+                if(nfc.myTagInfo == null){
+                    Toast.makeText(this, "Empty Tag", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(this, "Cannot Parse Information in Tag", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }
