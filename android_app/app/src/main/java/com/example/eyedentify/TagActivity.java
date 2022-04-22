@@ -469,4 +469,18 @@ public class TagActivity extends AppCompatActivity {
                 imageBitmap.getHeight(), matrixForRotation, true);
         return rotatedBitmap;
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        launch_main_activity();
+    }
+
+    public void launch_main_activity(){
+        Intent main_activity = new Intent(getApplicationContext(), MainActivity.class);
+        //put user data in bundle here, if we do anything with user data
+        startActivity(main_activity);
+        finish();
+    }
 }

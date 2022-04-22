@@ -3,10 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/JasonMay/Documents/GitHub/EyeDentify/android_app/app/src/main/res/drawable/tag_btn_add_photo.xml" value="0.2075" />
+        <entry key="..\:/Users/JasonMay/Documents/GitHub/EyeDentify/android_app/app/src/main/res/drawable/tag_btn_add_voice_memo.xml" value="0.2075" />
+        <entry key="..\:/Users/JasonMay/Documents/GitHub/EyeDentify/android_app/app/src/main/res/layout/activity_image_recognition_pending.xml" value="0.1956521739130435" />
         <entry key="..\:/Users/JasonMay/Documents/GitHub/EyeDentify/android_app/app/src/main/res/layout/activity_login.xml" value="0.16032608695652173" />
         <entry key="..\:/Users/JasonMay/Documents/GitHub/EyeDentify/android_app/app/src/main/res/layout/activity_login2.xml" value="0.22" />
         <entry key="..\:/Users/JasonMay/Documents/GitHub/EyeDentify/android_app/app/src/main/res/layout/activity_main.xml" value="0.12239583333333333" />
-        <entry key="..\:/Users/JasonMay/Documents/GitHub/EyeDentify/android_app/app/src/main/res/layout/activity_tag.xml" value="0.1897644927536232" />
+        <entry key="..\:/Users/JasonMay/Documents/GitHub/EyeDentify/android_app/app/src/main/res/layout/activity_pairing.xml" value="0.1956521739130435" />
+        <entry key="..\:/Users/JasonMay/Documents/GitHub/EyeDentify/android_app/app/src/main/res/layout/activity_result.xml" value="0.1539855072463768" />
+        <entry key="..\:/Users/JasonMay/Documents/GitHub/EyeDentify/android_app/app/src/main/res/layout/activity_tag.xml" value="0.1708542713567839" />
         <entry key="..\:/Users/santi09/CS501Code/FinalProject/EyeDentify/android_app/app/src/main/res/layout/activity_main.xml" value="0.19927536231884058" />
         <entry key="..\:/Users/santi09/CS501Code/FinalProject/EyeDentify/android_app/app/src/main/res/layout/activity_tag.xml" value="0.21784420289855072" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.147" />

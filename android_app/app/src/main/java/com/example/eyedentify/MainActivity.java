@@ -216,4 +216,10 @@ public class MainActivity extends AppCompatActivity {
                 imageBitmap.getHeight(), matrixForRotation, true);
         return rotatedBitmap;
     }
+    @Override
+    public void onBackPressed() {
+        // pressing back on main_activity closes app
+        finish();
+    }
+
 }
