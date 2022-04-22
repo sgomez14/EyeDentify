@@ -84,8 +84,10 @@ public class TagActivity extends AppCompatActivity {
         edtItemKeywords = (EditText) findViewById(R.id.edtItemKeywords);
         imgScannedItem = (ImageView) findViewById(R.id.imgScannedItem);
 
-        mFileName = sp.getString("audioPath", null);
+        mFileName = "";
         iFileName = "";
+        mFileName = sp.getString("audioPath", null);
+        iFileName = sp.getString("imgPath", null);
         nfc = NFC.makeNFC(this);
         adapter = nfc.adapter;
         nfc.readIntent(getIntent());
@@ -160,7 +162,8 @@ public class TagActivity extends AppCompatActivity {
 
         //checking if arrived at this page with tag or with button
         if (getIntent().hasExtra("tagInfo")) {
-            String message = getIntent().getExtras().getString("tagInfo");
+
+            String message = sp.getString(getIntent().getExtras().getString("tagInfo"), null);
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
             //info array, [0] = img, [1] = description+keywords, [2] = audio
             String[] infoArray = message.split("%");
@@ -243,10 +246,12 @@ public class TagActivity extends AppCompatActivity {
                 editor.putString(unique, edtItemDescription.getText()+"%%%"+edtItemKeywords.getText());
                 editor.commit();
                 String msg = (iFileName.equals("") ? "na" : iFileName) + "%" + unique+ "%" + (mFileName.equals("") ? "na" : mFileName);
-
+                String u = UUID.randomUUID().toString();
+                editor.putString(u, msg);
+                editor.commit();
                 //uncomment the line below to go to listening and tagging activity
                 //=================================================================
-                startActivity(new Intent(TagActivity.this, NFCPairingActivity.class).putExtra("tagInfo", msg));
+                startActivity(new Intent(TagActivity.this, NFCPairingActivity.class).putExtra("tagInfo", u));
                 //=================================================================
                 //uncomment the lines below to write to tag directly
                 //=================================================================
@@ -263,7 +268,6 @@ public class TagActivity extends AppCompatActivity {
 
     }
 
-
     private String getRecordingPath(){
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
         File musicDir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
@@ -278,6 +282,8 @@ public class TagActivity extends AppCompatActivity {
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
         File imgDir = cw.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         iFileName = UUID.randomUUID().toString();
+        editor.putString("imgPath", iFileName);
+        editor.commit();
         File f = new File(imgDir, iFileName+".png");
         return f.getPath();
     }

@@ -19,12 +19,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.util.Locale;
 
 public class ResultActivity extends AppCompatActivity {
+
     Button btnEditTag;
     private NFC nfc;
     PendingIntent pendingIntent;
@@ -32,7 +34,8 @@ public class ResultActivity extends AppCompatActivity {
     NfcAdapter adapter;
     boolean writeMode;
     private SharedPreferences sp;
-    private EditText edtItemDescription, edtItemKeywords;
+    private SharedPreferences.Editor editor;
+    private TextView edtItemDescription, edtItemKeywords;
     private TextToSpeech textToSpeech;
     private ImageView imgScannedItem;
     @Override
@@ -40,9 +43,10 @@ public class ResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
         sp = getSharedPreferences("eyedentify", Context.MODE_PRIVATE);
+        editor = sp.edit();
         btnEditTag = findViewById(R.id.btnEditTag);
-        edtItemDescription = (EditText) findViewById(R.id.edtItemDescription);
-        edtItemKeywords = (EditText) findViewById(R.id.edtItemKeywords);
+        edtItemDescription = findViewById(R.id.edtItemDescription);
+        edtItemKeywords = findViewById(R.id.edtItemKeywords);
         imgScannedItem = findViewById(R.id.imgScannedItem);
         btnEditTag.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,10 +71,7 @@ public class ResultActivity extends AppCompatActivity {
         });
 
         if (getIntent().hasExtra("tagInfo")) {
-            String message = getIntent().getExtras().getString("tagInfo");
-            //disable fields if with a tag
-            edtItemDescription.setEnabled(false);
-            edtItemKeywords.setEnabled(false);
+            String message = sp.getString(getIntent().getExtras().getString("tagInfo"), null);
             //info array, [0] = img, [1] = description+keywords, [2] = audio
             String[] infoArray = message.split("%");
             Thread speakDescription = new Thread(){
