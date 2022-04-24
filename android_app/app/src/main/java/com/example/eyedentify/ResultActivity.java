@@ -15,7 +15,11 @@ import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,6 +33,7 @@ import java.util.Locale;
 public class ResultActivity extends AppCompatActivity {
 
     private CardView btnPlayVoiceMemo, btnEditTag;
+
     private NFC nfc;
     PendingIntent pendingIntent;
     IntentFilter filters[];
@@ -40,6 +45,7 @@ public class ResultActivity extends AppCompatActivity {
     private TextToSpeech textToSpeech;
     private ImageView imgScannedItem;
     Thread speakDescription;
+    Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +66,7 @@ public class ResultActivity extends AppCompatActivity {
 
             }
         });
+
 
 
         btnEditTag.setOnClickListener(new View.OnClickListener() {
@@ -141,7 +148,19 @@ public class ResultActivity extends AppCompatActivity {
                     File musicDir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
                     File f = new File(musicDir, infoArray[2]+".mp3");
                     MediaPlayer mp = MediaPlayer.create(this, Uri.parse(f.getPath()));
-                    mp.start();
+                    //playAudioWtihDelay(mp);
+
+//                    Thread t = new Thread() {
+//                        public void run() {
+//                            try {
+//                                Thread.sleep(5000);
+//                            } catch (InterruptedException e) {
+//                                e.printStackTrace();
+//                            }
+//                            mp.start();
+//                        }
+//                    };
+//                    t.start();
                 }
             }
             else{
@@ -153,6 +172,16 @@ public class ResultActivity extends AppCompatActivity {
         }
 
     }
+
+//
+//    public void playAudioWtihDelay(MediaPlayer mp) {
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                mp.start();
+//            }
+//        }, 2000);
+//    }
 
     @Override
     protected void onNewIntent(Intent intent){
@@ -174,6 +203,7 @@ public class ResultActivity extends AppCompatActivity {
     public void onPause(){
         super.onPause();
         writeModeOff();
+        textToSpeech.stop();
     }
 
     @Override
