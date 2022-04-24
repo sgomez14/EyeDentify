@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +28,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import java.io.File;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -126,21 +129,34 @@ public class MainActivity extends AppCompatActivity {
         // Confirm requestCode and resultCode are valid
         if (requestCode == IMAGE_CAPTURE_CODE && resultCode == RESULT_OK) {
             try{
-                // convert image to File image recognition sdks
-                File imageFile = new File(getPath(image_uri));
+                ExecutorService executorService = Executors.newSingleThreadExecutor();
+                executorService.execute(new Runnable() {
+                    @Override
+                    public void run() {
 
-                // convert imageFile to bitmap for ML kit
-                Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile.toString());
-                imageBitmap = rotateBitmap90(imageBitmap);
-                // pass image bitmap to MLKit class
-                mlkitResult = MLKit.getTextFromImage(imageBitmap, this); // pass image to MLKit
+                        // onPreExecute Method
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent loadResults = new Intent(MainActivity.this, ImageRecognitionPendingActivity.class);
+                                startActivity(loadResults);
+                            }
+                        });
 
-                // pass image file to CloudSight class
-                new CloudSight(MainActivity.this, mlkitResult, imageFile);
+                        // convert image to File image recognition sdks
+                        File imageFile = new File(getPath(image_uri));
 
-                Intent loadResults = new Intent(this, ImageRecognitionPendingActivity.class);
-                startActivity(loadResults);
+                        // convert imageFile to bitmap for ML kit
+                        Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile.toString());
+                        imageBitmap = rotateBitmap90(imageBitmap);
+                        // pass image bitmap to MLKit class
+                        mlkitResult = MLKit.getTextFromImage(imageBitmap, MainActivity.this); // pass image to MLKit
 
+                        // pass image file to CloudSight class
+                        new CloudSight(MainActivity.this, mlkitResult, imageFile);
+
+                    }
+                });
             }
             catch (Exception e) {
                 Log.d("EyeDentify debug", e.getMessage());
