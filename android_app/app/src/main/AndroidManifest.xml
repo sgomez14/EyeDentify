@@ -25,6 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EyeDentify">
         <activity android:name=".LoginActivity"
+            android:windowSoftInputMode="adjustNothing"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,6 +44,7 @@
             android:name=".ImageRecognitionPendingActivity"
             android:exported="false" />
         <activity
+            android:windowSoftInputMode="adjustNothing"
             android:name=".TagActivity"
             android:exported="false" />
         <activity
