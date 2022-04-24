@@ -26,18 +26,16 @@ public class NFCPairingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pairing);
+        Toast.makeText(this, "Warning: tag with information will get overwritten.", Toast.LENGTH_SHORT).show();
+
         if (getIntent().hasExtra("tagInfo")) {
             uniqueIdToSPStorage = getIntent().getExtras().getString("tagInfo");
-            Toast.makeText(this, uniqueIdToSPStorage, Toast.LENGTH_SHORT).show();
         }
+
         nfc = NFC.makeNFC(this);
         adapter = nfc.adapter;
-//        nfc.readIntent(getIntent());
-
         pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), PendingIntent.FLAG_MUTABLE);
-
         IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
-
         tagDetected.addCategory(Intent.CATEGORY_DEFAULT);
         filters = new IntentFilter[]{tagDetected};
     }
@@ -52,15 +50,15 @@ public class NFCPairingActivity extends AppCompatActivity {
             if(nfc.myTag != null){
 //                startActivity(new Intent(ResultActivity.this, ResultActivity.class).putExtra("tagInfo", nfc.myTagInfo));
                 try {
-                    Toast.makeText(this, uniqueIdToSPStorage, Toast.LENGTH_LONG).show();
                     nfc.write(uniqueIdToSPStorage);
+                    Toast.makeText(this, "Successfully written to tag.", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(NFCPairingActivity.this, ResultActivity.class).putExtra("tagInfo", uniqueIdToSPStorage));
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
             }
             else{
-                Toast.makeText(this, "Null tag", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "This tag is not responding, please try again.", Toast.LENGTH_SHORT).show();
             }
         }
     }

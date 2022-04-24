@@ -28,4 +28,5 @@
     <string name="login_button">LOGIN</string>
     <string name="create_button">CREATE ACCOUNT</string>
     <string name="play_voice_memo">PLAY VOICE MEMO</string>
+    <string name="pairing">Listening to a tag</string>
 </resources>
