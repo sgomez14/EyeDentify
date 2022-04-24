@@ -11,25 +11,6 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:elevation="10dp"
-        app:cardCornerRadius="25dp">
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="275dp"
-            android:layout_height="275dp"
-            android:layout_centerHorizontal="false"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/eyedentify_logo_black_gold" />
-    </androidx.cardview.widget.CardView>
-
-
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleLarge"

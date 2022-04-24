@@ -8,14 +8,23 @@
     tools:context=".LoginActivity">
 
 
-    <ImageView
-        android:id="@+id/imageViewLogo"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        app:srcCompat="@drawable/eyedentify_logo_black_gold"
-        android:layout_weight="0.1"
-        android:contentDescription="Welcome to EyeDentify"
-        />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:elevation="10dp"
+        app:cardCornerRadius="25dp"
+        android:layout_margin="10dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="275dp"
+            android:layout_height="275dp"
+            android:layout_centerHorizontal="false"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/eyedentify_logo_black_gold" />
+    </androidx.cardview.widget.CardView>
 
     <EditText
         android:id="@+id/etEmail"
@@ -59,7 +68,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="@string/login_button"
-            android:textSize="60sp"
+            android:textSize="40sp"
             android:textStyle="bold" />
 
     </androidx.cardview.widget.CardView>
@@ -84,29 +93,10 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="@string/create_button"
-            android:textSize="60sp"
+            android:textSize="40sp"
             android:textStyle="bold" />
 
     </androidx.cardview.widget.CardView>
 
-<!--    <Button-->
-<!--        android:id="@+id/btnLogin"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_weight="0.2"-->
-<!--        android:background="@drawable/tag_btn_login"-->
-<!--        android:contentDescription="This is the login"-->
-<!--        android:text="Login"-->
-<!--        android:textSize="60sp" />-->
-
-<!--    <Button-->
-<!--        android:id="@+id/btnCreate"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_weight="0.2"-->
-<!--        android:background="@drawable/yellowdiamond"-->
-<!--        android:contentDescription="create account"-->
-<!--        android:text="Create Account"-->
-<!--        android:textSize="60sp" />-->
 
 </LinearLayout>
