@@ -7,7 +7,7 @@
     <string name="keywords_label">Item Keywords</string>
     <string name="keywords">campbell\ncondensed\nchicken\nnoodle\nsoup</string>
     <string name="pair_with_tag">Pair with Tag</string>
-    <string name="imageContentDescription">Image of scanned item.</string>
+    <string name="imageContentDescription">.</string>
     <string name="add_photo">Add Photo</string>
     <string name="add_voice_memo">Add Voice Memo</string>
     <string name="edit_tag">Edit Tag</string>

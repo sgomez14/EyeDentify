@@ -14,7 +14,11 @@ import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,7 +31,7 @@ import java.util.Locale;
 
 public class ResultActivity extends AppCompatActivity {
 
-    Button btnEditTag;
+    Button btnEditTag/*, testButton*/;
     private NFC nfc;
     PendingIntent pendingIntent;
     IntentFilter filters[];
@@ -39,6 +43,7 @@ public class ResultActivity extends AppCompatActivity {
     private TextToSpeech textToSpeech;
     private ImageView imgScannedItem;
     Thread speakDescription;
+    Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +52,32 @@ public class ResultActivity extends AppCompatActivity {
         sp = getSharedPreferences("eyedentify", Context.MODE_PRIVATE);
         editor = sp.edit();
         btnEditTag = findViewById(R.id.btnEditTag);
+        //testButton = findViewById(R.id.testButton);
         edtItemDescription = findViewById(R.id.edtItemDescription);
         edtItemKeywords = findViewById(R.id.edtItemKeywords);
         imgScannedItem = findViewById(R.id.imgScannedItem);
+        handler = new Handler();
+//
+//        testButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String message = sp.getString(getIntent().getExtras().getString("tagInfo"), null);
+//                //info array, [0] = img, [1] = description+keywords, [2] = audio
+//                String[] infoArray = message.split("%");
+//                if(infoArray[2].equals("na")){
+//                    speakDescription.start();
+//                }
+//                else {
+//                    ContextWrapper cw = new ContextWrapper(getApplicationContext());
+//                    File musicDir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
+//                    File f = new File(musicDir, infoArray[2] + ".mp3");
+//                    MediaPlayer mp = MediaPlayer.create(ResultActivity.this, Uri.parse(f.getPath()));
+//                    mp.start();
+//                }
+//            }
+//        });
+
+
         btnEditTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,7 +157,19 @@ public class ResultActivity extends AppCompatActivity {
                     File musicDir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
                     File f = new File(musicDir, infoArray[2]+".mp3");
                     MediaPlayer mp = MediaPlayer.create(this, Uri.parse(f.getPath()));
-                    mp.start();
+                    //playAudioWtihDelay(mp);
+
+//                    Thread t = new Thread() {
+//                        public void run() {
+//                            try {
+//                                Thread.sleep(5000);
+//                            } catch (InterruptedException e) {
+//                                e.printStackTrace();
+//                            }
+//                            mp.start();
+//                        }
+//                    };
+//                    t.start();
                 }
             }
             else{
@@ -141,6 +181,16 @@ public class ResultActivity extends AppCompatActivity {
         }
 
     }
+
+//
+//    public void playAudioWtihDelay(MediaPlayer mp) {
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                mp.start();
+//            }
+//        }, 2000);
+//    }
 
     @Override
     protected void onNewIntent(Intent intent){
@@ -162,6 +212,7 @@ public class ResultActivity extends AppCompatActivity {
     public void onPause(){
         super.onPause();
         writeModeOff();
+        textToSpeech.stop();
     }
 
     @Override
