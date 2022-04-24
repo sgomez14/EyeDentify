@@ -1,6 +1,7 @@
 package com.example.eyedentify;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.app.PendingIntent;
 import android.content.Context;
@@ -31,7 +32,8 @@ import java.util.Locale;
 
 public class ResultActivity extends AppCompatActivity {
 
-    Button btnEditTag/*, testButton*/;
+    private CardView btnPlayVoiceMemo, btnEditTag;
+
     private NFC nfc;
     PendingIntent pendingIntent;
     IntentFilter filters[];
@@ -51,31 +53,20 @@ public class ResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_result);
         sp = getSharedPreferences("eyedentify", Context.MODE_PRIVATE);
         editor = sp.edit();
-        btnEditTag = findViewById(R.id.btnEditTag);
-        //testButton = findViewById(R.id.testButton);
+        btnPlayVoiceMemo = findViewById(R.id.cardViewPlayVoiceMemo);
+        btnEditTag = findViewById(R.id.cardViewEditTagResults);
         edtItemDescription = findViewById(R.id.edtItemDescription);
         edtItemKeywords = findViewById(R.id.edtItemKeywords);
         imgScannedItem = findViewById(R.id.imgScannedItem);
-        handler = new Handler();
-//
-//        testButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String message = sp.getString(getIntent().getExtras().getString("tagInfo"), null);
-//                //info array, [0] = img, [1] = description+keywords, [2] = audio
-//                String[] infoArray = message.split("%");
-//                if(infoArray[2].equals("na")){
-//                    speakDescription.start();
-//                }
-//                else {
-//                    ContextWrapper cw = new ContextWrapper(getApplicationContext());
-//                    File musicDir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
-//                    File f = new File(musicDir, infoArray[2] + ".mp3");
-//                    MediaPlayer mp = MediaPlayer.create(ResultActivity.this, Uri.parse(f.getPath()));
-//                    mp.start();
-//                }
-//            }
-//        });
+
+        //TODO: add action that plays the voice memo
+        btnPlayVoiceMemo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
 
 
         btnEditTag.setOnClickListener(new View.OnClickListener() {

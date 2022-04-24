@@ -7,6 +7,31 @@
     tools:context=".ResultActivity"
     android:orientation="vertical">
 
+        <androidx.cardview.widget.CardView
+
+            android:id="@+id/cardViewPlayVoiceMemo"
+            app:cardCornerRadius="50dp"
+            android:layout_margin="5dp"
+            android:elevation="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="7">
+
+                <ImageView
+                    android:background="@drawable/yellowdiamond"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/play_voice_memo"
+                    android:textSize="40sp"
+                    android:textStyle="bold" />
+
+        </androidx.cardview.widget.CardView>
+
         <ImageView
             android:id="@+id/imgScannedItem"
             android:layout_width="match_parent"
@@ -90,14 +115,37 @@
             android:scrollbars="vertical"
             android:textColorHint="#546E7A"
             tools:ignore="DuplicateSpeakableTextCheck" />
+        <androidx.cardview.widget.CardView
 
-        <Button
-            android:id="@+id/btnEditTag"
+            android:id="@+id/cardViewEditTagResults"
+            app:cardCornerRadius="50dp"
+            android:layout_margin="5dp"
+            android:elevation="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:layout_weight="7"
-            android:background="@drawable/greenstripe"
-            android:text="@string/edit_tag"
-            android:textSize="24sp" />
+            android:layout_weight="7">
+
+                <ImageView
+                    android:background="@drawable/greenstripe"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/edit_tag"
+                    android:textSize="40sp"
+                    android:textStyle="bold" />
+
+        </androidx.cardview.widget.CardView>
+<!--        <Button-->
+<!--            android:id="@+id/btnEditTag"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="2dp"-->
+<!--            android:layout_weight="7"-->
+<!--            android:background="@drawable/greenstripe"-->
+<!--            android:text="@string/edit_tag"-->
+<!--            android:textSize="24sp" />-->
 </LinearLayout>

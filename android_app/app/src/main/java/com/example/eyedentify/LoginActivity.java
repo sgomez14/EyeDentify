@@ -2,6 +2,7 @@ package com.example.eyedentify;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -27,11 +28,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText etEmail;
     private EditText etPassword;
-    private Button btnLogin;
-    private Button btnCreate;
     private Button btnGuest;
     private FirebaseAuth mAuth;
     private final String TAG = "LOGIN DEBUG";
+    private CardView btnLogin;
+    private CardView btnCreate;
 
 
     @Override
@@ -51,9 +52,9 @@ public class LoginActivity extends AppCompatActivity {
 
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
-        btnLogin = findViewById(R.id.btnLogin);
-        btnCreate = findViewById(R.id.btnCreate);
-        //btnGuest = findViewById(R.id.btnGuest);
+        btnLogin = findViewById(R.id.cardViewLogin);
+        btnCreate = findViewById(R.id.cardViewCreate);
+
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override

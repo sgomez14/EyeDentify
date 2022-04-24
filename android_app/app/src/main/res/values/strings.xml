@@ -1,16 +1,16 @@
 <resources>
     <string name="app_name">EyeDentify</string>
-    <string name="scan_item">Scan Item with Camera</string>
-    <string name="tag_item">Tag Item</string>
+    <string name="scan_item">SCAN ITEM WITH CAMERA</string>
+    <string name="tag_item">TAG ITEM</string>
     <string name="item_description_label">Item Description</string>
     <string name="item_description">Can of chicken noodle soup with red and white label.</string>
     <string name="keywords_label">Item Keywords</string>
     <string name="keywords">campbell\ncondensed\nchicken\nnoodle\nsoup</string>
-    <string name="pair_with_tag">Pair with Tag</string>
-    <string name="imageContentDescription">.</string>
+    <string name="pair_with_tag">PAIR WITH TAG</string>
+    <string name="imageContentDescription">Image of scanned item.</string>
     <string name="add_photo">Add Photo</string>
-    <string name="add_voice_memo">Add Voice Memo</string>
-    <string name="edit_tag">Edit Tag</string>
+    <string name="add_voice_memo">ADD VOICE MEMO</string>
+    <string name="edit_tag">EDIT TAG</string>
     <string name="textContentDescription">Text field for item description.</string>
     <string name="keywordContentDescription">Text field for keywords about the item.</string>
     <string name="speak_description">Speak Description</string>
@@ -25,6 +25,8 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="image_results_loading">Retrieving Image Description</string>
+    <string name="login_button">LOGIN</string>
+    <string name="create_button">CREATE ACCOUNT</string>
+    <string name="play_voice_memo">PLAY VOICE MEMO</string>
     <string name="pairing">Listening to a tag</string>
-
 </resources>

@@ -2,6 +2,7 @@ package com.example.eyedentify;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -55,7 +56,7 @@ public class TagActivity extends AppCompatActivity {
     private String cloudSightResult;
     private String mlkitResult;
 
-    private Button btnPairTag, btnAddVoiceMemo, btnAddPhoto;
+    private CardView btnPairTag, btnAddVoiceMemo, btnAddPhoto;
     private EditText edtItemDescription, edtItemKeywords;
     private ImageView imgScannedItem;
     private NFC nfc;
@@ -72,19 +73,19 @@ public class TagActivity extends AppCompatActivity {
     MediaRecorder mRecorder = new MediaRecorder();
 
 
-    @SuppressLint("WrongThread")
+    @SuppressLint({"WrongThread", "ClickableViewAccessibility"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tag);
         sp = getSharedPreferences("eyedentify", Context.MODE_PRIVATE);
         editor = sp.edit();
-        btnPairTag = (Button) findViewById(R.id.btnEditTag);
-        btnAddVoiceMemo = findViewById(R.id.btnAddVoiceMemo);
-        btnAddPhoto = findViewById(R.id.btnAddPhoto);
-        edtItemDescription = (EditText) findViewById(R.id.edtItemDescription);
-        edtItemKeywords = (EditText) findViewById(R.id.edtItemKeywords);
-        imgScannedItem = (ImageView) findViewById(R.id.imgScannedItem);
+        btnPairTag = findViewById(R.id.cardViewEditTag);
+        btnAddVoiceMemo = findViewById(R.id.cardViewAddViewMemo);
+        btnAddPhoto = findViewById(R.id.cardViewAddPhoto);
+        edtItemDescription = findViewById(R.id.edtItemDescription);
+        edtItemKeywords = findViewById(R.id.edtItemKeywords);
+        imgScannedItem = findViewById(R.id.imgScannedItem);
 
         mFileName = "";
         iFileName = "";
@@ -111,6 +112,7 @@ public class TagActivity extends AppCompatActivity {
 //                + Environment.DIRECTORY_DCIM + File.separator + "FILE_NAME.mp3");
 
         btnAddVoiceMemo.setOnTouchListener(new View.OnTouchListener() {
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_DOWN){
