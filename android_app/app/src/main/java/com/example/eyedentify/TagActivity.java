@@ -170,8 +170,14 @@ public class TagActivity extends AppCompatActivity {
         if (getIntent().hasExtra("tagInfo") && sp.contains(getIntent().getExtras().getString("tagInfo"))) {
             String message = sp.getString(getIntent().getExtras().getString("tagInfo"), null);
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+
             //info array, [0] = img, [1] = description+keywords, [2] = audio
             String[] infoArray = message.split("%");
+            if(!infoArray[0].equals("na")){
+                iFileName = infoArray[0];
+                editor.putString("imgPath", iFileName);
+                editor.commit();
+            }
             if(infoArray.length == 3){
                 String[] info = sp.getString(infoArray[1], null).split("%%%");
                 if(info.length == 2){
