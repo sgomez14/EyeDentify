@@ -25,4 +25,6 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="image_results_loading">Retrieving Image Description</string>
+    <string name="pairing">Listening to a tag</string>
+
 </resources>
