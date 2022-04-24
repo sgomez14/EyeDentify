@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">EyeDentify</string>
     <string name="scan_item">SCAN ITEM WITH CAMERA</string>
-    <string name="tag_item">Tag Item</string>
+    <string name="tag_item">TAG ITEM</string>
     <string name="item_description_label">Item Description</string>
     <string name="item_description">Can of chicken noodle soup with red and white label.</string>
     <string name="keywords_label">Item Keywords</string>
@@ -27,4 +27,5 @@
     <string name="image_results_loading">Retrieving Image Description</string>
     <string name="login_button">LOGIN</string>
     <string name="create_button">CREATE ACCOUNT</string>
+    <string name="play_voice_memo">PLAY VOICE MEMO</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.example.eyedentify;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.app.PendingIntent;
 import android.content.Context;
@@ -27,7 +28,7 @@ import java.util.Locale;
 
 public class ResultActivity extends AppCompatActivity {
 
-    Button btnEditTag;
+    private CardView btnPlayVoiceMemo, btnEditTag;
     private NFC nfc;
     PendingIntent pendingIntent;
     IntentFilter filters[];
@@ -46,10 +47,21 @@ public class ResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_result);
         sp = getSharedPreferences("eyedentify", Context.MODE_PRIVATE);
         editor = sp.edit();
-        btnEditTag = findViewById(R.id.btnEditTag);
+        btnPlayVoiceMemo = findViewById(R.id.cardViewPlayVoiceMemo);
+        btnEditTag = findViewById(R.id.cardViewEditTagResults);
         edtItemDescription = findViewById(R.id.edtItemDescription);
         edtItemKeywords = findViewById(R.id.edtItemKeywords);
         imgScannedItem = findViewById(R.id.imgScannedItem);
+
+        //TODO: add action that plays the voice memo
+        btnPlayVoiceMemo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+
         btnEditTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

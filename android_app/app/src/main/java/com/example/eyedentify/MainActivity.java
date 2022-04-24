@@ -3,6 +3,7 @@ package com.example.eyedentify;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
@@ -40,13 +41,13 @@ public class MainActivity extends AppCompatActivity {
     private String cloudSightResult;
     private String mlkitResult;
 
-    private Button btnTagItem;
+    private CardView btnTagItem, btnScanItem;
     private NFC nfc;
     PendingIntent pendingIntent;
     IntentFilter filters[];
     NfcAdapter adapter;
     boolean writeMode;
-    private Button btnScanItem;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
             }, REQUEST_CAMERA_CODE);
         }
 
-        btnTagItem = (Button) findViewById(R.id.btnTagItem);
-        btnScanItem = (Button) findViewById(R.id.btnScanItem);
+        btnTagItem  = findViewById(R.id.cardViewTagItem);
+        btnScanItem = findViewById(R.id.cardViewScanItem);
 
         // stuff related to NFC
         nfc = NFC.makeNFC(this);
