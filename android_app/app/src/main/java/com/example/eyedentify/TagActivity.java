@@ -30,6 +30,7 @@ import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
@@ -117,6 +118,8 @@ public class TagActivity extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_DOWN){
                     // start recording.
+                        Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                        vibrator.vibrate(300);
                         startRecording();
                     return true;
                 }
@@ -126,6 +129,8 @@ public class TagActivity extends AppCompatActivity {
                         mRecorder.stop();
                         mRecorder.release();
                         mRecorder = null;
+                        Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                        vibrator.vibrate(300);
                         Toast.makeText(TagActivity.this, "Recording Complete", Toast.LENGTH_SHORT).show();
                         return true;
                     } catch (Exception e){

@@ -63,11 +63,19 @@ public class ResultActivity extends AppCompatActivity {
         btnPlayVoiceMemo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (getIntent().hasExtra("tagInfo") && sp.contains(getIntent().getExtras().getString("tagInfo"))) {
+                    String message = sp.getString(getIntent().getExtras().getString("tagInfo"), null);
+                    String[] infoArray = message.split("%");
+                    if (infoArray.length == 3 && !infoArray[2].equals("na")) {
+                        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+                        File musicDir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
+                        File f = new File(musicDir, infoArray[2] + ".mp3");
+                        MediaPlayer mp = MediaPlayer.create(ResultActivity.this, Uri.parse(f.getPath()));
+                        mp.start();
+                    }
+                }
             }
         });
-
-
 
         btnEditTag.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,6 +136,11 @@ public class ResultActivity extends AppCompatActivity {
                             textToSpeech.speak(speech, TextToSpeech.QUEUE_FLUSH, null, null);
                         }
                     };
+                }
+
+                // Hide memo button when there is no memo
+                if(infoArray[2].equals("na")){
+                    btnPlayVoiceMemo.setVisibility(View.GONE);
                 }
 
                 if(infoArray[0].equals("na")){
