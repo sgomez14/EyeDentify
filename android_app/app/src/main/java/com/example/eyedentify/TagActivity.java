@@ -82,7 +82,7 @@ public class TagActivity extends AppCompatActivity {
         sp = getSharedPreferences("eyedentify", Context.MODE_PRIVATE);
         editor = sp.edit();
         btnPairTag = findViewById(R.id.cardViewEditTag);
-        btnAddVoiceMemo = findViewById(R.id.cardViewAddViewMemo);
+        btnAddVoiceMemo = findViewById(R.id.cardViewAddVoiceMemo);
         btnAddPhoto = findViewById(R.id.cardViewAddPhoto);
         edtItemDescription = findViewById(R.id.edtItemDescription);
         edtItemKeywords = findViewById(R.id.edtItemKeywords);
@@ -171,45 +171,34 @@ public class TagActivity extends AppCompatActivity {
             }
         });
 
+        //PARSING TAG MESSAGE HERE
         //checking if arrived at this page with tag or with button
         if (getIntent().hasExtra("tagInfo") && sp.contains(getIntent().getExtras().getString("tagInfo"))) {
             String message = sp.getString(getIntent().getExtras().getString("tagInfo"), null);
 
             //info array, [0] = img, [1] = description+keywords, [2] = audio
             String[] infoArray = message.split("%");
-            if(!infoArray[0].equals("na")){
-                iFileName = infoArray[0];
-                editor.putString("imgPath", iFileName);
-                editor.commit();
-            }
-            if(infoArray.length == 3){
+
+            if(infoArray.length == 3){ //message is parsable
+                if(!infoArray[0].equals("na")){ //image is not null, store image file state
+                    iFileName = infoArray[0];
+                    editor.putString("imgPath", iFileName);
+                    editor.commit();
+                }
                 String[] info = sp.getString(infoArray[1], null).split("%%%");
-                if(info.length == 2){
+                if(info.length == 2){//contains both description and keywords
                     edtItemDescription.setText(info[0]);
                     edtItemKeywords.setText(info[1]);
-                }else if(info.length == 1){
+                }else if(info.length == 1){ //contains only keywords
                     edtItemDescription.setText(info[0]);
                 }
-//                textToSpeech.speak(infoArray[2], TextToSpeech.QUEUE_FLUSH, null, null);
-                Thread speakDescription = new Thread(){
-                    public void run(){
-                        try {
-                            Thread.sleep(500);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        String speech = "You just came across "+info[0]+
-                                ", and possible words are " + info[1];
-                        textToSpeech.speak(speech, TextToSpeech.QUEUE_FLUSH, null, null);
-                    }
-                };
-                if(!infoArray[0].equals("na")){
+                if(!infoArray[0].equals("na")){ //image is not null
                     ContextWrapper cw = new ContextWrapper(getApplicationContext());
                     File imgDir = cw.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
                     String imgFileName = imgDir+"/"+infoArray[0]+".png";
                     imgScannedItem.setImageBitmap(BitmapFactory.decodeFile(imgFileName));
                 }
-                if(!infoArray[2].equals("na")){
+                if(!infoArray[2].equals("na")){ //voice memo is not null
                     mFileName = infoArray[2];
                 }
             }
@@ -252,7 +241,7 @@ public class TagActivity extends AppCompatActivity {
                 String u = UUID.randomUUID().toString();
                 editor.putString(u, msg);
                 editor.commit();
-                //uncomment the line below to go to listening and tagging activity
+                //uncomment the lines below to go to listening and tagging activity
                 //=================================================================
                 editor.remove("audioPath");
                 editor.remove("imgPath");
