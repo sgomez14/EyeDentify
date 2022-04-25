@@ -174,7 +174,6 @@ public class TagActivity extends AppCompatActivity {
         //checking if arrived at this page with tag or with button
         if (getIntent().hasExtra("tagInfo") && sp.contains(getIntent().getExtras().getString("tagInfo"))) {
             String message = sp.getString(getIntent().getExtras().getString("tagInfo"), null);
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 
             //info array, [0] = img, [1] = description+keywords, [2] = audio
             String[] infoArray = message.split("%");
@@ -204,15 +203,10 @@ public class TagActivity extends AppCompatActivity {
                         textToSpeech.speak(speech, TextToSpeech.QUEUE_FLUSH, null, null);
                     }
                 };
-                if(infoArray[0].equals("na")){
-                    //TODO: default image
-                }
-                else{
+                if(!infoArray[0].equals("na")){
                     ContextWrapper cw = new ContextWrapper(getApplicationContext());
                     File imgDir = cw.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-//                    File f = new File(imgDir, infoArray[0]+".png");
                     String imgFileName = imgDir+"/"+infoArray[0]+".png";
-                    Toast.makeText(this, imgFileName, Toast.LENGTH_SHORT).show();
                     imgScannedItem.setImageBitmap(BitmapFactory.decodeFile(imgFileName));
                 }
                 if(!infoArray[2].equals("na")){
@@ -500,7 +494,6 @@ public class TagActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
         launch_main_activity();
     }
 

@@ -88,5 +88,11 @@ public class NFCPairingActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //does nothing on back press
+        if (getIntent().hasExtra("tagInfo")) {
+            startActivity(
+                    new Intent(NFCPairingActivity.this, TagActivity.class).putExtra(
+                            "tagInfo", getIntent().getExtras().getString("tagInfo"))
+            );
+        }
     }
 }
