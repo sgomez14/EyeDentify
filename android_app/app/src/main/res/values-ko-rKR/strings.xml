@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EyeDentify</string>
+    <string name="scan_item">카메라로 항목 스캔</string>
+    <string name="tag_item">태그 항목</string>
+    <string name="item_description_label">항목 설명</string>
+    <string name="item_description">빨간색과 흰색 레이블이 있는 치킨 누들 수프 캔.</string>
+    <string name="keywords_label">아이템 키워드</string>
+    <string name="keywords">campbell</string>
+    <string name="pair_with_tag">태그와 페어링</string>
+    <string name="imageContentDescription">스캔한 항목의 이미지입니다.</string>
+    <string name="add_photo">사진 추가</string>
+    <string name="add_voice_memo">음성 메모 추가</string>
+    <string name="edit_tag">태그 수정</string>
+    <string name="textContentDescription">항목 설명을 위한 텍스트 필드입니다.</string>
+    <string name="keywordContentDescription">항목에 대한 키워드에 대한 텍스트 필드입니다.</string>
+    <string name="speak_description">설명 말하기</string>
+    <string name="speak_keywords">키워드 말하기</string>
+    <string name="title_activity_login">EyeDentify</string>
+    <string name="prompt_email">이메일</string>
+    <string name="prompt_password">비밀번호</string>
+    <string name="action_sign_in">로그인 또는 등록</string>
+    <string name="action_sign_in_short">로그인</string>
+    <string name="welcome">어서 오십시오 !</string>
+    <string name="invalid_username">유효한 사용자 이름이 아닙니다.</string>
+    <string name="invalid_password">비밀번호는 5자 이상이어야 합니다.</string>
+    <string name="login_failed">로그인 실패</string>
+    <string name="image_results_loading">이미지 설명 검색</string>
+    <string name="login_button">로그인</string>
+    <string name="create_button">계정 만들기</string>
+    <string name="play_voice_memo">음성 메모 재생</string>
+    <string name="pairing">태그 듣기</string>
+</resources>
