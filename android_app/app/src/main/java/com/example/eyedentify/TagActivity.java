@@ -2,11 +2,14 @@ package com.example.eyedentify;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import java.io.FileOutputStream;
 import java.util.*;
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.ContentValues;
@@ -27,6 +30,7 @@ import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
@@ -40,17 +44,20 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class TagActivity extends AppCompatActivity {
 
     private static final int PERMISSION_CODE = 1000;
     private static final int REQUEST_CAMERA_CODE = 100;
     private static final int IMAGE_CAPTURE_CODE = 101;
+
     Uri image_uri;
     private String cloudSightResult;
     private String mlkitResult;
 
-    private Button btnPairTag, btnAddVoiceMemo, btnAddPhoto;
+    private CardView btnPairTag, btnAddVoiceMemo, btnAddPhoto;
     private EditText edtItemDescription, edtItemKeywords;
     private ImageView imgScannedItem;
     private NFC nfc;
@@ -60,28 +67,33 @@ public class TagActivity extends AppCompatActivity {
     boolean writeMode;
     TTS tts ;
     private TextToSpeech textToSpeech;
-    private String mFileName;
+    private String mFileName, iFileName;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private MediaPlayer mPlayer;
     MediaRecorder mRecorder = new MediaRecorder();
 
 
+    @SuppressLint({"WrongThread", "ClickableViewAccessibility"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tag);
         sp = getSharedPreferences("eyedentify", Context.MODE_PRIVATE);
         editor = sp.edit();
-        btnPairTag = (Button) findViewById(R.id.btnEditTag);
-        btnAddVoiceMemo = findViewById(R.id.btnAddVoiceMemo);
-        btnAddPhoto = findViewById(R.id.btnAddPhoto);
-        edtItemDescription = (EditText) findViewById(R.id.edtItemDescription);
-        edtItemKeywords = (EditText) findViewById(R.id.edtItemKeywords);
-        imgScannedItem = (ImageView) findViewById(R.id.imgScannedItem);
+        btnPairTag = findViewById(R.id.cardViewEditTag);
+        btnAddVoiceMemo = findViewById(R.id.cardViewAddVoiceMemo);
+        btnAddPhoto = findViewById(R.id.cardViewAddPhoto);
+        edtItemDescription = findViewById(R.id.edtItemDescription);
+        edtItemKeywords = findViewById(R.id.edtItemKeywords);
+        imgScannedItem = findViewById(R.id.imgScannedItem);
 
-        boolean gotHereWithTag;
         mFileName = "";
+        iFileName = "";
+        if(sp.contains("audioPath"))
+            mFileName = sp.getString("audioPath", null);
+        if(sp.contains("imgPath"))
+            iFileName = sp.getString("imgPath", null);
         nfc = NFC.makeNFC(this);
         adapter = nfc.adapter;
         nfc.readIntent(getIntent());
@@ -101,20 +113,30 @@ public class TagActivity extends AppCompatActivity {
 //                + Environment.DIRECTORY_DCIM + File.separator + "FILE_NAME.mp3");
 
         btnAddVoiceMemo.setOnTouchListener(new View.OnTouchListener() {
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_DOWN){
                     // start recording.
+                        Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                        vibrator.vibrate(300);
                         startRecording();
                     return true;
                 }
                 if(event.getAction() == MotionEvent.ACTION_UP){
                     // Stop recording and save file
-                    mRecorder.stop();
-                    mRecorder.release();
-                    mRecorder = null;
-                    Toast.makeText(TagActivity.this, "Recording Complete", Toast.LENGTH_SHORT).show();
-                    return true;
+                    try{
+                        mRecorder.stop();
+                        mRecorder.release();
+                        mRecorder = null;
+                        Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                        vibrator.vibrate(300);
+                        Toast.makeText(TagActivity.this, "Recording Complete", Toast.LENGTH_SHORT).show();
+                        return true;
+                    } catch (Exception e){
+                        Toast.makeText(TagActivity.this, "Recorder Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
                 }
                 return false;
             }
@@ -149,42 +171,35 @@ public class TagActivity extends AppCompatActivity {
             }
         });
 
+        //PARSING TAG MESSAGE HERE
         //checking if arrived at this page with tag or with button
-        if (getIntent().hasExtra("tagInfo")) {
-            String message = getIntent().getExtras().getString("tagInfo");
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-            gotHereWithTag = true;
-            //disable fields if with a tag
-            edtItemDescription.setEnabled(false);
-            edtItemKeywords.setEnabled(false);
+        if (getIntent().hasExtra("tagInfo") && sp.contains(getIntent().getExtras().getString("tagInfo"))) {
+            String message = sp.getString(getIntent().getExtras().getString("tagInfo"), null);
+
             //info array, [0] = img, [1] = description+keywords, [2] = audio
             String[] infoArray = message.split("%");
-            if(infoArray.length == 3){
-                String[] info = sp.getString(infoArray[1], null).split("%%%");
-                edtItemDescription.setText(info[0]);
-                edtItemKeywords.setText(info[1]);
-//                textToSpeech.speak(infoArray[2], TextToSpeech.QUEUE_FLUSH, null, null);
-                Thread speakDescription = new Thread(){
-                    public void run(){
-                        try {
-                            Thread.sleep(500);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        String speech = "You just came across "+info[0]+
-                                ", and possible words are " + info[1];
-                        textToSpeech.speak(speech, TextToSpeech.QUEUE_FLUSH, null, null);
-                    }
-                };
-                if(infoArray[2].equals("na")){
-                    speakDescription.start();
+
+            if(infoArray.length == 3){ //message is parsable
+                if(!infoArray[0].equals("na")){ //image is not null, store image file state
+                    iFileName = infoArray[0];
+                    editor.putString("imgPath", iFileName);
+                    editor.commit();
                 }
-                else{
+                String[] info = sp.getString(infoArray[1], null).split("%%%");
+                if(info.length == 2){//contains both description and keywords
+                    edtItemDescription.setText(info[0]);
+                    edtItemKeywords.setText(info[1]);
+                }else if(info.length == 1){ //contains only keywords
+                    edtItemDescription.setText(info[0]);
+                }
+                if(!infoArray[0].equals("na")){ //image is not null
                     ContextWrapper cw = new ContextWrapper(getApplicationContext());
-                    File musicDir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
-                    File f = new File(musicDir, infoArray[2]+".mp3");
-                    MediaPlayer mp = MediaPlayer.create(this, Uri.parse(f.getPath()));
-                    mp.start();
+                    File imgDir = cw.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                    String imgFileName = imgDir+"/"+infoArray[0]+".png";
+                    imgScannedItem.setImageBitmap(BitmapFactory.decodeFile(imgFileName));
+                }
+                if(!infoArray[2].equals("na")){ //voice memo is not null
+                    mFileName = infoArray[2];
                 }
             }
             else{
@@ -202,12 +217,12 @@ public class TagActivity extends AppCompatActivity {
             edtItemDescription.setText(cloudSightResult); // CloudSight provides descriptive sentence
             edtItemKeywords.setText(mlkitResult); // MLKit provides words detect on the object
             imgScannedItem.setImageBitmap(imageBitmap);
-        }
-        else { // arrived at this activity via the "Tag Item" button
-            gotHereWithTag = false;
-            //enable fields if with a button
-            edtItemDescription.setEnabled(true);
-            edtItemKeywords.setEnabled(true);
+            try (FileOutputStream out = new FileOutputStream(getImagePath())) {
+                imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
+                // PNG is a lossless format, the compression factor (100) is ignored
+            } catch (IOException e) {
+                Toast.makeText(this, "File Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
         }
 
 
@@ -215,14 +230,23 @@ public class TagActivity extends AppCompatActivity {
         btnPairTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(edtItemDescription.getText().toString().isEmpty() && mFileName.equals("")){
+                    Toast.makeText(TagActivity.this, "Please fill out item description or voice memo to pair a tag.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 String unique = UUID.randomUUID().toString();
                 editor.putString(unique, edtItemDescription.getText()+"%%%"+edtItemKeywords.getText());
                 editor.commit();
-                String msg = "img%"+unique+"%"+(mFileName.equals("") ? "na" : mFileName);
-
-                //uncomment the line below to go to listening and tagging activity
+                String msg = (iFileName.equals("") ? "na" : iFileName) + "%" + unique+ "%" + (mFileName.equals("") ? "na" : mFileName);
+                String u = UUID.randomUUID().toString();
+                editor.putString(u, msg);
+                editor.commit();
+                //uncomment the lines below to go to listening and tagging activity
                 //=================================================================
-                startActivity(new Intent(TagActivity.this, NFCPairingActivity.class).putExtra("tagInfo", msg));
+                editor.remove("audioPath");
+                editor.remove("imgPath");
+                editor.commit();
+                startActivity(new Intent(TagActivity.this, NFCPairingActivity.class).putExtra("tagInfo", u));
                 //=================================================================
                 //uncomment the lines below to write to tag directly
                 //=================================================================
@@ -239,12 +263,23 @@ public class TagActivity extends AppCompatActivity {
 
     }
 
-
     private String getRecordingPath(){
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
         File musicDir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
         mFileName = UUID.randomUUID().toString();
+        editor.putString("audioPath", mFileName);
+        editor.commit();
         File f = new File(musicDir, mFileName+".mp3");
+        return f.getPath();
+    }
+
+    private String getImagePath(){
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        File imgDir = cw.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        iFileName = UUID.randomUUID().toString();
+        editor.putString("imgPath", iFileName);
+        editor.commit();
+        File f = new File(imgDir, iFileName+".png");
         return f.getPath();
     }
 
@@ -377,21 +412,34 @@ public class TagActivity extends AppCompatActivity {
         // Confirm requestCode and resultCode are valid
         if (requestCode == IMAGE_CAPTURE_CODE && resultCode == RESULT_OK) {
             try{
-                // convert image to File image recognition sdks
-                File imageFile = new File(getPath(image_uri));
+                ExecutorService executorService = Executors.newSingleThreadExecutor();
+                executorService.execute(new Runnable() {
+                    @Override
+                    public void run() {
 
-                // convert imageFile to bitmap for ML kit
-                Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile.toString());
-                imageBitmap = rotateBitmap90(imageBitmap);
-                // pass image bitmap to MLKit class
-                mlkitResult = MLKit.getTextFromImage(imageBitmap, this); // pass image to MLKit
+                        // onPreExecute Method
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent loadResults = new Intent(TagActivity.this, ImageRecognitionPendingActivity.class);
+                                startActivity(loadResults);
+                            }
+                        });
 
-                // pass image file to CloudSight class
-                new CloudSight(TagActivity.this, mlkitResult, imageFile);
+                        // convert image to File image recognition sdks
+                        File imageFile = new File(getPath(image_uri));
 
-                Intent loadResults = new Intent(this, ImageRecognitionPendingActivity.class);
-                startActivity(loadResults);
+                        // convert imageFile to bitmap for ML kit
+                        Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile.toString());
+                        imageBitmap = rotateBitmap90(imageBitmap);
+                        // pass image bitmap to MLKit class
+                        mlkitResult = MLKit.getTextFromImage(imageBitmap, TagActivity.this); // pass image to MLKit
 
+                        // pass image file to CloudSight class
+                        new CloudSight(TagActivity.this, mlkitResult, imageFile);
+
+                    }
+                });
             }
             catch (Exception e) {
                 Log.d("EyeDentify debug", e.getMessage());
@@ -431,4 +479,18 @@ public class TagActivity extends AppCompatActivity {
                 imageBitmap.getHeight(), matrixForRotation, true);
         return rotatedBitmap;
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        launch_main_activity();
+    }
+
+    public void launch_main_activity() {
+        Intent main_activity = new Intent(getApplicationContext(), MainActivity.class);
+        //put user data in bundle here, if we do anything with user data
+        startActivity(main_activity);
+        finish();
+    }
+
 }

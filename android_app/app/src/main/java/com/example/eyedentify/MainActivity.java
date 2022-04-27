@@ -2,14 +2,18 @@ package com.example.eyedentify;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -25,6 +29,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import java.io.File;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,24 +38,25 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CAMERA_CODE = 100;
     private static final int IMAGE_CAPTURE_CODE = 101;
     Uri image_uri;
+    private SharedPreferences sp;
 
     // Strings to save results from image recognition algorithms
     private String cloudSightResult;
     private String mlkitResult;
 
-    private Button btnTagItem;
+    private CardView btnTagItem, btnScanItem;
     private NFC nfc;
     PendingIntent pendingIntent;
     IntentFilter filters[];
     NfcAdapter adapter;
     boolean writeMode;
-    private Button btnScanItem;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        sp = getSharedPreferences("eyedentify", Context.MODE_PRIVATE);
         // 1) Request camera access permission
         if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{
@@ -57,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
             }, REQUEST_CAMERA_CODE);
         }
 
-        btnTagItem = (Button) findViewById(R.id.btnTagItem);
-        btnScanItem = (Button) findViewById(R.id.btnScanItem);
+        btnTagItem  = findViewById(R.id.cardViewTagItem);
+        btnScanItem = findViewById(R.id.cardViewScanItem);
 
         // stuff related to NFC
         nfc = NFC.makeNFC(this);
@@ -98,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     @Override
@@ -122,21 +130,34 @@ public class MainActivity extends AppCompatActivity {
         // Confirm requestCode and resultCode are valid
         if (requestCode == IMAGE_CAPTURE_CODE && resultCode == RESULT_OK) {
             try{
-                // convert image to File image recognition sdks
-                File imageFile = new File(getPath(image_uri));
+                ExecutorService executorService = Executors.newSingleThreadExecutor();
+                executorService.execute(new Runnable() {
+                    @Override
+                    public void run() {
 
-                // convert imageFile to bitmap for ML kit
-                Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile.toString());
-                imageBitmap = rotateBitmap90(imageBitmap);
-                // pass image bitmap to MLKit class
-                mlkitResult = MLKit.getTextFromImage(imageBitmap, this); // pass image to MLKit
+                        // onPreExecute Method
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent loadResults = new Intent(MainActivity.this, ImageRecognitionPendingActivity.class);
+                                startActivity(loadResults);
+                            }
+                        });
 
-                // pass image file to CloudSight class
-                new CloudSight(MainActivity.this, mlkitResult, imageFile);
+                        // convert image to File image recognition sdks
+                        File imageFile = new File(getPath(image_uri));
 
-                Intent loadResults = new Intent(this, ImageRecognitionPendingActivity.class);
-                startActivity(loadResults);
+                        // convert imageFile to bitmap for ML kit
+                        Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile.toString());
+                        imageBitmap = rotateBitmap90(imageBitmap);
+                        // pass image bitmap to MLKit class
+                        mlkitResult = MLKit.getTextFromImage(imageBitmap, MainActivity.this); // pass image to MLKit
 
+                        // pass image file to CloudSight class
+                        new CloudSight(MainActivity.this, mlkitResult, imageFile);
+
+                    }
+                });
             }
             catch (Exception e) {
                 Log.d("EyeDentify debug", e.getMessage());
@@ -176,11 +197,18 @@ public class MainActivity extends AppCompatActivity {
         nfc.readIntent(intent);
         if(NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())){
             nfc.myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            if(nfc.myTagInfo != null && nfc.myTagInfo.split("%").length == 3){
+            if(nfc.myTagInfo != null && sp.contains(nfc.myTagInfo) && sp.getString(nfc.myTagInfo, null).split("%").length == 3){
+
                 startActivity(new Intent(MainActivity.this, ResultActivity.class).putExtra("tagInfo", nfc.myTagInfo));
             }
-            else{
-                Toast.makeText(this, "Cannot Parse Information in Tag", Toast.LENGTH_SHORT).show();
+            else {
+//                assert nfc.myTagInfo != null;
+//                if(nfc.myTagInfo == null){
+//                    Toast.makeText(this, "Empty Tag", Toast.LENGTH_SHORT).show();
+//                }
+//                else{
+                    Toast.makeText(this, "Cannot Read Information in Tag", Toast.LENGTH_SHORT).show();
+//                }
             }
         }
     }
@@ -214,4 +242,10 @@ public class MainActivity extends AppCompatActivity {
                 imageBitmap.getHeight(), matrixForRotation, true);
         return rotatedBitmap;
     }
+    @Override
+    public void onBackPressed() {
+        // pressing back on main_activity closes app
+        finish();
+    }
+
 }
