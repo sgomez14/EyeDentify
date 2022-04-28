@@ -191,7 +191,7 @@ public class TagActivity extends AppCompatActivity {
             String[] infoArray = message.split("%");
 
             if(infoArray.length == 3){ //message is parsable
-                if(!infoArray[0].equals("na")){ //image is not null, store image file state
+                if(!infoArray[0].equals(Utilities.NOT_APPLICABLE)){ //image is not null, store image file state
                     iFileName = infoArray[0];
                     editor.putString("imgPath", iFileName);
                     editor.commit();
@@ -203,13 +203,13 @@ public class TagActivity extends AppCompatActivity {
                 }else if(info.length == 1){ //contains only keywords
                     edtItemDescription.setText(info[0]);
                 }
-                if(!infoArray[0].equals("na")){ //image is not null
+                if(!infoArray[0].equals(Utilities.NOT_APPLICABLE)){ //image is not null
                     ContextWrapper cw = new ContextWrapper(getApplicationContext());
                     File imgDir = cw.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
                     String imgFileName = imgDir+"/"+infoArray[0]+".png";
                     imgScannedItem.setImageBitmap(BitmapFactory.decodeFile(imgFileName));
                 }
-                if(!infoArray[2].equals("na")){ //voice memo is not null
+                if(!infoArray[2].equals(Utilities.NOT_APPLICABLE)){ //voice memo is not null
                     mFileName = infoArray[2];
                 }
             }
@@ -248,9 +248,11 @@ public class TagActivity extends AppCompatActivity {
                 //generate a unique id as key for the description and keywords
                 String unique = UUID.randomUUID().toString();
                 //put it into the map
-                editor.putString(unique, edtItemDescription.getText()+"%%%"+edtItemKeywords.getText());
+                editor.putString(unique, edtItemDescription.getText()+Utilities.TXT_SEPARATOR+edtItemKeywords.getText());
                 editor.commit();
-                String msg = (iFileName.equals("") ? "na" : iFileName) + "%" + unique+ "%" + (mFileName.equals("") ? "na" : mFileName);
+                String msg = (iFileName.equals("") ? Utilities.NOT_APPLICABLE : iFileName) +
+                        Utilities.MSG_SEPARATOR + unique+ Utilities.MSG_SEPARATOR +
+                        (mFileName.equals("") ? Utilities.NOT_APPLICABLE : mFileName);
                 String u = UUID.randomUUID().toString();
                 editor.putString(u, msg);
                 editor.commit();
@@ -496,6 +498,9 @@ public class TagActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        editor.remove("audioPath");
+        editor.remove("imgPath");
+        editor.commit();
         launch_main_activity();
     }
 

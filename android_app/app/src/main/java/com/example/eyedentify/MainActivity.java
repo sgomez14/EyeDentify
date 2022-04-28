@@ -69,9 +69,13 @@ public class MainActivity extends AppCompatActivity {
 
         // stuff related to NFC
         nfc = NFC.makeNFC(this);
+        //make an adapter for nfc to read and write
         adapter = nfc.adapter;
+        //try to read once to see if there's a tag
         nfc.readIntent(getIntent());
+        //this MUTABLE intent flag will allow the tag information to be actually modified.
         pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), PendingIntent.FLAG_MUTABLE);
+        //will handle NFC Tag discovered intents
         IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
         tagDetected.addCategory(Intent.CATEGORY_DEFAULT);
         filters = new IntentFilter[]{tagDetected};
@@ -190,6 +194,10 @@ public class MainActivity extends AppCompatActivity {
         
     }
 
+
+    //gets triggered whenever a tag gets read
+    //fills in the tag information for nfc instance
+    //goes to result page with the tag information
     @Override
     protected void onNewIntent(Intent intent){
         super.onNewIntent(intent);
@@ -197,18 +205,11 @@ public class MainActivity extends AppCompatActivity {
         nfc.readIntent(intent);
         if(NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())){
             nfc.myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            if(nfc.myTagInfo != null && sp.contains(nfc.myTagInfo) && sp.getString(nfc.myTagInfo, null).split("%").length == 3){
-
+            if(nfc.myTagInfo != null && sp.contains(nfc.myTagInfo) && sp.getString(nfc.myTagInfo, null).split(Utilities.MSG_SEPARATOR).length == Utilities.MESSAGE_FULL_LENGTH){
                 startActivity(new Intent(MainActivity.this, ResultActivity.class).putExtra("tagInfo", nfc.myTagInfo));
             }
             else {
-//                assert nfc.myTagInfo != null;
-//                if(nfc.myTagInfo == null){
-//                    Toast.makeText(this, "Empty Tag", Toast.LENGTH_SHORT).show();
-//                }
-//                else{
                     Toast.makeText(this, R.string.cannot_read, Toast.LENGTH_SHORT).show();
-//                }
             }
         }
     }
