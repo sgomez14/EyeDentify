@@ -194,6 +194,10 @@ public class MainActivity extends AppCompatActivity {
         
     }
 
+
+    //gets triggered whenever a tag gets read
+    //fills in the tag information for nfc instance
+    //goes to result page with the tag information
     @Override
     protected void onNewIntent(Intent intent){
         super.onNewIntent(intent);
@@ -205,13 +209,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, ResultActivity.class).putExtra("tagInfo", nfc.myTagInfo));
             }
             else {
-//                assert nfc.myTagInfo != null;
-//                if(nfc.myTagInfo == null){
-//                    Toast.makeText(this, "Empty Tag", Toast.LENGTH_SHORT).show();
-//                }
-//                else{
                     Toast.makeText(this, R.string.cannot_read, Toast.LENGTH_SHORT).show();
-//                }
             }
         }
     }
