@@ -55,4 +55,6 @@
     <string name="write_success">टैग पर सफलतापूर्वक लिखा गया</string>
     <string name="incorrect_response">यह टैग उत्तर नहीं दे रहा है, कृपया पुनः प्रयास करें</string>
     <string name="error_unknown">सत्यापन विफल अज्ञात गलती</string>
+    <string name="TextRecognizerError">एमएलकिट:त्रुटि पाठ पहचानकर्ता चालू नहीं है</string>
+    <string name="logo_description">EyeDentify लोगो एक काली पृष्ठभूमि दिखाता है जिसमें पीले रंग में एक आंख का चित्रण और ऊपर एक सोने का बैनर बहता है.</string>
 </resources>
