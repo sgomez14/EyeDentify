@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 import java.io.File;
 import java.util.Locale;
-
 import ai.cloudsight.androidsdk.CloudSightCallback;
 import ai.cloudsight.androidsdk.CloudSightClient;
 import ai.cloudsight.androidsdk.CloudSightResponse;
