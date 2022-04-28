@@ -9,4 +9,13 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#F44336</color>
     <color name="yellow">#FF9800</color>
+    <color name="canary_yellow">#FFBB00</color>
+    <color name="cambridge_blue">#92BFB1</color>
+    <color name="champagne_pink">#FFE5D4</color>
+    <color name="lighter_champagne_pink">#FBE7DB</color>
+    <color name="seashell">#FFF3EB</color>
+    <color name="grey_x">#B7B7B7</color>
+    <color name="light_salmon">#F8AC90</color>
+    <color name="melon">#F9BAA2</color>
+    <color name="unbleached_silk">#FBD3C3</color>
 </resources>
