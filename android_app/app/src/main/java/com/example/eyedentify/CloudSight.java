@@ -3,11 +3,15 @@ package com.example.eyedentify;
 import android.content.Context;
 import android.util.Log;
 import java.io.File;
+import java.util.Locale;
+
 import ai.cloudsight.androidsdk.CloudSightCallback;
 import ai.cloudsight.androidsdk.CloudSightClient;
 import ai.cloudsight.androidsdk.CloudSightResponse;
 
 public class CloudSight {
+    static String  language_code = Locale.getDefault().getLanguage();
+
     // 1) Constructor
     public CloudSight (Context context, String mlkitResult, File file) {
         uploadImageRequest(context, mlkitResult, file);
@@ -41,7 +45,7 @@ public class CloudSight {
             @Override
             public void imageRecognized(CloudSightResponse response) {
                 Log.d("Cloudsight debug", response.getName());
-                Utilities.newActivityWithImageResults(context, response.getName(), mlkitResult, file);
+                Utilities.newActivityWithImageResults(context, GoogleTranslate.translate(response.getName(),language_code, context.getApplicationContext()), mlkitResult, file);
             }
 
             // 7) Failure case
