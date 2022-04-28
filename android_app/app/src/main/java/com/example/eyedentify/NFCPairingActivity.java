@@ -3,8 +3,10 @@ package com.example.eyedentify;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -19,14 +21,18 @@ public class NFCPairingActivity extends AppCompatActivity {
     NfcAdapter adapter;
     boolean writeMode;
     String uniqueIdToSPStorage;
-    long timer = 3000;
+    CountDownTimer countDownTimer;
+    private SharedPreferences sp;
+    private SharedPreferences.Editor editor;
+    long timer = 5000;
     long interval = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pairing);
-
+        sp = getSharedPreferences("eyedentify", Context.MODE_PRIVATE);
+        editor = sp.edit();
 
         // A toast to warn users that every tag will get overwritten
         Toast.makeText(this, R.string.warning_overwrite, Toast.LENGTH_SHORT).show();
@@ -55,7 +61,7 @@ public class NFCPairingActivity extends AppCompatActivity {
         30 seconds timer for pairing activity,
         once timer is up and there is no tag scanned, go back to previous activity (TagActivity)
         */
-        new CountDownTimer(timer, interval) {
+        countDownTimer = new CountDownTimer(timer, interval) {
 
             /*
             onTick debugger to count down the time
@@ -91,6 +97,7 @@ public class NFCPairingActivity extends AppCompatActivity {
                 try {
                     nfc.write(uniqueIdToSPStorage);
                     Toast.makeText(this, R.string.write_success, Toast.LENGTH_SHORT).show();
+                    countDownTimer.cancel();
                     startActivity(new Intent(NFCPairingActivity.this, ResultActivity.class).putExtra("tagInfo", uniqueIdToSPStorage));
                 } catch (Exception exception) {
                     exception.printStackTrace();
@@ -144,6 +151,10 @@ public class NFCPairingActivity extends AppCompatActivity {
     public void onBackPressed() {
         //does nothing on back press
         if (getIntent().hasExtra("tagInfo")) {
+            countDownTimer.cancel();
+            editor.remove("audioPath");
+            editor.remove("imgPath");
+            editor.commit();
             startActivity(
                     new Intent(NFCPairingActivity.this, TagActivity.class).putExtra(
                             "tagInfo", getIntent().getExtras().getString("tagInfo"))
