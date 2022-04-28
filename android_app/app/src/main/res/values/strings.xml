@@ -39,8 +39,8 @@
     <string name="on_cloudsight_failure">Cloudsight cannot return value</string>
     <string name="cannot_read">Cannot read from tag</string>
     <string name="missing_file">Likely missing files</string>
-    <string name="you_just">You just came across</string>
-    <string name="possible_words">and possible words are</string>
+    <string name="you_just">"You just came across "</string>
+    <string name="possible_words">"and possible words are "</string>
     <string name="warning_overwrite">Warning: tag with information will get overwritten.</string>
     <string name="email">Email</string>
     <string name="invalid_email">invalid email</string>

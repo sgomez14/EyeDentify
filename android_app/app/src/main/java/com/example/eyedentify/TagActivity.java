@@ -498,6 +498,9 @@ public class TagActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        editor.remove("audioPath");
+        editor.remove("imgPath");
+        editor.commit();
         launch_main_activity();
     }
 

@@ -56,4 +56,5 @@
     <string name="error_unknown">验证出错。错误未知</string>
     <string name="incorrect_response">标签无响应。请重试</string>
     <string name="TextRecognizerError">MLKit：错误，文本识别器无法运行</string>
+    <string name="logo_description">EyeDentify 徽标显示黑色背景，黄色眼睛插图和顶部流动的金色横幅。</string>
 </resources>

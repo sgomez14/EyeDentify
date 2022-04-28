@@ -2,7 +2,6 @@ package com.example.eyedentify;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -16,17 +15,11 @@ import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
-import android.speech.tts.UtteranceProgressListener;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.io.File;
 import java.util.Locale;
 
@@ -172,6 +165,11 @@ public class ResultActivity extends AppCompatActivity {
 
     }
 
+    /*
+     Gets triggered whenever a tag gets read
+     fills in the tag information for nfc instance
+     gets to result page with the tag information
+    */
     @Override
     protected void onNewIntent(Intent intent){
         super.onNewIntent(intent);
@@ -189,6 +187,9 @@ public class ResultActivity extends AppCompatActivity {
         }
     }
 
+    /*
+    NFC write mode off when paused
+    */
     @Override
     public void onPause(){
         super.onPause();
@@ -196,22 +197,34 @@ public class ResultActivity extends AppCompatActivity {
         textToSpeech.stop();
     }
 
+    /*
+    NFC write mode on when paused
+    */
     @Override
     public void onResume(){
         super.onResume();
         writeModeOn();
     }
 
+    /*
+    Disabling write mode for NFC
+    */
     private void writeModeOff(){
         writeMode = false;
         adapter.disableForegroundDispatch(this);
     }
 
+    /*
+    Enabling write mode for NFC
+    */
     private void writeModeOn(){
         writeMode = true;
         adapter.enableForegroundDispatch(this, pendingIntent, filters, null);
     }
 
+    /*
+    Back press brings to previous activity (MainActivity)
+    */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
