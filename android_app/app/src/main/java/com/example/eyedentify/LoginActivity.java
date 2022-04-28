@@ -28,7 +28,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText etEmail;
     private EditText etPassword;
-    private Button btnGuest;
     private FirebaseAuth mAuth;
     private final String TAG = "LOGIN DEBUG";
     private CardView btnLogin;
@@ -62,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                 String str_email = etEmail.getText().toString();
                 String str_pass = etPassword.getText().toString();
 
+                //check blank fields
                 if (str_email.equals("")) {
                     Toast.makeText(getApplicationContext(), R.string.email_empty,
                             Toast.LENGTH_SHORT).show();
@@ -82,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                 String str_email = etEmail.getText().toString();
                 String str_pass = etPassword.getText().toString();
 
+                //check blank fields
                 if (str_email.equals("")) {
                     Toast.makeText(getApplicationContext(), R.string.email_empty,
                             Toast.LENGTH_SHORT).show();
@@ -96,18 +97,6 @@ public class LoginActivity extends AppCompatActivity {
                 createAccount(str_email, str_pass);
             }
         });
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            // Check if user is signed in (non-null) and update UI accordingly.
-           // reload();
-        }
 
     }
 
@@ -144,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             launch_main_activity();
                         } else {
-                            // If sign in fails, display a message to the user.
+                            // If sign in fails, log a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
 
                             auth_error_handler(task);
@@ -184,14 +173,9 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void go_back_to_main_activity(){
-
-    }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
         launch_main_activity();
     }
 
