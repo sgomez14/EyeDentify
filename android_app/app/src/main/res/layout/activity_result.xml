@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="215dp"
             android:layout_margin="5dp"
-
+            android:importantForAccessibility="no"
             app:srcCompat="@drawable/can_of_soup"
             tools:srcCompat="@drawable/can_of_soup" />
 
