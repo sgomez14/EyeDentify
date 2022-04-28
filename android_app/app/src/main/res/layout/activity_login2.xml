@@ -32,9 +32,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.1"
-        android:contentDescription="please enter email"
         android:ems="10"
-        android:hint="E - mail"
+        android:hint= "@string/email"
         android:inputType="textEmailAddress"
         android:textSize="34sp" />
 
@@ -43,9 +42,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.1"
-        android:contentDescription="please enter password"
         android:ems="10"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:textSize="34sp" />
 

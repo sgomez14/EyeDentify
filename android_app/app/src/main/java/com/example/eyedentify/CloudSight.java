@@ -3,12 +3,16 @@ package com.example.eyedentify;
 import android.content.Context;
 import android.util.Log;
 import java.io.File;
+import java.util.Locale;
+
 import ai.cloudsight.androidsdk.CloudSightCallback;
 import ai.cloudsight.androidsdk.CloudSightClient;
 import ai.cloudsight.androidsdk.CloudSightResponse;
 
 public class CloudSight {
-    // 1) Constructor
+    static String  language_code = Locale.getDefault().getLanguage();
+
+    // 1) Constructor for MainActivity and TagActivity to call this CloudSight helper class
     public CloudSight (Context context, String mlkitResult, File file) {
         uploadImageRequest(context, mlkitResult, file);
     }
@@ -24,14 +28,10 @@ public class CloudSight {
 
         // 5) Pass in photo file and analyze photo using API
         client.getImageInformation(file, new CloudSightCallback() {
-            @Override
-
-            public void imageUploaded(CloudSightResponse response) {
-                Log.d("Cloudsight debug", "imageUploaded " + response.getStatus());
-            }
 
             /*
-            6) Successful case when image is recognized
+            6) imageUploaded & imageRecognized
+            Successful case when image is recognized
             Cloudsight would pass back a response using call back function 'imageRecognized'.
             Once call back function is called, call main activity's newActivityWithImageResults to
             start next activity TagActivity.
@@ -39,20 +39,31 @@ public class CloudSight {
             and in real time.
              */
             @Override
-            public void imageRecognized(CloudSightResponse response) {
-                Log.d("Cloudsight debug", response.getName());
-                Utilities.newActivityWithImageResults(context, response.getName(), mlkitResult, file);
+            public void imageUploaded(CloudSightResponse response) {
+                Log.d("Cloudsight debug", "imageUploaded " + response.getStatus());
             }
 
-            // 7) Failure case
+            @Override
+            public void imageRecognized(CloudSightResponse response) {
+                Log.d("Cloudsight debug", response.getName());
+                Utilities.newActivityWithImageResults(context, GoogleTranslate.translate(response.getName(),language_code, context.getApplicationContext()), mlkitResult, file);
+            }
+
+
+            /*
+            7) imageRecognitionFailed & onFailure
+            they are detected when image failed to get recognized or API key is wrong
+            */
             @Override
             public void imageRecognitionFailed(String reason) {
                 Log.d("Cloudsight debug", "imageRecognitionFailed " + reason);
+                Utilities.newActivityWithImageResults(context, context.getString(R.string.on_cloudsight_failure), mlkitResult, file);
             }
 
             @Override
             public void onFailure(Throwable throwable) {
                 Log.d("Cloudsight debug", "onFailure " + throwable.getLocalizedMessage());
+                Utilities.newActivityWithImageResults(context, context.getString(R.string.on_cloudsight_failure), mlkitResult, file);
             }
         });
     }

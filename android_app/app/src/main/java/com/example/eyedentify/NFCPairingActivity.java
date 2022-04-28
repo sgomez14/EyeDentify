@@ -26,7 +26,7 @@ public class NFCPairingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pairing);
-        Toast.makeText(this, "Warning: tag with information will get overwritten.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.warning_overwrite, Toast.LENGTH_SHORT).show();
 
         if (getIntent().hasExtra("tagInfo")) {
             uniqueIdToSPStorage = getIntent().getExtras().getString("tagInfo");
@@ -51,14 +51,14 @@ public class NFCPairingActivity extends AppCompatActivity {
 //                startActivity(new Intent(ResultActivity.this, ResultActivity.class).putExtra("tagInfo", nfc.myTagInfo));
                 try {
                     nfc.write(uniqueIdToSPStorage);
-                    Toast.makeText(this, "Successfully written to tag.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.write_success, Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(NFCPairingActivity.this, ResultActivity.class).putExtra("tagInfo", uniqueIdToSPStorage));
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
             }
             else{
-                Toast.makeText(this, "This tag is not responding, please try again.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.incorrect_response, Toast.LENGTH_SHORT).show();
             }
         }
     }

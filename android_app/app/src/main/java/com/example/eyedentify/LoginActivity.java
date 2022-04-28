@@ -63,12 +63,12 @@ public class LoginActivity extends AppCompatActivity {
                 String str_pass = etPassword.getText().toString();
 
                 if (str_email.equals("")) {
-                    Toast.makeText(getApplicationContext(), "E-mail field is empty!",
+                    Toast.makeText(getApplicationContext(), R.string.email_empty,
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (str_pass.equals("")){
-                    Toast.makeText(getApplicationContext(), "Password field is empty!",
+                    Toast.makeText(getApplicationContext(), R.string.password_empty,
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -83,12 +83,12 @@ public class LoginActivity extends AppCompatActivity {
                 String str_pass = etPassword.getText().toString();
 
                 if (str_email.equals("")) {
-                    Toast.makeText(getApplicationContext(), "E-mail field is empty!",
+                    Toast.makeText(getApplicationContext(), R.string.email_empty,
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (str_pass.equals("")){
-                    Toast.makeText(getApplicationContext(), "Password field is empty!",
+                    Toast.makeText(getApplicationContext(), R.string.password_empty,
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -159,25 +159,25 @@ public class LoginActivity extends AppCompatActivity {
         try {
             throw task.getException();
         } catch (FirebaseAuthEmailException e){
-            Toast.makeText(getApplicationContext(), "Invalid email",
+            Toast.makeText(getApplicationContext(), R.string.invalid_email,
                     Toast.LENGTH_SHORT).show();
         }catch(FirebaseAuthWeakPasswordException e) {
-            Toast.makeText(getApplicationContext(), "Password must be minimum 6 characters",
+            Toast.makeText(getApplicationContext(), R.string.password_min,
                     Toast.LENGTH_SHORT).show();
         } catch (FirebaseAuthInvalidCredentialsException e){
-            Toast.makeText(getApplicationContext(), "Invalid login credentials",
+            Toast.makeText(getApplicationContext(), R.string.invalid_cred,
                     Toast.LENGTH_SHORT).show();
         } catch (FirebaseNetworkException e){
-            Toast.makeText(getApplicationContext(), "Not connected to internet",
+            Toast.makeText(getApplicationContext(), R.string.no_internet,
                     Toast.LENGTH_SHORT).show();
 
         }catch (FirebaseAuthUserCollisionException e){
-            Toast.makeText(getApplicationContext(), "Email already registered",
+            Toast.makeText(getApplicationContext(), R.string.email_used,
                     Toast.LENGTH_SHORT).show();
 
         }
         catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Authentication failed unknown error.",
+            Toast.makeText(getApplicationContext(), R.string.error_unknown,
             Toast.LENGTH_SHORT).show();
 
         }

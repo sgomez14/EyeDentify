@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                         PackageManager.PERMISSION_GRANTED) {
                     openCamera();
                 } else {
-                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.perm_denied, Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
 //                    Toast.makeText(this, "Empty Tag", Toast.LENGTH_SHORT).show();
 //                }
 //                else{
-                    Toast.makeText(this, "Cannot Read Information in Tag", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.cannot_read, Toast.LENGTH_SHORT).show();
 //                }
             }
         }
