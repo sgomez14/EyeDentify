@@ -58,14 +58,15 @@ public class ResultActivity extends AppCompatActivity {
         edtItemDescription = findViewById(R.id.edtItemDescription);
         edtItemKeywords = findViewById(R.id.edtItemKeywords);
         imgScannedItem = findViewById(R.id.imgScannedItem);
-
-        //TODO: add action that plays the voice memo
         btnPlayVoiceMemo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (getIntent().hasExtra("tagInfo") && sp.contains(getIntent().getExtras().getString("tagInfo"))) {
+                    //get the message from sharedpreference using the key
                     String message = sp.getString(getIntent().getExtras().getString("tagInfo"), null);
+                    //split the message into image, text and audio
                     String[] infoArray = message.split("%");
+                    //if message is indeed the format we constructed and there is a audio memo, retrieve the audio memo
                     if (infoArray.length == 3 && !infoArray[2].equals("na")) {
                         ContextWrapper cw = new ContextWrapper(getApplicationContext());
                         File musicDir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
@@ -84,9 +85,13 @@ public class ResultActivity extends AppCompatActivity {
             }
         });
         nfc = NFC.makeNFC(this);
+        //make an adapter for nfc to read and write
         adapter = nfc.adapter;
+        //try to read once to see if there's a tag
         nfc.readIntent(getIntent());
+        //this MUTABLE intent flag will allow the tag information to be actually modified.
         pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), PendingIntent.FLAG_MUTABLE);
+        //will handle NFC Tag discovered intents
         IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
         tagDetected.addCategory(Intent.CATEGORY_DEFAULT);
         filters = new IntentFilter[]{tagDetected};
@@ -106,11 +111,12 @@ public class ResultActivity extends AppCompatActivity {
             speakDescription = new Thread(){
                 public void run(){}
             };
-            if(infoArray.length == 3){
+            //
+            if(infoArray.length == 3){ //message is parsable
                 String[] info = sp.getString(infoArray[1], null).split("%%%");
-                if(info.length == 2){
-                    edtItemDescription.setText(info[0]);
-                    edtItemKeywords.setText(info[1]);
+                if(info.length == 2){ //there are both description and keywords available
+                    edtItemDescription.setText(info[0]); //set description text
+                    edtItemKeywords.setText(info[1]); //set keywords text
                     speakDescription = new Thread(){
                         public void run(){
                             try {
@@ -118,13 +124,13 @@ public class ResultActivity extends AppCompatActivity {
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
-                            String speech = R.string.you_just + info[0]+
-                                    R.string.possible_words + info[1];
+                            String speech = getResources().getString(R.string.you_just) + info[0]+
+                                    getResources().getString(R.string.possible_words) + info[1];
                             textToSpeech.speak(speech, TextToSpeech.QUEUE_FLUSH, null, null);
                         }
                     };
-                }else if (info.length == 1){
-                    edtItemDescription.setText(info[0]);
+                }else if (info.length == 1){ //just description available
+                    edtItemDescription.setText(info[0]); //set description text
                     speakDescription = new Thread(){
                         public void run(){
                             try {
@@ -143,37 +149,17 @@ public class ResultActivity extends AppCompatActivity {
                     btnPlayVoiceMemo.setVisibility(View.GONE);
                 }
 
-                if(infoArray[0].equals("na")){
-                    //TODO: default image
-                }
-                else{
+                //if there is an image available, retrieve it and set it to screen
+                if(!infoArray[0].equals("na")){
                     ContextWrapper cw = new ContextWrapper(getApplicationContext());
                     File imgDir = cw.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
 //                    File f = new File(imgDir, infoArray[0]+".png");
                     String imgFileName = imgDir+"/"+infoArray[0]+".png";
                     imgScannedItem.setImageBitmap(BitmapFactory.decodeFile(imgFileName));
                 }
-                if(infoArray[2].equals("na")){
+                if(infoArray[2].equals("na")){                 //if no audio memo available
+                    //if no audio memo available
                     speakDescription.start();
-                }
-                else{
-                    ContextWrapper cw = new ContextWrapper(getApplicationContext());
-                    File musicDir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
-                    File f = new File(musicDir, infoArray[2]+".mp3");
-                    MediaPlayer mp = MediaPlayer.create(this, Uri.parse(f.getPath()));
-                    //playAudioWtihDelay(mp);
-
-//                    Thread t = new Thread() {
-//                        public void run() {
-//                            try {
-//                                Thread.sleep(5000);
-//                            } catch (InterruptedException e) {
-//                                e.printStackTrace();
-//                            }
-//                            mp.start();
-//                        }
-//                    };
-//                    t.start();
                 }
             }
             else{
@@ -185,16 +171,6 @@ public class ResultActivity extends AppCompatActivity {
         }
 
     }
-
-//
-//    public void playAudioWtihDelay(MediaPlayer mp) {
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                mp.start();
-//            }
-//        }, 2000);
-//    }
 
     @Override
     protected void onNewIntent(Intent intent){
