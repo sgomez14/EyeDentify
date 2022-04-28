@@ -118,8 +118,8 @@ public class ResultActivity extends AppCompatActivity {
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
-                            String speech = "You just came across "+info[0]+
-                                    ", and possible words are " + info[1];
+                            String speech = R.string.you_just + info[0]+
+                                    R.string.possible_words + info[1];
                             textToSpeech.speak(speech, TextToSpeech.QUEUE_FLUSH, null, null);
                         }
                     };
@@ -132,7 +132,7 @@ public class ResultActivity extends AppCompatActivity {
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
-                            String speech = "You just came across "+info[0];
+                            String speech = R.string.you_just+info[0];
                             textToSpeech.speak(speech, TextToSpeech.QUEUE_FLUSH, null, null);
                         }
                     };
@@ -177,11 +177,11 @@ public class ResultActivity extends AppCompatActivity {
                 }
             }
             else{
-                Toast.makeText(this, "Likely missing files", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.missing_file, Toast.LENGTH_SHORT).show();
             }
         }
         else{
-            Toast.makeText(this, "Cannot read from tag", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.cannot_read, Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -207,7 +207,7 @@ public class ResultActivity extends AppCompatActivity {
                 startActivity(new Intent(ResultActivity.this, ResultActivity.class).putExtra("tagInfo", nfc.myTagInfo));
             }
             else{
-                Toast.makeText(this, "Cannot Parse Information in Tag", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.cannot_parse, Toast.LENGTH_SHORT).show();
             }
         }
     }
