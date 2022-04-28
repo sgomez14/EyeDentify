@@ -4,12 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -144,6 +142,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+    //catches errors for authentication
     public void auth_error_handler(Task<AuthResult> task){
         try {
             throw task.getException();
@@ -163,25 +162,17 @@ public class LoginActivity extends AppCompatActivity {
         }catch (FirebaseAuthUserCollisionException e){
             Toast.makeText(getApplicationContext(), R.string.email_used,
                     Toast.LENGTH_SHORT).show();
-
         }
         catch (Exception e) {
             Toast.makeText(getApplicationContext(), R.string.error_unknown,
             Toast.LENGTH_SHORT).show();
-
         }
 
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        launch_main_activity();
-    }
-
     public void launch_main_activity(){
         Intent main_activity = new Intent(getApplicationContext(), MainActivity.class);
-        //put user data in bundle here, if we do anything with user data
+        //starts main activity
         startActivity(main_activity);
         finish();
     }
