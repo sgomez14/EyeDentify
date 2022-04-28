@@ -55,5 +55,5 @@
     <string name="incorrect_response">This tag is not responding, please try again</string>
     <string name="error_unknown">Authentication failed unknown error</string>
     <string name="TextRecognizerError">MLKit: Error TextRecognizer Not Operational</string>
-
+    <string name="logo_description">EyeDentify Logo shows a black background with an illustration of an eye in yellow and a gold banner flowing on top.</string>
 </resources>
