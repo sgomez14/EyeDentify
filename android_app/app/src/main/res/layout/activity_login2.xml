@@ -13,9 +13,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
         android:elevation="10dp"
-        app:cardCornerRadius="25dp"
-        android:layout_margin="10dp">
+        app:cardCornerRadius="25dp">
 
         <ImageView
             android:id="@+id/imageView"
@@ -51,22 +51,23 @@
     <androidx.cardview.widget.CardView
 
         android:id="@+id/cardViewLogin"
-        app:cardCornerRadius="50dp"
-        android:layout_margin="5dp"
-        android:elevation="10dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.2">
+        android:layout_margin="5dp"
+        android:layout_weight="0.2"
+        android:elevation="10dp"
+        app:cardCornerRadius="50dp">
 
         <ImageView
-            android:background="@drawable/greenstripe"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@drawable/greenstripe" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:hapticFeedbackEnabled="true"
             android:text="@string/login_button"
             android:textSize="40sp"
             android:textStyle="bold" />
@@ -76,17 +77,17 @@
     <androidx.cardview.widget.CardView
 
         android:id="@+id/cardViewCreate"
-        app:cardCornerRadius="50dp"
-        android:layout_margin="5dp"
-        android:elevation="10dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.2">
+        android:layout_margin="5dp"
+        android:layout_weight="0.2"
+        android:elevation="10dp"
+        app:cardCornerRadius="50dp">
 
         <ImageView
-            android:background="@drawable/yellowdiamond"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@drawable/yellowdiamond" />
 
         <TextView
             android:layout_width="match_parent"

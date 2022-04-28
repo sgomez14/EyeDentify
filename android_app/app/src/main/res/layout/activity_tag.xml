@@ -4,71 +4,71 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TagActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".TagActivity">
 
 
         <ImageView
             android:id="@+id/imgScannedItem"
             android:layout_width="match_parent"
             android:layout_height="215dp"
+            android:layout_margin="5dp"
             android:contentDescription="@string/imageContentDescription"
             app:srcCompat="@drawable/eyedentify_logo_black_gold"
-            tools:srcCompat="@drawable/eyedentify_logo_black_gold"
-            android:layout_margin="5dp"/>
+            tools:srcCompat="@drawable/eyedentify_logo_black_gold" />
 
 
         <TextView
             android:id="@+id/tvDescriptionLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:layout_weight="1"
             android:labelFor="@+id/tvDescription"
             android:text="@string/item_description_label"
             android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_margin="5dp"/>
+            android:textStyle="bold" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/tvDescription"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="3"-->
-<!--            android:text="@string/item_description"-->
-<!--            android:textSize="20sp" />-->
+        <!--        <TextView-->
+        <!--            android:id="@+id/tvDescription"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_weight="3"-->
+        <!--            android:text="@string/item_description"-->
+        <!--            android:textSize="20sp" />-->
 
         <EditText
             android:id="@+id/edtItemDescription"
             android:layout_width="match_parent"
             android:layout_height="70dp"
+            android:layout_margin="5dp"
             android:layout_weight="7"
             android:ems="10"
             android:gravity="start|top"
             android:hint="@string/textContentDescription"
+            android:importantForAutofill="no"
             android:inputType="textMultiLine"
             android:textColorHint="#546E7A"
-            tools:ignore="DuplicateSpeakableTextCheck"
-            android:importantForAutofill="no"
-            android:layout_margin="5dp"/>
+            tools:ignore="DuplicateSpeakableTextCheck" />
 
         <TextView
             android:id="@+id/tvWordsDetectedLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:layout_weight="1"
             android:labelFor="@+id/tvWordsDetected"
             android:text="@string/keywords_label"
             android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_margin="5dp"/>
+            android:textStyle="bold" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/tvWordsDetected"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="3"-->
-<!--            android:text="@string/keywords"-->
-<!--            android:textSize="20sp" />-->
+        <!--        <TextView-->
+        <!--            android:id="@+id/tvWordsDetected"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_weight="3"-->
+        <!--            android:text="@string/keywords"-->
+        <!--            android:textSize="20sp" />-->
 
         <EditText
             android:id="@+id/edtItemKeywords"
@@ -77,33 +77,33 @@
             android:layout_margin="5dp"
             android:layout_weight="7"
             android:ems="10"
+            android:enabled="true"
+            android:focusable="true"
             android:gravity="start|top"
             android:hint="@string/keywordContentDescription"
             android:importantForAutofill="no"
             android:inputType="textMultiLine"
-            android:textColorHint="#546E7A"
-            android:enabled="true"
-            android:minLines="3"
-            android:maxEms="4"
             android:isScrollContainer="true"
+            android:maxEms="4"
+            android:minLines="3"
             android:scrollbars="vertical"
-            android:focusable="true"
-            tools:ignore="DuplicateSpeakableTextCheck"
-            />
+            android:textColorHint="#546E7A"
+            tools:ignore="DuplicateSpeakableTextCheck" />
+
         <androidx.cardview.widget.CardView
 
             android:id="@+id/cardViewAddPhoto"
-            app:cardCornerRadius="50dp"
-            android:layout_margin="5dp"
-            android:elevation="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="7">
+            android:layout_margin="5dp"
+            android:layout_weight="7"
+            android:elevation="10dp"
+            app:cardCornerRadius="50dp">
 
                 <ImageView
-                    android:background="@drawable/orangestripe"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:background="@drawable/orangestripe" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -114,29 +114,29 @@
                     android:textStyle="bold" />
 
         </androidx.cardview.widget.CardView>
-<!--        <Button-->
-<!--            android:id="@+id/btnAddPhoto"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="7"-->
-<!--            android:background="@drawable/orangestripe"-->
-<!--            android:text="@string/scan_item"-->
-<!--            android:textSize="24sp"-->
-<!--            android:layout_margin="2dp"/>-->
+        <!--        <Button-->
+        <!--            android:id="@+id/btnAddPhoto"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_weight="7"-->
+        <!--            android:background="@drawable/orangestripe"-->
+        <!--            android:text="@string/scan_item"-->
+        <!--            android:textSize="24sp"-->
+        <!--            android:layout_margin="2dp"/>-->
         <androidx.cardview.widget.CardView
 
             android:id="@+id/cardViewAddVoiceMemo"
-            app:cardCornerRadius="50dp"
-            android:layout_margin="5dp"
-            android:elevation="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="7">
+            android:layout_margin="5dp"
+            android:layout_weight="7"
+            android:elevation="10dp"
+            app:cardCornerRadius="50dp">
 
                 <ImageView
-                    android:background="@drawable/yellowdiamond"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:background="@drawable/yellowdiamond" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -148,29 +148,29 @@
 
         </androidx.cardview.widget.CardView>
 
-<!--        <Button-->
-<!--            android:id="@+id/btnAddVoiceMemo"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="7"-->
-<!--            android:background="@drawable/yellowdiamond"-->
-<!--            android:text="@string/add_voice_memo"-->
-<!--            android:textSize="24sp"-->
-<!--            android:layout_margin="2dp"/>-->
+        <!--        <Button-->
+        <!--            android:id="@+id/btnAddVoiceMemo"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_weight="7"-->
+        <!--            android:background="@drawable/yellowdiamond"-->
+        <!--            android:text="@string/add_voice_memo"-->
+        <!--            android:textSize="24sp"-->
+        <!--            android:layout_margin="2dp"/>-->
         <androidx.cardview.widget.CardView
 
             android:id="@+id/cardViewEditTag"
-            app:cardCornerRadius="50dp"
-            android:layout_margin="5dp"
-            android:elevation="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="7">
+            android:layout_margin="5dp"
+            android:layout_weight="7"
+            android:elevation="10dp"
+            app:cardCornerRadius="50dp">
 
                 <ImageView
-                    android:background="@drawable/greenstripe"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:background="@drawable/greenstripe" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -181,13 +181,13 @@
                     android:textStyle="bold" />
 
         </androidx.cardview.widget.CardView>
-<!--        <Button-->
-<!--            android:id="@+id/btnEditTag"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="7"-->
-<!--            android:background="@drawable/greenstripe"-->
-<!--            android:text="@string/pair_with_tag"-->
-<!--            android:textSize="24sp"-->
-<!--            android:layout_margin="2dp"/>-->
+        <!--        <Button-->
+        <!--            android:id="@+id/btnEditTag"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_weight="7"-->
+        <!--            android:background="@drawable/greenstripe"-->
+        <!--            android:text="@string/pair_with_tag"-->
+        <!--            android:textSize="24sp"-->
+        <!--            android:layout_margin="2dp"/>-->
 </LinearLayout>
