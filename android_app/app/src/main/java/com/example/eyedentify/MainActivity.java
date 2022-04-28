@@ -69,9 +69,13 @@ public class MainActivity extends AppCompatActivity {
 
         // stuff related to NFC
         nfc = NFC.makeNFC(this);
+        //make an adapter for nfc to read and write
         adapter = nfc.adapter;
+        //try to read once to see if there's a tag
         nfc.readIntent(getIntent());
+        //this MUTABLE intent flag will allow the tag information to be actually modified.
         pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), PendingIntent.FLAG_MUTABLE);
+        //will handle NFC Tag discovered intents
         IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
         tagDetected.addCategory(Intent.CATEGORY_DEFAULT);
         filters = new IntentFilter[]{tagDetected};
