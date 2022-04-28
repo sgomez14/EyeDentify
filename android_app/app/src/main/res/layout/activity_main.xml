@@ -10,17 +10,17 @@
         <androidx.cardview.widget.CardView
 
             android:id="@+id/cardViewScanItem"
-            app:cardCornerRadius="50dp"
-            android:layout_margin="5dp"
-            android:elevation="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="7">
+            android:layout_margin="5dp"
+            android:layout_weight="7"
+            android:elevation="10dp"
+            app:cardCornerRadius="50dp">
 
                 <ImageView
-                    android:background="@drawable/purplestripe"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:background="@drawable/purplestripe" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -32,31 +32,31 @@
 
         </androidx.cardview.widget.CardView>
 
-<!--        <Button-->
-<!--            android:id="@+id/btnScanItem"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_weight="1"-->
-<!--            android:background="@drawable/purplestripe"-->
-<!--            android:isScrollContainer="false"-->
-<!--            android:text="@string/scan_item"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="34sp"-->
-<!--            android:layout_margin="5dp" />-->
+        <!--        <Button-->
+        <!--            android:id="@+id/btnScanItem"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:background="@drawable/purplestripe"-->
+        <!--            android:isScrollContainer="false"-->
+        <!--            android:text="@string/scan_item"-->
+        <!--            android:textColor="@color/black"-->
+        <!--            android:textSize="34sp"-->
+        <!--            android:layout_margin="5dp" />-->
         <androidx.cardview.widget.CardView
 
             android:id="@+id/cardViewTagItem"
-            app:cardCornerRadius="50dp"
-            android:layout_margin="5dp"
-            android:elevation="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="7">
+            android:layout_margin="5dp"
+            android:layout_weight="7"
+            android:elevation="10dp"
+            app:cardCornerRadius="50dp">
 
                 <ImageView
-                    android:background="@drawable/yellowdiamond"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:background="@drawable/yellowdiamond" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -67,14 +67,14 @@
                     android:textStyle="bold" />
 
         </androidx.cardview.widget.CardView>
-<!--        <Button-->
-<!--            android:id="@+id/btnTagItem"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_weight="1"-->
-<!--            android:background="@drawable/yellowdiamond"-->
-<!--            android:text="@string/tag_item"-->
-<!--            android:textSize="34sp"-->
-<!--            android:layout_margin="5dp"-->
-<!--            app:iconGravity="top" />-->
+        <!--        <Button-->
+        <!--            android:id="@+id/btnTagItem"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:background="@drawable/yellowdiamond"-->
+        <!--            android:text="@string/tag_item"-->
+        <!--            android:textSize="34sp"-->
+        <!--            android:layout_margin="5dp"-->
+        <!--            app:iconGravity="top" />-->
 </LinearLayout>
