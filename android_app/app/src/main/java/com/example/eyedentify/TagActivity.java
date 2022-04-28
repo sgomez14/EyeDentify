@@ -88,19 +88,28 @@ public class TagActivity extends AppCompatActivity {
         edtItemKeywords = findViewById(R.id.edtItemKeywords);
         imgScannedItem = findViewById(R.id.imgScannedItem);
 
+        // initialize image file name and audio file name to emtpty,
         mFileName = "";
         iFileName = "";
+
+        // fill in from sharedpreference if available
         if(sp.contains("audioPath"))
             mFileName = sp.getString("audioPath", null);
         if(sp.contains("imgPath"))
             iFileName = sp.getString("imgPath", null);
+        // initialize an NFC object
         nfc = NFC.makeNFC(this);
+        //make an adapter for nfc to read and write
         adapter = nfc.adapter;
+        //try to read once to see if there's a tag
         nfc.readIntent(getIntent());
+        //this MUTABLE intent flag will allow the tag information to be actually modified.
         pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), PendingIntent.FLAG_MUTABLE);
+        //will handle NFC Tag discovered intents
         IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
         tagDetected.addCategory(Intent.CATEGORY_DEFAULT);
         filters = new IntentFilter[]{tagDetected};
+        //create text to speech instance
         tts = TTS.getInstanceOf(this);
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED){
             checkPermission(this);
@@ -126,9 +135,11 @@ public class TagActivity extends AppCompatActivity {
                 if(event.getAction() == MotionEvent.ACTION_UP){
                     // Stop recording and save file
                     try{
+                        //routines to stop recording and release the recorder object
                         mRecorder.stop();
                         mRecorder.release();
                         mRecorder = null;
+                        //have the phone vibrate a little bit to confirm the recording has stopped
                         Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
                         vibrator.vibrate(300);
                         Toast.makeText(TagActivity.this, R.string.record_complete, Toast.LENGTH_SHORT).show();
@@ -234,7 +245,9 @@ public class TagActivity extends AppCompatActivity {
                     Toast.makeText(TagActivity.this, R.string.please_fill_either, Toast.LENGTH_SHORT).show();
                     return;
                 }
+                //generate a unique id as key for the description and keywords
                 String unique = UUID.randomUUID().toString();
+                //put it into the map
                 editor.putString(unique, edtItemDescription.getText()+"%%%"+edtItemKeywords.getText());
                 editor.commit();
                 String msg = (iFileName.equals("") ? "na" : iFileName) + "%" + unique+ "%" + (mFileName.equals("") ? "na" : mFileName);
