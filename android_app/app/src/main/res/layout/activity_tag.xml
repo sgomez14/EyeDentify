@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="215dp"
             android:layout_margin="5dp"
-            android:contentDescription="@string/imageContentDescription"
+            android:importantForAccessibility="no"
             app:srcCompat="@drawable/eyedentify_logo_black_gold"
             tools:srcCompat="@drawable/eyedentify_logo_black_gold" />
 
