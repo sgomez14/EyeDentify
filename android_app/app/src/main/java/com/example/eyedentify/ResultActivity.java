@@ -138,7 +138,7 @@ public class ResultActivity extends AppCompatActivity {
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
-                            String speech = R.string.you_just+info[0];
+                            String speech = getResources().getString(R.string.you_just)+info[0];
                             textToSpeech.speak(speech, TextToSpeech.QUEUE_FLUSH, null, null);
                         }
                     };
