@@ -66,7 +66,7 @@ public class ResultActivity extends AppCompatActivity {
                     String message = sp.getString(getIntent().getExtras().getString("tagInfo"), null);
                     //split the message into image, text and audio
                     String[] infoArray = message.split("%");
-                    //if message is indeed the format we constructed and there is a audio memo, retrieve the audio memo
+                    //if message is indeed the format we constructed and there is a audio memo, retrieve the audio memo and play it
                     if (infoArray.length == 3 && !infoArray[2].equals("na")) {
                         ContextWrapper cw = new ContextWrapper(getApplicationContext());
                         File musicDir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
@@ -177,9 +177,10 @@ public class ResultActivity extends AppCompatActivity {
         super.onNewIntent(intent);
         setIntent(intent);
         nfc.readIntent(intent);
-        if(NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())){
+        if(NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())){ //if has a tag intent
             nfc.myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
             if(nfc.myTagInfo != null){
+                //if there is something in the tag, open result page again with new information discovered in tag
                 startActivity(new Intent(ResultActivity.this, ResultActivity.class).putExtra("tagInfo", nfc.myTagInfo));
             }
             else{
