@@ -29,4 +29,30 @@
     <string name="create_button">CREATE ACCOUNT</string>
     <string name="play_voice_memo">PLAY VOICE MEMO</string>
     <string name="pairing">Listening to a tag</string>
+    <string name="perm_denied">Permission Denied</string>
+    <string name="go_back_page">Please go Back to Previous Page to Scan a Tag</string>
+    <string name="please_fill_either">Please fill out item description or voice memo to pair a tag</string>
+    <string name="invalid_in_tag">Invalid Information in Tag</string>
+    <string name="record_complete">Recording Complete</string>
+    <string name="record_error">Recording Error</string>
+    <string name="cannot_parse">Cannot Parse Information in Tag</string>
+    <string name="on_cloudsight_failure">Cloudsight cannot return value</string>
+    <string name="cannot_read">Cannot read from tag</string>
+    <string name="missing_file">Likely missing files</string>
+    <string name="you_just">You just came across</string>
+    <string name="possible_words">and possible words are</string>
+    <string name="warning_overwrite">Warning: tag with information will get overwritten.</string>
+    <string name="email">E - Mail</string>
+    <string name="invalid_email">invalid email</string>
+    <string name="invalid_cred">Invalid login credentials</string>
+    <string name="email_empty">E - Mail field is empty</string>
+    <string name="no_internet">Not connected to internet</string>
+    <string name="email_used">Email already registered</string>
+    <string name="password">Password</string>
+    <string name="password_min">Password must be minimum 6 characters</string>
+    <string name="password_empty">Password field is empty</string>
+    <string name="write_success">Successfully written to tag</string>
+    <string name="incorrect_response">This tag is not responding, please try again</string>
+    <string name="error_unknown">Authentication failed unknown error</string>
+
 </resources>
