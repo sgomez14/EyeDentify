@@ -4,16 +4,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.util.SparseArray;
-import android.view.View;
-
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
 public class MLKit {
-
-    public static final String TextRecognizerError = "MLKit: Error TextRecognizer Not Operational";
-
 
     // 1) Call Google ML Kit TextRecognizer: https://developers.google.com/android/reference/com/google/mlkit/vision/text/TextRecognizer
     public static String getTextFromImage(Bitmap bitmap, Context context) {
@@ -26,8 +21,7 @@ public class MLKit {
         // 3) Confirm TextRecognizer is operational, otherwise log error
         if (!textRecognizer.isOperational()) {
             Log.d("EyeDentify", "Error Occured");
-
-            textFromImage = TextRecognizerError;
+            textFromImage = context.getString(R.string.TextRecognizerError);
         }
         else {
             // 4) Create an instance of Frame using bitmap

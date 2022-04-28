@@ -42,10 +42,10 @@
     <string name="you_just">You just came across</string>
     <string name="possible_words">and possible words are</string>
     <string name="warning_overwrite">Warning: tag with information will get overwritten.</string>
-    <string name="email">E - Mail</string>
+    <string name="email">Email</string>
     <string name="invalid_email">invalid email</string>
     <string name="invalid_cred">Invalid login credentials</string>
-    <string name="email_empty">E - Mail field is empty</string>
+    <string name="email_empty">Email field is empty</string>
     <string name="no_internet">Not connected to internet</string>
     <string name="email_used">Email already registered</string>
     <string name="password">Password</string>
@@ -54,5 +54,6 @@
     <string name="write_success">Successfully written to tag</string>
     <string name="incorrect_response">This tag is not responding, please try again</string>
     <string name="error_unknown">Authentication failed unknown error</string>
+    <string name="TextRecognizerError">MLKit: Error TextRecognizer Not Operational</string>
 
 </resources>

@@ -55,4 +55,5 @@
     <string name="write_success">写入成功</string>
     <string name="error_unknown">验证出错。错误未知</string>
     <string name="incorrect_response">标签无响应。请重试</string>
+    <string name="TextRecognizerError">MLKit：错误，文本识别器无法运行</string>
 </resources>
