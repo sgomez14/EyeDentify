@@ -2,13 +2,11 @@ package com.example.eyedentify;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -26,7 +24,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 import java.io.File;
 import java.util.concurrent.ExecutorService;
@@ -169,6 +166,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /*
+    Function to open camera intent
+     */
     private void openCamera() {
         ContentValues values = new ContentValues();
 
@@ -194,6 +194,12 @@ public class MainActivity extends AppCompatActivity {
         
     }
 
+
+    /*
+     Gets triggered whenever a tag gets read
+     fills in the tag information for nfc instance
+     gets to result page with the tag information
+     */
     @Override
     protected void onNewIntent(Intent intent){
         super.onNewIntent(intent);
@@ -201,44 +207,52 @@ public class MainActivity extends AppCompatActivity {
         nfc.readIntent(intent);
         if(NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())){
             nfc.myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            if(nfc.myTagInfo != null && sp.contains(nfc.myTagInfo) && sp.getString(nfc.myTagInfo, null).split("%").length == 3){
-
+            if(nfc.myTagInfo != null && sp.contains(nfc.myTagInfo) && sp.getString(nfc.myTagInfo, null).split(Utilities.MSG_SEPARATOR).length == Utilities.MESSAGE_FULL_LENGTH){
                 startActivity(new Intent(MainActivity.this, ResultActivity.class).putExtra("tagInfo", nfc.myTagInfo));
             }
             else {
-//                assert nfc.myTagInfo != null;
-//                if(nfc.myTagInfo == null){
-//                    Toast.makeText(this, "Empty Tag", Toast.LENGTH_SHORT).show();
-//                }
-//                else{
                     Toast.makeText(this, R.string.cannot_read, Toast.LENGTH_SHORT).show();
-//                }
             }
         }
     }
 
+    /*
+    NFC write mode off when paused
+     */
     @Override
     public void onPause(){
         super.onPause();
         writeModeOff();
     }
 
+    /*
+    NFC write mode on when paused
+     */
     @Override
     public void onResume(){
         super.onResume();
         writeModeOn();
     }
 
+    /*
+    Disabling write mode for NFC
+     */
     private void writeModeOff(){
         writeMode = false;
         adapter.disableForegroundDispatch(this);
     }
 
+    /*
+    Enabling write mode for NFC
+     */
     private void writeModeOn(){
         writeMode = true;
         adapter.enableForegroundDispatch(this, pendingIntent, filters, null);
     }
 
+    /*
+    Rotate bitmap image 90 degree
+     */
     public static Bitmap rotateBitmap90 (Bitmap imageBitmap){
         Matrix matrixForRotation = new Matrix();
         matrixForRotation.postRotate(90); // assuming rotating in clockwise direction
@@ -246,6 +260,8 @@ public class MainActivity extends AppCompatActivity {
                 imageBitmap.getHeight(), matrixForRotation, true);
         return rotatedBitmap;
     }
+
+
     @Override
     public void onBackPressed() {
         // pressing back on main_activity closes app

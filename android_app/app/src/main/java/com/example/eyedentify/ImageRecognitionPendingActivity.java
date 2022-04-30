@@ -6,6 +6,9 @@ import android.os.Bundle;
 
 public class ImageRecognitionPendingActivity extends AppCompatActivity {
 
+    /*
+    API loading page for Cloudsight and MLkit
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

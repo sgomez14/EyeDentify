@@ -4,12 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -28,7 +26,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText etEmail;
     private EditText etPassword;
-    private Button btnGuest;
     private FirebaseAuth mAuth;
     private final String TAG = "LOGIN DEBUG";
     private CardView btnLogin;
@@ -62,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
                 String str_email = etEmail.getText().toString();
                 String str_pass = etPassword.getText().toString();
 
+                //check blank fields
                 if (str_email.equals("")) {
                     Toast.makeText(getApplicationContext(), R.string.email_empty,
                             Toast.LENGTH_SHORT).show();
@@ -82,6 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                 String str_email = etEmail.getText().toString();
                 String str_pass = etPassword.getText().toString();
 
+                //check blank fields
                 if (str_email.equals("")) {
                     Toast.makeText(getApplicationContext(), R.string.email_empty,
                             Toast.LENGTH_SHORT).show();
@@ -96,18 +95,6 @@ public class LoginActivity extends AppCompatActivity {
                 createAccount(str_email, str_pass);
             }
         });
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            // Check if user is signed in (non-null) and update UI accordingly.
-           // reload();
-        }
 
     }
 
@@ -144,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             launch_main_activity();
                         } else {
-                            // If sign in fails, display a message to the user.
+                            // If sign in fails, log a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
 
                             auth_error_handler(task);
@@ -155,6 +142,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+    //catches errors for authentication
     public void auth_error_handler(Task<AuthResult> task){
         try {
             throw task.getException();
@@ -174,30 +162,17 @@ public class LoginActivity extends AppCompatActivity {
         }catch (FirebaseAuthUserCollisionException e){
             Toast.makeText(getApplicationContext(), R.string.email_used,
                     Toast.LENGTH_SHORT).show();
-
         }
         catch (Exception e) {
             Toast.makeText(getApplicationContext(), R.string.error_unknown,
             Toast.LENGTH_SHORT).show();
-
         }
 
     }
 
-    private void go_back_to_main_activity(){
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        launch_main_activity();
-    }
-
     public void launch_main_activity(){
         Intent main_activity = new Intent(getApplicationContext(), MainActivity.class);
-        //put user data in bundle here, if we do anything with user data
+        //starts main activity
         startActivity(main_activity);
         finish();
     }

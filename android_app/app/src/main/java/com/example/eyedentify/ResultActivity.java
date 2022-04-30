@@ -2,7 +2,6 @@ package com.example.eyedentify;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -16,17 +15,11 @@ import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
-import android.speech.tts.UtteranceProgressListener;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.io.File;
 import java.util.Locale;
 
@@ -65,9 +58,9 @@ public class ResultActivity extends AppCompatActivity {
                     //get the message from sharedpreference using the key
                     String message = sp.getString(getIntent().getExtras().getString("tagInfo"), null);
                     //split the message into image, text and audio
-                    String[] infoArray = message.split("%");
+                    String[] infoArray = message.split(Utilities.MSG_SEPARATOR);
                     //if message is indeed the format we constructed and there is a audio memo, retrieve the audio memo and play it
-                    if (infoArray.length == 3 && !infoArray[2].equals("na")) {
+                    if (infoArray.length == Utilities.MESSAGE_FULL_LENGTH && !infoArray[2].equals(Utilities.NOT_APPLICABLE)) {
                         ContextWrapper cw = new ContextWrapper(getApplicationContext());
                         File musicDir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
                         File f = new File(musicDir, infoArray[2] + ".mp3");
@@ -107,14 +100,14 @@ public class ResultActivity extends AppCompatActivity {
         if (getIntent().hasExtra("tagInfo") && sp.contains(getIntent().getExtras().getString("tagInfo"))) {
             String message = sp.getString(getIntent().getExtras().getString("tagInfo"), null);
             //info array, [0] = img, [1] = description+keywords, [2] = audio
-            String[] infoArray = message.split("%");
+            String[] infoArray = message.split(Utilities.MSG_SEPARATOR);
             speakDescription = new Thread(){
                 public void run(){}
             };
             //
-            if(infoArray.length == 3){ //message is parsable
-                String[] info = sp.getString(infoArray[1], null).split("%%%");
-                if(info.length == 2){ //there are both description and keywords available
+            if(infoArray.length == Utilities.MESSAGE_FULL_LENGTH){ //message is parsable
+                String[] info = sp.getString(infoArray[1], null).split(Utilities.TXT_SEPARATOR);
+                if(info.length == Utilities.DESCRIPTION_AND_KEYWORDS){ //there are both description and keywords available
                     edtItemDescription.setText(info[0]); //set description text
                     edtItemKeywords.setText(info[1]); //set keywords text
                     speakDescription = new Thread(){
@@ -129,7 +122,7 @@ public class ResultActivity extends AppCompatActivity {
                             textToSpeech.speak(speech, TextToSpeech.QUEUE_FLUSH, null, null);
                         }
                     };
-                }else if (info.length == 1){ //just description available
+                }else if (info.length == Utilities.JUST_DESCRIPTION){ //just description available
                     edtItemDescription.setText(info[0]); //set description text
                     speakDescription = new Thread(){
                         public void run(){
@@ -145,19 +138,19 @@ public class ResultActivity extends AppCompatActivity {
                 }
 
                 // Hide memo button when there is no memo
-                if(infoArray[2].equals("na")){
+                if(infoArray[2].equals(Utilities.NOT_APPLICABLE)){
                     btnPlayVoiceMemo.setVisibility(View.GONE);
                 }
 
                 //if there is an image available, retrieve it and set it to screen
-                if(!infoArray[0].equals("na")){
+                if(!infoArray[0].equals(Utilities.NOT_APPLICABLE)){
                     ContextWrapper cw = new ContextWrapper(getApplicationContext());
                     File imgDir = cw.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
 //                    File f = new File(imgDir, infoArray[0]+".png");
                     String imgFileName = imgDir+"/"+infoArray[0]+".png";
                     imgScannedItem.setImageBitmap(BitmapFactory.decodeFile(imgFileName));
                 }
-                if(infoArray[2].equals("na")){                 //if no audio memo available
+                if(infoArray[2].equals(Utilities.NOT_APPLICABLE)){                 //if no audio memo available
                     //if no audio memo available
                     speakDescription.start();
                 }
@@ -172,6 +165,11 @@ public class ResultActivity extends AppCompatActivity {
 
     }
 
+    /*
+     Gets triggered whenever a tag gets read
+     fills in the tag information for nfc instance
+     gets to result page with the tag information
+    */
     @Override
     protected void onNewIntent(Intent intent){
         super.onNewIntent(intent);
@@ -189,6 +187,9 @@ public class ResultActivity extends AppCompatActivity {
         }
     }
 
+    /*
+    NFC write mode off when paused
+    */
     @Override
     public void onPause(){
         super.onPause();
@@ -196,22 +197,34 @@ public class ResultActivity extends AppCompatActivity {
         textToSpeech.stop();
     }
 
+    /*
+    NFC write mode on when paused
+    */
     @Override
     public void onResume(){
         super.onResume();
         writeModeOn();
     }
 
+    /*
+    Disabling write mode for NFC
+    */
     private void writeModeOff(){
         writeMode = false;
         adapter.disableForegroundDispatch(this);
     }
 
+    /*
+    Enabling write mode for NFC
+    */
     private void writeModeOn(){
         writeMode = true;
         adapter.enableForegroundDispatch(this, pendingIntent, filters, null);
     }
 
+    /*
+    Back press brings to previous activity (MainActivity)
+    */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
