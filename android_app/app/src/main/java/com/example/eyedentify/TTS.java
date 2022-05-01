@@ -11,6 +11,7 @@ public class TTS {
 
     public static TTS T;
 
+    //singleton struct
     public static TTS getInstanceOf(Context c){
         if(T == null){
             T = new TTS(c);
@@ -23,9 +24,6 @@ public class TTS {
         textToSpeech = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-//                if(status != TextToSpeech.ERROR) {
-//                    textToSpeech.setLanguage(Locale.CANADA);
-//                }
                 if (status == TextToSpeech.SUCCESS){
                     textToSpeech.setLanguage(Locale.US);
                 }

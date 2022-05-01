@@ -2,10 +2,12 @@ package com.example.eyedentify;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -48,6 +50,9 @@ public class STT {
         spRecog.setRecognitionListener(new RecognitionListener() {
             @Override
             public void onReadyForSpeech(Bundle bundle) {
+                //vibrate on start stt
+                Vibrator vibrator = (Vibrator) activity.getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                vibrator.vibrate(300);
 
             }
 
@@ -84,7 +89,7 @@ public class STT {
                 et.setText(data.get(0));
 
 
-                //confidence scores
+                //confidence scores, if necessary
                 float[] conf = bundle.getFloatArray(SpeechRecognizer.CONFIDENCE_SCORES);
                 Float score = conf[0];
                 String scr = score.toString();

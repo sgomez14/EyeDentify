@@ -66,6 +66,7 @@ public class TagActivity extends AppCompatActivity {
     NfcAdapter adapter;
     boolean writeMode;
     TTS tts ;
+    private STT stt;
     private TextToSpeech textToSpeech;
     private String mFileName, iFileName;
     private SharedPreferences sp;
@@ -114,6 +115,8 @@ public class TagActivity extends AppCompatActivity {
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED){
             checkPermission(this);
         }
+
+        stt = new STT(this, edtItemDescription);
 
 //        mr.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
 //        mr.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
@@ -176,7 +179,7 @@ public class TagActivity extends AppCompatActivity {
             @Override
             public void onInit(int status) {
                 if (status == TextToSpeech.SUCCESS){
-                    textToSpeech.setLanguage(Locale.US);
+                    textToSpeech.setLanguage(Locale.getDefault());
                 }
 
             }
@@ -276,6 +279,13 @@ public class TagActivity extends AppCompatActivity {
             }
         });
 
+        edtItemDescription.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                stt.startListen();
+                return true;
+            }
+        });
     }
 
     private String getRecordingPath(){

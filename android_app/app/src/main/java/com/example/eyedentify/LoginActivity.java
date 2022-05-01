@@ -99,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void createAccount(@NonNull String email,@NonNull  String password) {
-        // [START create_user_with_email]
+        //  create a new user account
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -116,11 +116,10 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
-        // [END create_user_with_email]
     }
 
     private void signIn(@NonNull String email, @NonNull String password) {
-        // [START sign_in_with_email]
+        // log in to a already created account
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -138,7 +137,6 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
-        // [END sign_in_with_email]
     }
 
 
