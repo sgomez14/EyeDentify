@@ -282,17 +282,6 @@ public class TagActivity extends AppCompatActivity {
                 editor.remove("imgPath");
                 editor.commit();
                 startActivity(new Intent(TagActivity.this, NFCPairingActivity.class).putExtra("tagInfo", u));
-                //=================================================================
-                //uncomment the lines below to write to tag directly
-                //=================================================================
-//                try {
-//                    nfc.write(msg);
-//                    Toast.makeText(TagActivity.this, "Write Success", Toast.LENGTH_SHORT).show();
-//                    mFileName = "";
-//                } catch (Exception e) {
-//                    Toast.makeText(TagActivity.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
-//                }
-                //=================================================================
             }
         });
         //Speech to text listeners
@@ -398,9 +387,6 @@ public class TagActivity extends AppCompatActivity {
         super.onPause();
         writeModeOff();
         //the only way to keep image is to pair with tag
-        if(!keep_image){
-            deleteImage();
-        }
     }
 
     @Override
@@ -535,14 +521,6 @@ public class TagActivity extends AppCompatActivity {
                 imageBitmap.getHeight(), matrixForRotation, true);
         return rotatedBitmap;
     }
-
-    private void deleteImage(){
-//        File img = new File(getImagePath());
-//        if(img.exists()){
-//            getContentResolver().delete(Uri.fromFile(img),null, null);
-//        }
-    }
-
 
     @Override
     public void onBackPressed() {

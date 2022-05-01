@@ -192,6 +192,9 @@ public class ResultActivity extends AppCompatActivity {
             nfc.myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
             if(nfc.myTagInfo != null){
                 //if there is something in the tag, open result page again with new information discovered in tag
+                editor.remove("audioPath");
+                editor.remove("imgPath");
+                editor.commit();
                 startActivity(new Intent(ResultActivity.this, ResultActivity.class).putExtra("tagInfo", nfc.myTagInfo));
             }
             else{
