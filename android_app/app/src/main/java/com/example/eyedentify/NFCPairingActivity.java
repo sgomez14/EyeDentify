@@ -13,6 +13,8 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.Objects;
+
 public class NFCPairingActivity extends AppCompatActivity {
 
     private NFC nfc;
@@ -106,7 +108,8 @@ public class NFCPairingActivity extends AppCompatActivity {
                 }
             }
         } catch (Exception e) {
-                Toast.makeText(NFCPairingActivity.this, "Error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            if(Objects.equals(e.getMessage(), "null"))
+                Toast.makeText(NFCPairingActivity.this, "Please try again and make sure your hand is steady", Toast.LENGTH_SHORT).show();
         }
     }
 

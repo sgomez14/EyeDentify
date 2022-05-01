@@ -163,7 +163,7 @@ public class ResultActivity extends AppCompatActivity {
                     String imgFileName = imgDir+"/"+infoArray[0]+".png";
                     imgScannedItem.setImageBitmap(BitmapFactory.decodeFile(imgFileName));
                 }
-                if(infoArray[2].equals(Utilities.NOT_APPLICABLE)){                 //if no audio memo available
+                if(infoArray[2].equals(Utilities.NOT_APPLICABLE)){//if no audio memo available
                     //if no audio memo available
                     speakDescription.start();
                 }
