@@ -24,6 +24,12 @@
         <entry key="..\:/Users/santi09/CS501Code/FinalProject/EyeDentify/android_app/app/src/main/res/layout/activity_pairing.xml" value="0.21784420289855072" />
         <entry key="..\:/Users/santi09/CS501Code/FinalProject/EyeDentify/android_app/app/src/main/res/layout/activity_result.xml" value="0.1" />
         <entry key="..\:/Users/santi09/CS501Code/FinalProject/EyeDentify/android_app/app/src/main/res/layout/activity_tag.xml" value="0.21784420289855072" />
+        <entry key="app/src/main/res/layout/activity_image_recognition_pending.xml" value="0.13437217705510388" />
+        <entry key="app/src/main/res/layout/activity_login2.xml" value="0.13437217705510388" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.13437217705510388" />
+        <entry key="app/src/main/res/layout/activity_pairing.xml" value="0.13437217705510388" />
+        <entry key="app/src/main/res/layout/activity_result.xml" value="0.13437217705510388" />
+        <entry key="app/src/main/res/layout/activity_tag.xml" value="0.13437217705510388" />
       </map>
     </option>
   </component>
