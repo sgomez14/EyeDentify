@@ -23,7 +23,6 @@ public class STT {
     private SpeechRecognizer spRecog;
     private final Intent speechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
     private static final Integer RecordAudioRequestCode = 1;
-    private String most_recent_string;
 
     //use this constructor
     public STT(Activity activity, EditText et){

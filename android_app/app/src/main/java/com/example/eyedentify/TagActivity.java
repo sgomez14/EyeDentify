@@ -56,6 +56,7 @@ public class TagActivity extends AppCompatActivity {
     private static final int IMAGE_CAPTURE_CODE = 101;
 
     Uri image_uri;
+    private Boolean keep_image = false;
     private String cloudSightResult;
     private String mlkitResult;
 
@@ -259,6 +260,7 @@ public class TagActivity extends AppCompatActivity {
                     Toast.makeText(TagActivity.this, R.string.please_fill_either, Toast.LENGTH_SHORT).show();
                     return;
                 }
+                keep_image = true;
                 //generate a unique id as key for the description and keywords
                 String unique = UUID.randomUUID().toString();
                 //put it into the map
@@ -289,7 +291,7 @@ public class TagActivity extends AppCompatActivity {
                 //=================================================================
             }
         });
-
+        //Speech to text listeners
         edtItemDescription.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -391,6 +393,10 @@ public class TagActivity extends AppCompatActivity {
     public void onPause(){
         super.onPause();
         writeModeOff();
+        //the only way to keep image is to pair with tag
+        if(!keep_image){
+            deleteImage();
+        }
     }
 
     @Override
@@ -507,6 +513,9 @@ public class TagActivity extends AppCompatActivity {
 
         values.put(MediaStore.Images.Media.TITLE, "New Picture");
         values.put(MediaStore.Images.Media.DESCRIPTION, "From The Camera");
+        //set folder for image
+        values.put(MediaStore.Images.Media.RELATIVE_PATH, "DCIM/" + getResources().getString(R.string.app_name));
+
         image_uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -522,6 +531,14 @@ public class TagActivity extends AppCompatActivity {
                 imageBitmap.getHeight(), matrixForRotation, true);
         return rotatedBitmap;
     }
+
+    private void deleteImage(){
+//        File img = new File(getImagePath());
+//        if(img.exists()){
+//            getContentResolver().delete(Uri.fromFile(img),null, null);
+//        }
+    }
+
 
     @Override
     public void onBackPressed() {
