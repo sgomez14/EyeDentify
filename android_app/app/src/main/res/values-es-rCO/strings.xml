@@ -57,4 +57,6 @@
     <string name="error_unknown">Autenticación fallida error desconocido</string>
     <string name="TextRecognizerError">No se pueden proporcionar palabras clave de imágenes en este momento. Inténtalo de nuevo.</string>
     <string name="logo_description">El logotipo de EyeDentify muestra un fondo negro con una ilustración de un ojo en amarillo y una pancarta dorada que fluye en la parte superior.</string>
+    <string name="recording_erased">grabación borrada</string>
+    <string name="shake_instruction">mantenga presionado para grabar una nota, agite el teléfono para eliminar una nota</string>
 </resources>

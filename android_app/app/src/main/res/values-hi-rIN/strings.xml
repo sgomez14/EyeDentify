@@ -57,4 +57,6 @@
     <string name="error_unknown">सत्यापन विफल अज्ञात गलती</string>
     <string name="TextRecognizerError">इस समय छवि कीवर्ड प्रदान नहीं कर सकते। कृपया पुन: प्रयास करें।</string>
     <string name="logo_description">EyeDentify लोगो एक काली पृष्ठभूमि दिखाता है जिसमें पीले रंग में एक आंख का चित्रण और ऊपर एक सोने का बैनर बहता है.</string>
+    <string name="recording_erased">रिकॉर्डिंग मिटा दी गई</string>
+    <string name="shake_instruction">मेमो रिकॉर्ड करने के लिए होल्ड करें, मेमो हटाने के लिए फोन हिलाएं</string>
 </resources>

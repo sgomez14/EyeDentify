@@ -56,7 +56,6 @@ public class TagActivity extends AppCompatActivity {
     private static final int IMAGE_CAPTURE_CODE = 101;
 
     Uri image_uri;
-    private Boolean keep_image = false;
     private String cloudSightResult;
     private String mlkitResult;
 
@@ -264,7 +263,6 @@ public class TagActivity extends AppCompatActivity {
                     Toast.makeText(TagActivity.this, R.string.please_fill_either, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                keep_image = true;
                 //generate a unique id as key for the description and keywords
                 String unique = UUID.randomUUID().toString();
                 //put it into the map
@@ -282,6 +280,17 @@ public class TagActivity extends AppCompatActivity {
                 editor.remove("imgPath");
                 editor.commit();
                 startActivity(new Intent(TagActivity.this, NFCPairingActivity.class).putExtra("tagInfo", u));
+                //=================================================================
+                //uncomment the lines below to write to tag directly
+                //=================================================================
+//                try {
+//                    nfc.write(msg);
+//                    Toast.makeText(TagActivity.this, "Write Success", Toast.LENGTH_SHORT).show();
+//                    mFileName = "";
+//                } catch (Exception e) {
+//                    Toast.makeText(TagActivity.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+//                }
+                //=================================================================
             }
         });
         //Speech to text listeners
@@ -386,7 +395,6 @@ public class TagActivity extends AppCompatActivity {
     public void onPause(){
         super.onPause();
         writeModeOff();
-        //the only way to keep image is to pair with tag
     }
 
     @Override

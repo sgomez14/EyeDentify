@@ -143,6 +143,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="@string/add_voice_memo"
+                    android:contentDescription="@string/shake_instruction"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
