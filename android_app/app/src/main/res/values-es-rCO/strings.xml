@@ -27,7 +27,7 @@
     <string name="login_failed">Error de inicio de sesion</string>
     <string name="image_results_loading">Recuperación de la descripción de la imagen</string>
     <string name="login_button">INGRESAR</string>
-    <string name="create_button">CREAR UNA CUENTA</string>
+    <string name="create_button">CREAR CUENTA</string>
     <string name="play_voice_memo">"REPRODUCIR NOTA DE VOZ "</string>
     <string name="pairing">Esperando una etiqueta</string>
     <string name="perm_denied">Permiso denegado</string>
