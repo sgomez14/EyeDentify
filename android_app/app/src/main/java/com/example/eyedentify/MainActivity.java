@@ -24,6 +24,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 import java.io.File;
 import java.util.concurrent.ExecutorService;
@@ -48,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
     NfcAdapter adapter;
     boolean writeMode;
 
+    private Animation button_anim;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
 
         btnTagItem  = findViewById(R.id.cardViewTagItem);
         btnScanItem = findViewById(R.id.cardViewScanItem);
+
+        button_anim = AnimationUtils.loadAnimation(this, R.anim.button_anim);
 
         // stuff related to NFC
         nfc = NFC.makeNFC(this);
@@ -82,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         btnTagItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btnTagItem.startAnimation(button_anim); // start button animation
                 startActivity(new Intent(MainActivity.this, TagActivity.class));
             }
         });
@@ -90,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         btnScanItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btnScanItem.startAnimation(button_anim); // start button animation
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                     if(checkSelfPermission(Manifest.permission.CAMERA) ==
                             PackageManager.PERMISSION_DENIED ||

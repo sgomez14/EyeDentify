@@ -17,6 +17,8 @@ import android.os.Environment;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +42,8 @@ public class ResultActivity extends AppCompatActivity {
     Thread speakDescription;
     Handler handler;
 
+    private Animation button_anim;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,9 +55,11 @@ public class ResultActivity extends AppCompatActivity {
         edtItemDescription = findViewById(R.id.edtItemDescription);
         edtItemKeywords = findViewById(R.id.edtItemKeywords);
         imgScannedItem = findViewById(R.id.imgScannedItem);
+        button_anim = AnimationUtils.loadAnimation(this, R.anim.button_anim);
         btnPlayVoiceMemo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btnPlayVoiceMemo.startAnimation(button_anim);
                 if (getIntent().hasExtra("tagInfo") && sp.contains(getIntent().getExtras().getString("tagInfo"))) {
                     //get the message from sharedpreference using the key
                     String message = sp.getString(getIntent().getExtras().getString("tagInfo"), null);
@@ -74,6 +80,7 @@ public class ResultActivity extends AppCompatActivity {
         btnEditTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btnEditTag.startAnimation(button_anim);
                 startActivity(new Intent(ResultActivity.this, TagActivity.class).putExtra("tagInfo", getIntent().getExtras().getString("tagInfo")));
             }
         });

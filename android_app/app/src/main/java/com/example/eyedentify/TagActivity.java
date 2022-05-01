@@ -36,6 +36,8 @@ import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -74,6 +76,8 @@ public class TagActivity extends AppCompatActivity {
     private MediaPlayer mPlayer;
     MediaRecorder mRecorder = new MediaRecorder();
 
+    private Animation button_anim;
+
 
     @SuppressLint({"WrongThread", "ClickableViewAccessibility"})
     @Override
@@ -88,6 +92,7 @@ public class TagActivity extends AppCompatActivity {
         edtItemDescription = findViewById(R.id.edtItemDescription);
         edtItemKeywords = findViewById(R.id.edtItemKeywords);
         imgScannedItem = findViewById(R.id.imgScannedItem);
+        button_anim = AnimationUtils.loadAnimation(this, R.anim.button_anim);
 
         // initialize image file name and audio file name to emtpty,
         mFileName = "";
@@ -136,6 +141,7 @@ public class TagActivity extends AppCompatActivity {
                     return true;
                 }
                 if(event.getAction() == MotionEvent.ACTION_UP){
+                    btnAddVoiceMemo.startAnimation(button_anim);
                     // Stop recording and save file
                     try{
                         //routines to stop recording and release the recorder object
@@ -159,6 +165,7 @@ public class TagActivity extends AppCompatActivity {
         btnAddPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btnAddPhoto.startAnimation(button_anim);
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                     if(checkSelfPermission(Manifest.permission.CAMERA) ==
                             PackageManager.PERMISSION_DENIED ||
@@ -244,6 +251,7 @@ public class TagActivity extends AppCompatActivity {
         btnPairTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btnPairTag.startAnimation(button_anim);
                 if(edtItemDescription.getText().toString().isEmpty() && mFileName.equals("")){
                     Toast.makeText(TagActivity.this, R.string.please_fill_either, Toast.LENGTH_SHORT).show();
                     return;
