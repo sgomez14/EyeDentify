@@ -24,7 +24,7 @@ public class NFCPairingActivity extends AppCompatActivity {
     CountDownTimer countDownTimer;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
-    long timer = 5000;
+    long timer = 60000;
     long interval = 1000;
 
     @Override

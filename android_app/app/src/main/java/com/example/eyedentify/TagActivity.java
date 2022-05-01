@@ -151,7 +151,8 @@ public class TagActivity extends AppCompatActivity {
                         Toast.makeText(TagActivity.this, R.string.record_complete, Toast.LENGTH_SHORT).show();
                         return true;
                     } catch (Exception e){
-                        Toast.makeText(TagActivity.this, R.string.record_error + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TagActivity.this, R.string.record_error, Toast.LENGTH_SHORT).show();
+                        mFileName = "";
                     }
 
                 }
