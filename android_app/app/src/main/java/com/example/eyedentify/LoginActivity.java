@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -31,10 +33,14 @@ public class LoginActivity extends AppCompatActivity {
     private CardView btnLogin;
     private CardView btnCreate;
 
+    private Animation button_anim;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        button_anim = AnimationUtils.loadAnimation(this, R.anim.button_anim);
 
         //check if user already logged in before displaying login activity
         mAuth = FirebaseAuth.getInstance();
@@ -56,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btnLogin.startAnimation(button_anim);
                 String str_email = etEmail.getText().toString();
                 String str_pass = etPassword.getText().toString();
 
@@ -77,6 +84,7 @@ public class LoginActivity extends AppCompatActivity {
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btnCreate.startAnimation(button_anim);
                 String str_email = etEmail.getText().toString();
                 String str_pass = etPassword.getText().toString();
 
