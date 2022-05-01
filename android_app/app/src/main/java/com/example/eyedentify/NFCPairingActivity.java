@@ -91,21 +91,22 @@ public class NFCPairingActivity extends AppCompatActivity {
         super.onNewIntent(intent);
         setIntent(intent);
         nfc.readIntent(intent);
-        if(NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())){
-            nfc.myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            if(nfc.myTag != null){
-                try {
-                    nfc.write(uniqueIdToSPStorage);
-                    Toast.makeText(this, R.string.write_success, Toast.LENGTH_SHORT).show();
-                    countDownTimer.cancel();
-                    startActivity(new Intent(NFCPairingActivity.this, ResultActivity.class).putExtra("tagInfo", uniqueIdToSPStorage));
-                } catch (Exception exception) {
-                    exception.printStackTrace();
+        try {
+            if(NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())){
+                nfc.myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+                if(nfc.myTag != null){
+                        nfc.write(uniqueIdToSPStorage);
+                        Toast.makeText(this, R.string.write_success, Toast.LENGTH_SHORT).show();
+                        countDownTimer.cancel();
+                        startActivity(new Intent(NFCPairingActivity.this, ResultActivity.class).putExtra("tagInfo", uniqueIdToSPStorage));
+
+                }
+                else{
+                    Toast.makeText(this, R.string.incorrect_response, Toast.LENGTH_SHORT).show();
                 }
             }
-            else{
-                Toast.makeText(this, R.string.incorrect_response, Toast.LENGTH_SHORT).show();
-            }
+        } catch (Exception e) {
+                Toast.makeText(NFCPairingActivity.this, "Error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
