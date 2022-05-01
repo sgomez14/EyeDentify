@@ -68,7 +68,8 @@ public class TagActivity extends AppCompatActivity {
     NfcAdapter adapter;
     boolean writeMode;
     TTS tts ;
-    private STT stt;
+    private STT sttDesc;
+    private STT sttKey;
     private TextToSpeech textToSpeech;
     private String mFileName, iFileName;
     private SharedPreferences sp;
@@ -121,7 +122,9 @@ public class TagActivity extends AppCompatActivity {
             checkPermission(this);
         }
 
-        stt = new STT(this, edtItemDescription);
+        //init Speech to text
+        sttDesc = new STT(this, edtItemDescription);
+        sttKey = new STT(this, edtItemKeywords);
 
 //        mr.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
 //        mr.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
@@ -290,7 +293,14 @@ public class TagActivity extends AppCompatActivity {
         edtItemDescription.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                stt.startListen();
+                sttDesc.startListen();
+                return true;
+            }
+        });
+        edtItemKeywords.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                sttKey.startListen();
                 return true;
             }
         });
