@@ -99,6 +99,7 @@ public class TagActivity extends AppCompatActivity {
         // initialize image file name and audio file name to emtpty,
         mFileName = "";
         iFileName = "";
+        imgScannedItem.setVisibility(View.GONE);
 
         // fill in from sharedpreference if available
         if(sp.contains("audioPath"))
@@ -222,6 +223,7 @@ public class TagActivity extends AppCompatActivity {
                     ContextWrapper cw = new ContextWrapper(getApplicationContext());
                     File imgDir = cw.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
                     String imgFileName = imgDir+"/"+infoArray[0]+".png";
+                    imgScannedItem.setVisibility(View.VISIBLE);
                     imgScannedItem.setImageBitmap(BitmapFactory.decodeFile(imgFileName));
                 }
                 if(!infoArray[2].equals(Utilities.NOT_APPLICABLE)){ //voice memo is not null
@@ -242,6 +244,7 @@ public class TagActivity extends AppCompatActivity {
 
             edtItemDescription.setText(cloudSightResult); // CloudSight provides descriptive sentence
             edtItemKeywords.setText(mlkitResult); // MLKit provides words detect on the object
+            imgScannedItem.setVisibility(View.VISIBLE);
             imgScannedItem.setImageBitmap(imageBitmap);
             try (FileOutputStream out = new FileOutputStream(getImagePath())) {
                 imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
