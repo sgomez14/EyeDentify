@@ -35,7 +35,7 @@
     <string name="please_fill_either">टैग को पेयर करने के लिए कृपया आइटम विवरण या वॉइस मेमो भ</string>
     <string name="invalid_in_tag">टैग में गलत जानकारी</string>
     <string name="record_complete">रिकॉर्डिंग पूर्ण</string>
-    <string name="record_error">रिकॉर्डिंग गलती</string>
+    <string name="record_error">वॉयस मेमो रिकॉर्ड करना शुरू करने के लिए, कृपया टैप करके रखें। रिकॉर्डिंग समाप्त करने के लिए, बटन छोड़ दें।</string>
     <string name="cannot_parse">टैग में जानकारी पार्स नहीं कर सकता</string>
     <string name="on_cloudsight_failure">Cloudsight मान वापस नहीं कर सकता</string>
     <string name="cannot_read">टैग से नहीं पढ़ा जा सकता</string>

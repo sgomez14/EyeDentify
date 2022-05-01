@@ -39,7 +39,7 @@
             android:layout_height="215dp"
             android:layout_margin="5dp"
             android:importantForAccessibility="no"
-            app:srcCompat="@drawable/can_of_soup"
+            app:srcCompat="@drawable/eyedentify_logo_black_gold"
             tools:srcCompat="@drawable/can_of_soup" />
 
 

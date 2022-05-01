@@ -35,7 +35,7 @@
     <string name="please_fill_either">你需要至少有物品描述或者语音备忘录来关联一个标签</string>
     <string name="invalid_in_tag">无法读取标签信息</string>
     <string name="record_complete">录制完成</string>
-    <string name="record_error">录制语音出错啦</string>
+    <string name="record_error">开始录制语音，请点击并按住。 结束录制，请松开按钮。</string>
     <string name="cannot_parse">无法读取标签信息</string>
     <string name="on_cloudsight_failure">Clousight识别失败</string>
     <string name="cannot_read">无法读取标签信息</string>

@@ -34,7 +34,7 @@
     <string name="please_fill_either">Please fill out item description or voice memo to pair a tag</string>
     <string name="invalid_in_tag">Invalid Information in Tag</string>
     <string name="record_complete">Recording Complete</string>
-    <string name="record_error">Recording Error</string>
+    <string name="record_error">To start recording voice memo, please tap and hold. To end recording, release the button.</string>
     <string name="cannot_parse">Cannot Parse Information in Tag</string>
     <string name="on_cloudsight_failure">Cloudsight cannot return value</string>
     <string name="cannot_read">Cannot read from tag</string>

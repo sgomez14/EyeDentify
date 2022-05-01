@@ -35,7 +35,7 @@
     <string name="please_fill_either">태그를 페어링하려면 항목 설명 또는 음성 메모를 작성하십시오.</string>
     <string name="invalid_in_tag">태그의 잘못된 정보</string>
     <string name="record_complete">녹음 완료</string>
-    <string name="record_error">녹화 오류</string>
+    <string name="record_error">음성 메모 녹음을 시작하려면 길게 누르세요. 녹음을 끝내려면 버튼에서 손을 뗍니다.</string>
     <string name="cannot_parse">태그의 정보를 구문 분석할 수 없음</string>
     <string name="on_cloudsight_failure">Cloudsight는 값을 반환할 수 없습니다.</string>
     <string name="cannot_read">태그에서 읽을 수 없습니다.</string>

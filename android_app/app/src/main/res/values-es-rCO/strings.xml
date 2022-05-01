@@ -35,7 +35,7 @@
     <string name="please_fill_either">Complete la descripción del artículo o la nota de voz para vincular una etiqueta</string>
     <string name="invalid_in_tag">"Información no válida en la etiqueta "</string>
     <string name="record_complete">Grabación completa</string>
-    <string name="record_error">Error de grabación</string>
+    <string name="record_error">Para comenzar a grabar una nota de voz, toque y mantenga presionado. Para finalizar la grabación, suelte el botón.</string>
     <string name="cannot_parse">No se puede analizar la información en la etiqueta</string>
     <string name="on_cloudsight_failure">Cloudsight no puede devolver valor</string>
     <string name="cannot_read">No se puede leer de la etiqueta</string>
