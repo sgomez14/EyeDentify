@@ -17,6 +17,8 @@ import android.os.Environment;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +42,8 @@ public class ResultActivity extends AppCompatActivity {
     Thread speakDescription;
     Handler handler;
 
+    private Animation button_anim;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,29 +55,37 @@ public class ResultActivity extends AppCompatActivity {
         edtItemDescription = findViewById(R.id.edtItemDescription);
         edtItemKeywords = findViewById(R.id.edtItemKeywords);
         imgScannedItem = findViewById(R.id.imgScannedItem);
+        button_anim = AnimationUtils.loadAnimation(this, R.anim.button_anim);
         btnPlayVoiceMemo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (getIntent().hasExtra("tagInfo") && sp.contains(getIntent().getExtras().getString("tagInfo"))) {
-                    //get the message from sharedpreference using the key
-                    String message = sp.getString(getIntent().getExtras().getString("tagInfo"), null);
-                    //split the message into image, text and audio
-                    String[] infoArray = message.split(Utilities.MSG_SEPARATOR);
-                    //if message is indeed the format we constructed and there is a audio memo, retrieve the audio memo and play it
-                    if (infoArray.length == Utilities.MESSAGE_FULL_LENGTH && !infoArray[2].equals(Utilities.NOT_APPLICABLE)) {
-                        ContextWrapper cw = new ContextWrapper(getApplicationContext());
-                        File musicDir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
-                        File f = new File(musicDir, infoArray[2] + ".mp3");
-                        MediaPlayer mp = MediaPlayer.create(ResultActivity.this, Uri.parse(f.getPath()));
-                        mp.start();
+                btnPlayVoiceMemo.startAnimation(button_anim);
+                try{
+                    if (getIntent().hasExtra("tagInfo") && sp.contains(getIntent().getExtras().getString("tagInfo"))) {
+                        //get the message from sharedpreference using the key
+                        String message = sp.getString(getIntent().getExtras().getString("tagInfo"), null);
+                        //split the message into image, text and audio
+                        String[] infoArray = message.split(Utilities.MSG_SEPARATOR);
+                        //if message is indeed the format we constructed and there is a audio memo, retrieve the audio memo and play it
+                        if (infoArray.length == Utilities.MESSAGE_FULL_LENGTH && !infoArray[2].equals(Utilities.NOT_APPLICABLE)) {
+                            ContextWrapper cw = new ContextWrapper(getApplicationContext());
+                            File musicDir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
+                            File f = new File(musicDir, infoArray[2] + ".mp3");
+                            MediaPlayer mp = MediaPlayer.create(ResultActivity.this, Uri.parse(f.getPath()));
+                            mp.start();
+                        }
                     }
+                }catch(Exception e){
+                    Toast.makeText(ResultActivity.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 
         btnEditTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btnEditTag.startAnimation(button_anim);
                 startActivity(new Intent(ResultActivity.this, TagActivity.class).putExtra("tagInfo", getIntent().getExtras().getString("tagInfo")));
             }
         });

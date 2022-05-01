@@ -4,12 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -28,16 +28,19 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText etEmail;
     private EditText etPassword;
-    private Button btnGuest;
     private FirebaseAuth mAuth;
     private final String TAG = "LOGIN DEBUG";
     private CardView btnLogin;
     private CardView btnCreate;
 
+    private Animation button_anim;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        button_anim = AnimationUtils.loadAnimation(this, R.anim.button_anim);
 
         //check if user already logged in before displaying login activity
         mAuth = FirebaseAuth.getInstance();
@@ -59,9 +62,11 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btnLogin.startAnimation(button_anim);
                 String str_email = etEmail.getText().toString();
                 String str_pass = etPassword.getText().toString();
 
+                //check blank fields
                 if (str_email.equals("")) {
                     Toast.makeText(getApplicationContext(), R.string.email_empty,
                             Toast.LENGTH_SHORT).show();
@@ -79,9 +84,11 @@ public class LoginActivity extends AppCompatActivity {
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btnCreate.startAnimation(button_anim);
                 String str_email = etEmail.getText().toString();
                 String str_pass = etPassword.getText().toString();
 
+                //check blank fields
                 if (str_email.equals("")) {
                     Toast.makeText(getApplicationContext(), R.string.email_empty,
                             Toast.LENGTH_SHORT).show();
@@ -99,20 +106,8 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            // Check if user is signed in (non-null) and update UI accordingly.
-           // reload();
-        }
-
-    }
-
     private void createAccount(@NonNull String email,@NonNull  String password) {
-        // [START create_user_with_email]
+        //  create a new user account
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -129,11 +124,10 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
-        // [END create_user_with_email]
     }
 
     private void signIn(@NonNull String email, @NonNull String password) {
-        // [START sign_in_with_email]
+        // log in to a already created account
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -144,17 +138,17 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             launch_main_activity();
                         } else {
-                            // If sign in fails, display a message to the user.
+                            // If sign in fails, log a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
 
                             auth_error_handler(task);
                         }
                     }
                 });
-        // [END sign_in_with_email]
     }
 
 
+    //catches errors for authentication
     public void auth_error_handler(Task<AuthResult> task){
         try {
             throw task.getException();
@@ -174,30 +168,17 @@ public class LoginActivity extends AppCompatActivity {
         }catch (FirebaseAuthUserCollisionException e){
             Toast.makeText(getApplicationContext(), R.string.email_used,
                     Toast.LENGTH_SHORT).show();
-
         }
         catch (Exception e) {
             Toast.makeText(getApplicationContext(), R.string.error_unknown,
             Toast.LENGTH_SHORT).show();
-
         }
 
     }
 
-    private void go_back_to_main_activity(){
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        launch_main_activity();
-    }
-
     public void launch_main_activity(){
         Intent main_activity = new Intent(getApplicationContext(), MainActivity.class);
-        //put user data in bundle here, if we do anything with user data
+        //starts main activity
         startActivity(main_activity);
         finish();
     }

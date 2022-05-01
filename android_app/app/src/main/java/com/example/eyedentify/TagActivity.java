@@ -36,6 +36,8 @@ import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -54,6 +56,7 @@ public class TagActivity extends AppCompatActivity {
     private static final int IMAGE_CAPTURE_CODE = 101;
 
     Uri image_uri;
+    private Boolean keep_image = false;
     private String cloudSightResult;
     private String mlkitResult;
 
@@ -66,12 +69,16 @@ public class TagActivity extends AppCompatActivity {
     NfcAdapter adapter;
     boolean writeMode;
     TTS tts ;
+    private STT sttDesc;
+    private STT sttKey;
     private TextToSpeech textToSpeech;
     private String mFileName, iFileName;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private MediaPlayer mPlayer;
     MediaRecorder mRecorder = new MediaRecorder();
+
+    private Animation button_anim;
 
 
     @SuppressLint({"WrongThread", "ClickableViewAccessibility"})
@@ -87,6 +94,7 @@ public class TagActivity extends AppCompatActivity {
         edtItemDescription = findViewById(R.id.edtItemDescription);
         edtItemKeywords = findViewById(R.id.edtItemKeywords);
         imgScannedItem = findViewById(R.id.imgScannedItem);
+        button_anim = AnimationUtils.loadAnimation(this, R.anim.button_anim);
 
         // initialize image file name and audio file name to emtpty,
         mFileName = "";
@@ -115,6 +123,10 @@ public class TagActivity extends AppCompatActivity {
             checkPermission(this);
         }
 
+        //init Speech to text
+        sttDesc = new STT(this, edtItemDescription);
+        sttKey = new STT(this, edtItemKeywords);
+
 //        mr.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
 //        mr.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
 //        mr.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
@@ -133,6 +145,7 @@ public class TagActivity extends AppCompatActivity {
                     return true;
                 }
                 if(event.getAction() == MotionEvent.ACTION_UP){
+                    btnAddVoiceMemo.startAnimation(button_anim);
                     // Stop recording and save file
                     try{
                         //routines to stop recording and release the recorder object
@@ -145,7 +158,8 @@ public class TagActivity extends AppCompatActivity {
                         Toast.makeText(TagActivity.this, R.string.record_complete, Toast.LENGTH_SHORT).show();
                         return true;
                     } catch (Exception e){
-                        Toast.makeText(TagActivity.this, R.string.record_error + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TagActivity.this, R.string.record_error, Toast.LENGTH_SHORT).show();
+                        mFileName = "";
                     }
 
                 }
@@ -156,6 +170,7 @@ public class TagActivity extends AppCompatActivity {
         btnAddPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btnAddPhoto.startAnimation(button_anim);
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                     if(checkSelfPermission(Manifest.permission.CAMERA) ==
                             PackageManager.PERMISSION_DENIED ||
@@ -176,7 +191,7 @@ public class TagActivity extends AppCompatActivity {
             @Override
             public void onInit(int status) {
                 if (status == TextToSpeech.SUCCESS){
-                    textToSpeech.setLanguage(Locale.US);
+                    textToSpeech.setLanguage(Locale.getDefault());
                 }
 
             }
@@ -241,10 +256,12 @@ public class TagActivity extends AppCompatActivity {
         btnPairTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btnPairTag.startAnimation(button_anim);
                 if(edtItemDescription.getText().toString().isEmpty() && mFileName.equals("")){
                     Toast.makeText(TagActivity.this, R.string.please_fill_either, Toast.LENGTH_SHORT).show();
                     return;
                 }
+                keep_image = true;
                 //generate a unique id as key for the description and keywords
                 String unique = UUID.randomUUID().toString();
                 //put it into the map
@@ -275,7 +292,21 @@ public class TagActivity extends AppCompatActivity {
                 //=================================================================
             }
         });
-
+        //Speech to text listeners
+        edtItemDescription.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                sttDesc.startListen();
+                return true;
+            }
+        });
+        edtItemKeywords.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                sttKey.startListen();
+                return true;
+            }
+        });
     }
 
     private String getRecordingPath(){
@@ -363,6 +394,10 @@ public class TagActivity extends AppCompatActivity {
     public void onPause(){
         super.onPause();
         writeModeOff();
+        //the only way to keep image is to pair with tag
+        if(!keep_image){
+            deleteImage();
+        }
     }
 
     @Override
@@ -479,6 +514,9 @@ public class TagActivity extends AppCompatActivity {
 
         values.put(MediaStore.Images.Media.TITLE, "New Picture");
         values.put(MediaStore.Images.Media.DESCRIPTION, "From The Camera");
+        //set folder for image
+        values.put(MediaStore.Images.Media.RELATIVE_PATH, "DCIM/" + getResources().getString(R.string.app_name));
+
         image_uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -494,6 +532,14 @@ public class TagActivity extends AppCompatActivity {
                 imageBitmap.getHeight(), matrixForRotation, true);
         return rotatedBitmap;
     }
+
+    private void deleteImage(){
+//        File img = new File(getImagePath());
+//        if(img.exists()){
+//            getContentResolver().delete(Uri.fromFile(img),null, null);
+//        }
+    }
+
 
     @Override
     public void onBackPressed() {
