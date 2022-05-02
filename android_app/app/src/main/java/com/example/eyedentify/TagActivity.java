@@ -21,6 +21,10 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Matrix;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
@@ -49,7 +53,7 @@ import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class TagActivity extends AppCompatActivity {
+public class TagActivity extends AppCompatActivity{
 
     private static final int PERMISSION_CODE = 1000;
     private static final int REQUEST_CAMERA_CODE = 100;
@@ -79,6 +83,13 @@ public class TagActivity extends AppCompatActivity {
 
     private Animation button_anim;
 
+    private SensorManager senMan;
+    private float acelVal, acelLast, shake;
+    private float  acelx = 0, acely = 0,  acelz = 0;
+    private final float shake_thresh_x = 10, shake_thresh_y = 12, shake_thresh_z = 18;
+    private final float shake_const = 0.9f;
+
+    private final int vibrate_length = 300;
 
     @SuppressLint({"WrongThread", "ClickableViewAccessibility"})
     @Override
@@ -126,6 +137,9 @@ public class TagActivity extends AppCompatActivity {
         //init Speech to text
         sttDesc = new STT(this, edtItemDescription);
         sttKey = new STT(this, edtItemKeywords);
+
+        senMan = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        senMan.registerListener(sensorListener, senMan.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
 
 //        mr.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
 //        mr.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
@@ -529,6 +543,44 @@ public class TagActivity extends AppCompatActivity {
                 imageBitmap.getHeight(), matrixForRotation, true);
         return rotatedBitmap;
     }
+
+
+    //shake detection to remove voice recording
+    private final SensorEventListener sensorListener = new SensorEventListener() {
+        @Override
+        public void onSensorChanged(SensorEvent sensorEvent) {
+            float x = sensorEvent.values[0];
+            float y = sensorEvent.values[1];
+            float z = sensorEvent.values[2];
+
+            float xdif = Math.abs(x - acelx);
+            float ydif = Math.abs(y - acely);
+            float zdif = Math.abs(z - acelz);
+
+            acelLast = acelVal;
+            acelVal = (float) Math.sqrt((double) (x*x) + (y*y) + (z*z) );
+            float delta = acelVal - acelLast;
+            shake = shake * shake_const + delta;
+
+            Log.d("shake", "x:" + xdif + "-y:" + ydif + "-z:"+ zdif);
+            //z: 18  y: 12 x: 10
+            if (xdif > shake_thresh_x || ydif > shake_thresh_y || zdif > shake_thresh_z){
+                //deleting link to recording filename
+                if (!mFileName.isEmpty()){
+                    mFileName = "";
+                    Toast.makeText(getApplicationContext(), R.string.recording_erased, Toast.LENGTH_SHORT).show();
+                }
+            }
+             acelx = x;
+             acely = y;
+             acelz = z;
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int i) {
+
+        }
+    };
 
     @Override
     public void onBackPressed() {

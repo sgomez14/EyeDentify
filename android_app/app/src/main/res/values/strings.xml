@@ -56,4 +56,6 @@
     <string name="error_unknown">Authentication failed unknown error</string>
     <string name="TextRecognizerError">Cannot provide image keywords at this time. Please try again.</string>
     <string name="logo_description">EyeDentify Logo shows a black background with an illustration of an eye in yellow and a gold banner flowing on top.</string>
+    <string name="recording_erased">recording erased</string>
+    <string name="shake_instruction">press and hold to record memo, shake phone to delete memo</string>
 </resources>
