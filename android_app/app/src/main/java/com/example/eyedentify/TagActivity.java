@@ -25,6 +25,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.ExifInterface;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
@@ -109,7 +110,7 @@ public class TagActivity extends AppCompatActivity{
         // initialize image file name and audio file name to emtpty,
         mFileName = "";
         iFileName = "";
-        imgScannedItem.setVisibility(View.GONE);
+        imgScannedItem.setVisibility(View.GONE); // set to GONE so that TalkBack jumps directly to Item Description
 
         // fill in from sharedpreference if available
         if(sp.contains("audioPath"))
@@ -232,7 +233,8 @@ public class TagActivity extends AppCompatActivity{
                     File imgDir = cw.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
                     String imgFileName = imgDir+"/"+infoArray[0]+".png";
                     imgScannedItem.setVisibility(View.VISIBLE);
-                    imgScannedItem.setImageBitmap(BitmapFactory.decodeFile(imgFileName));
+                    Bitmap imageBitMap = BitmapFactory.decodeFile(imgFileName);
+                    imgScannedItem.setImageBitmap(imageBitMap);
                 }
                 if(!infoArray[2].equals(Utilities.NOT_APPLICABLE)){ //voice memo is not null
                     mFileName = infoArray[2];
@@ -248,8 +250,16 @@ public class TagActivity extends AppCompatActivity{
             String mlkitResult = imageResults.getString("mlkitResult");
             String imageFile = imageResults.getString("imageFile");
             Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile);
-            imageBitmap = TagActivity.rotateBitmap90(imageBitmap); // rotate the bitmap 90 degrees
 
+            // rotate the image to normal orientation
+            try {
+                imageBitmap = TagActivity.rotateImage(imageBitmap, imageFile.toString());
+            } catch (IOException e) {
+                Log.e("Error Rotating Image", e.getMessage());
+                Toast.makeText(this, "Image Rotation Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            // set views
             edtItemDescription.setText(cloudSightResult); // CloudSight provides descriptive sentence
             edtItemKeywords.setText(mlkitResult); // MLKit provides words detect on the object
             imgScannedItem.setVisibility(View.VISIBLE);
@@ -477,12 +487,20 @@ public class TagActivity extends AppCompatActivity{
 
                         // convert imageFile to bitmap for ML kit
                         Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile.toString());
-                        imageBitmap = rotateBitmap90(imageBitmap);
-                        // pass image bitmap to MLKit class
-                        mlkitResult = MLKit.getTextFromImage(imageBitmap, TagActivity.this); // pass image to MLKit
+                        try {
+                            imageBitmap = rotateImage(imageBitmap, imageFile.toString());
 
-                        // pass image file to CloudSight class
-                        new CloudSight(TagActivity.this, mlkitResult, imageFile);
+                            // pass image bitmap to MLKit class
+                            mlkitResult = MLKit.getTextFromImage(imageBitmap, TagActivity.this); // pass image to MLKit
+
+                            // pass image file to CloudSight class
+                            new CloudSight(TagActivity.this, mlkitResult, imageFile);
+
+                        } catch (IOException e) {
+                            Log.e("Error Rotating Image", e.getMessage());
+                            Toast.makeText(TagActivity.this, "Image Rotation Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+
 
                     }
                 });
@@ -521,9 +539,29 @@ public class TagActivity extends AppCompatActivity{
     }
 
 
-    public static Bitmap rotateBitmap90 (Bitmap imageBitmap){
+    /*
+    Rotate bitmap image, reference: https://gist.github.com/tomogoma/788e3b775dd611c9226f8e17781a0f0c
+    */
+    public static Bitmap rotateImage(Bitmap imageBitmap, String path) throws IOException {
+
+        int rotate = 0;
+        ExifInterface exif; // this interface helps get tags about the image's orientation
+        exif = new ExifInterface(path);
+        int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, // get the orientation
+                ExifInterface.ORIENTATION_NORMAL);
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                rotate = 270;
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                rotate = 180;
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                rotate = 90;
+                break;
+        }
         Matrix matrixForRotation = new Matrix();
-        matrixForRotation.postRotate(90); // assuming rotating in clockwise direction
+        matrixForRotation.postRotate(rotate);
         Bitmap rotatedBitmap = Bitmap.createBitmap(imageBitmap, 0,0, imageBitmap.getWidth(),
                 imageBitmap.getHeight(), matrixForRotation, true);
         return rotatedBitmap;
