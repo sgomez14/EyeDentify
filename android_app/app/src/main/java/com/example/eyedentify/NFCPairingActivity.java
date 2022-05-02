@@ -13,6 +13,8 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.Objects;
+
 public class NFCPairingActivity extends AppCompatActivity {
 
     private NFC nfc;
@@ -24,7 +26,7 @@ public class NFCPairingActivity extends AppCompatActivity {
     CountDownTimer countDownTimer;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
-    long timer = 5000;
+    long timer = 60000;
     long interval = 1000;
 
     @Override
@@ -91,21 +93,23 @@ public class NFCPairingActivity extends AppCompatActivity {
         super.onNewIntent(intent);
         setIntent(intent);
         nfc.readIntent(intent);
-        if(NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())){
-            nfc.myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            if(nfc.myTag != null){
-                try {
-                    nfc.write(uniqueIdToSPStorage);
-                    Toast.makeText(this, R.string.write_success, Toast.LENGTH_SHORT).show();
-                    countDownTimer.cancel();
-                    startActivity(new Intent(NFCPairingActivity.this, ResultActivity.class).putExtra("tagInfo", uniqueIdToSPStorage));
-                } catch (Exception exception) {
-                    exception.printStackTrace();
+        try {
+            if(NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())){
+                nfc.myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+                if(nfc.myTag != null){
+                        nfc.write(uniqueIdToSPStorage);
+                        Toast.makeText(this, R.string.write_success, Toast.LENGTH_SHORT).show();
+                        countDownTimer.cancel();
+                        startActivity(new Intent(NFCPairingActivity.this, ResultActivity.class).putExtra("tagInfo", uniqueIdToSPStorage));
+
+                }
+                else{
+                    Toast.makeText(this, R.string.incorrect_response, Toast.LENGTH_SHORT).show();
                 }
             }
-            else{
-                Toast.makeText(this, R.string.incorrect_response, Toast.LENGTH_SHORT).show();
-            }
+        } catch (Exception e) {
+            if(Objects.equals(e.getMessage(), "null"))
+                Toast.makeText(NFCPairingActivity.this, "Please try again and make sure your hand is steady", Toast.LENGTH_SHORT).show();
         }
     }
 

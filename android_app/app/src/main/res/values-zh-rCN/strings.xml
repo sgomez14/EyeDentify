@@ -35,9 +35,9 @@
     <string name="please_fill_either">你需要至少有物品描述或者语音备忘录来关联一个标签</string>
     <string name="invalid_in_tag">无法读取标签信息</string>
     <string name="record_complete">录制完成</string>
-    <string name="record_error">录制语音出错啦</string>
+    <string name="record_error">开始录制语音，请点击并按住。 结束录制，请松开按钮。</string>
     <string name="cannot_parse">无法读取标签信息</string>
-    <string name="on_cloudsight_failure">Clousight识别失败</string>
+    <string name="on_cloudsight_failure">目前无法提供图片说明。 请再试一次。</string>
     <string name="cannot_read">无法读取标签信息</string>
     <string name="missing_file">可能有文件缺失</string>
     <string name="you_just">这里有</string>
@@ -55,6 +55,8 @@
     <string name="write_success">写入成功</string>
     <string name="error_unknown">验证出错。错误未知</string>
     <string name="incorrect_response">标签无响应。请重试</string>
-    <string name="TextRecognizerError">MLKit：错误，文本识别器无法运行</string>
+    <string name="TextRecognizerError">目前无法提供图片关键字。 请再试一次。</string>
     <string name="logo_description">EyeDentify 徽标显示黑色背景，黄色眼睛插图和顶部流动的金色横幅。</string>
+    <string name="recording_erased">"录音已删除 "</string>
+    <string name="shake_instruction">长按录制备忘录，摇动手机删除备忘录</string>
 </resources>

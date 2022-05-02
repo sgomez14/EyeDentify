@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
@@ -182,6 +183,9 @@ public class MainActivity extends AppCompatActivity {
 
         values.put(MediaStore.Images.Media.TITLE, "New Picture");
         values.put(MediaStore.Images.Media.DESCRIPTION, "From The Camera");
+        //set folder for image
+        values.put(MediaStore.Images.Media.RELATIVE_PATH, "DCIM/" + getResources().getString(R.string.app_name));
+
         image_uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

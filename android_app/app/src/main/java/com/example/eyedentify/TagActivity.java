@@ -21,6 +21,10 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Matrix;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
@@ -49,7 +53,7 @@ import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class TagActivity extends AppCompatActivity {
+public class TagActivity extends AppCompatActivity{
 
     private static final int PERMISSION_CODE = 1000;
     private static final int REQUEST_CAMERA_CODE = 100;
@@ -68,6 +72,8 @@ public class TagActivity extends AppCompatActivity {
     NfcAdapter adapter;
     boolean writeMode;
     TTS tts ;
+    private STT sttDesc;
+    private STT sttKey;
     private TextToSpeech textToSpeech;
     private String mFileName, iFileName;
     private SharedPreferences sp;
@@ -77,6 +83,13 @@ public class TagActivity extends AppCompatActivity {
 
     private Animation button_anim;
 
+    private SensorManager senMan;
+    private float acelVal, acelLast, shake;
+    private float  acelx = 0, acely = 0,  acelz = 0;
+    private final float shake_thresh_x = 10, shake_thresh_y = 12, shake_thresh_z = 18;
+    private final float shake_const = 0.9f;
+
+    private final int vibrate_length = 300;
 
     @SuppressLint({"WrongThread", "ClickableViewAccessibility"})
     @Override
@@ -96,6 +109,7 @@ public class TagActivity extends AppCompatActivity {
         // initialize image file name and audio file name to emtpty,
         mFileName = "";
         iFileName = "";
+        imgScannedItem.setVisibility(View.GONE);
 
         // fill in from sharedpreference if available
         if(sp.contains("audioPath"))
@@ -120,11 +134,13 @@ public class TagActivity extends AppCompatActivity {
             checkPermission(this);
         }
 
-//        mr.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
-//        mr.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-//        mr.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
-//        mr.setOutputFile(Environment.getExternalStorageDirectory() + File.separator
-//                + Environment.DIRECTORY_DCIM + File.separator + "FILE_NAME.mp3");
+        //init Speech to text
+        sttDesc = new STT(this, edtItemDescription);
+        sttKey = new STT(this, edtItemKeywords);
+
+        senMan = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        senMan.registerListener(sensorListener, senMan.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+
 
         btnAddVoiceMemo.setOnTouchListener(new View.OnTouchListener() {
 
@@ -151,7 +167,8 @@ public class TagActivity extends AppCompatActivity {
                         Toast.makeText(TagActivity.this, R.string.record_complete, Toast.LENGTH_SHORT).show();
                         return true;
                     } catch (Exception e){
-                        Toast.makeText(TagActivity.this, R.string.record_error + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TagActivity.this, R.string.record_error, Toast.LENGTH_SHORT).show();
+                        mFileName = "";
                     }
 
                 }
@@ -183,7 +200,7 @@ public class TagActivity extends AppCompatActivity {
             @Override
             public void onInit(int status) {
                 if (status == TextToSpeech.SUCCESS){
-                    textToSpeech.setLanguage(Locale.US);
+                    textToSpeech.setLanguage(Locale.getDefault());
                 }
 
             }
@@ -214,6 +231,7 @@ public class TagActivity extends AppCompatActivity {
                     ContextWrapper cw = new ContextWrapper(getApplicationContext());
                     File imgDir = cw.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
                     String imgFileName = imgDir+"/"+infoArray[0]+".png";
+                    imgScannedItem.setVisibility(View.VISIBLE);
                     imgScannedItem.setImageBitmap(BitmapFactory.decodeFile(imgFileName));
                 }
                 if(!infoArray[2].equals(Utilities.NOT_APPLICABLE)){ //voice memo is not null
@@ -234,6 +252,7 @@ public class TagActivity extends AppCompatActivity {
 
             edtItemDescription.setText(cloudSightResult); // CloudSight provides descriptive sentence
             edtItemKeywords.setText(mlkitResult); // MLKit provides words detect on the object
+            imgScannedItem.setVisibility(View.VISIBLE);
             imgScannedItem.setImageBitmap(imageBitmap);
             try (FileOutputStream out = new FileOutputStream(getImagePath())) {
                 imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
@@ -270,20 +289,23 @@ public class TagActivity extends AppCompatActivity {
                 editor.remove("imgPath");
                 editor.commit();
                 startActivity(new Intent(TagActivity.this, NFCPairingActivity.class).putExtra("tagInfo", u));
-                //=================================================================
-                //uncomment the lines below to write to tag directly
-                //=================================================================
-//                try {
-//                    nfc.write(msg);
-//                    Toast.makeText(TagActivity.this, "Write Success", Toast.LENGTH_SHORT).show();
-//                    mFileName = "";
-//                } catch (Exception e) {
-//                    Toast.makeText(TagActivity.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
-//                }
-                //=================================================================
             }
         });
-
+        //Speech to text listeners
+        edtItemDescription.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                sttDesc.startListen();
+                return true;
+            }
+        });
+        edtItemKeywords.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                sttKey.startListen();
+                return true;
+            }
+        });
     }
 
     private String getRecordingPath(){
@@ -371,6 +393,7 @@ public class TagActivity extends AppCompatActivity {
     public void onPause(){
         super.onPause();
         writeModeOff();
+        senMan.unregisterListener(sensorListener);
     }
 
     @Override
@@ -487,6 +510,9 @@ public class TagActivity extends AppCompatActivity {
 
         values.put(MediaStore.Images.Media.TITLE, "New Picture");
         values.put(MediaStore.Images.Media.DESCRIPTION, "From The Camera");
+        //set folder for image
+        values.put(MediaStore.Images.Media.RELATIVE_PATH, "DCIM/" + getResources().getString(R.string.app_name));
+
         image_uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -502,6 +528,45 @@ public class TagActivity extends AppCompatActivity {
                 imageBitmap.getHeight(), matrixForRotation, true);
         return rotatedBitmap;
     }
+
+
+    //shake detection to remove voice recording
+    private final SensorEventListener sensorListener = new SensorEventListener() {
+        @Override
+        public void onSensorChanged(SensorEvent sensorEvent) {
+            float x = sensorEvent.values[0];
+            float y = sensorEvent.values[1];
+            float z = sensorEvent.values[2];
+
+            float xdif = Math.abs(x - acelx);
+            float ydif = Math.abs(y - acely);
+            float zdif = Math.abs(z - acelz);
+
+            acelLast = acelVal;
+            acelVal = (float) Math.sqrt((double) (x*x) + (y*y) + (z*z) );
+            float delta = acelVal - acelLast;
+            shake = shake * shake_const + delta;
+
+            if (xdif > shake_thresh_x || ydif > shake_thresh_y || zdif > shake_thresh_z){
+                //deleting link to recording filename
+                if (!mFileName.isEmpty()){
+                    mFileName = "";
+                    Toast.makeText(getApplicationContext(), R.string.recording_erased, Toast.LENGTH_SHORT).show();
+                    Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                    vibrator.vibrate(300);
+
+                }
+            }
+             acelx = x;
+             acely = y;
+             acelz = z;
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int i) {
+
+        }
+    };
 
     @Override
     public void onBackPressed() {
