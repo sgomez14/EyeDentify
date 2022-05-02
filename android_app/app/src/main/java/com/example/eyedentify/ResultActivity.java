@@ -75,6 +75,7 @@ public class ResultActivity extends AppCompatActivity {
                             ContextWrapper cw = new ContextWrapper(getApplicationContext());
                             File musicDir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
                             File f = new File(musicDir, infoArray[2] + ".mp3");
+                            if(mp != null && mp.isPlaying()) mp.stop();
                             mp = MediaPlayer.create(ResultActivity.this, Uri.parse(f.getPath()));
                             mp.start();
                         }
@@ -213,8 +214,10 @@ public class ResultActivity extends AppCompatActivity {
     public void onPause(){
         super.onPause();
         writeModeOff();
-        mp.stop();
-        textToSpeech.stop();
+        if(mp.isPlaying())
+            mp.stop();
+        if(textToSpeech.isSpeaking())
+            textToSpeech.stop();
 
     }
 
