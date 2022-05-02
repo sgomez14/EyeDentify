@@ -42,6 +42,7 @@ public class ResultActivity extends AppCompatActivity {
     private ImageView imgScannedItem;
     Thread speakDescription;
     Handler handler;
+    MediaPlayer mp;
 
     private Animation button_anim;
 
@@ -54,7 +55,9 @@ public class ResultActivity extends AppCompatActivity {
         btnPlayVoiceMemo = findViewById(R.id.cardViewPlayVoiceMemo);
         btnEditTag = findViewById(R.id.cardViewEditTagResults);
         edtItemDescription = findViewById(R.id.edtItemDescription);
+        edtItemDescription.setMovementMethod(new ScrollingMovementMethod());
         edtItemKeywords = findViewById(R.id.edtItemKeywords);
+        edtItemKeywords.setMovementMethod(new ScrollingMovementMethod());
         imgScannedItem = findViewById(R.id.imgScannedItem);
         button_anim = AnimationUtils.loadAnimation(this, R.anim.button_anim);
         btnPlayVoiceMemo.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +75,7 @@ public class ResultActivity extends AppCompatActivity {
                             ContextWrapper cw = new ContextWrapper(getApplicationContext());
                             File musicDir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
                             File f = new File(musicDir, infoArray[2] + ".mp3");
-                            MediaPlayer mp = MediaPlayer.create(ResultActivity.this, Uri.parse(f.getPath()));
+                            mp = MediaPlayer.create(ResultActivity.this, Uri.parse(f.getPath()));
                             mp.start();
                         }
                     }
@@ -210,7 +213,9 @@ public class ResultActivity extends AppCompatActivity {
     public void onPause(){
         super.onPause();
         writeModeOff();
+        mp.stop();
         textToSpeech.stop();
+
     }
 
     /*

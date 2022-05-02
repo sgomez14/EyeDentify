@@ -149,15 +149,6 @@
 
         </androidx.cardview.widget.CardView>
 
-        <!--        <Button-->
-        <!--            android:id="@+id/btnAddVoiceMemo"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_weight="7"-->
-        <!--            android:background="@drawable/yellowdiamond"-->
-        <!--            android:text="@string/add_voice_memo"-->
-        <!--            android:textSize="24sp"-->
-        <!--            android:layout_margin="2dp"/>-->
         <androidx.cardview.widget.CardView
 
             android:id="@+id/cardViewEditTag"

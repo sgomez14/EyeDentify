@@ -141,11 +141,6 @@ public class TagActivity extends AppCompatActivity{
         senMan = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         senMan.registerListener(sensorListener, senMan.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
 
-//        mr.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
-//        mr.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-//        mr.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
-//        mr.setOutputFile(Environment.getExternalStorageDirectory() + File.separator
-//                + Environment.DIRECTORY_DCIM + File.separator + "FILE_NAME.mp3");
 
         btnAddVoiceMemo.setOnTouchListener(new View.OnTouchListener() {
 
@@ -294,17 +289,6 @@ public class TagActivity extends AppCompatActivity{
                 editor.remove("imgPath");
                 editor.commit();
                 startActivity(new Intent(TagActivity.this, NFCPairingActivity.class).putExtra("tagInfo", u));
-                //=================================================================
-                //uncomment the lines below to write to tag directly
-                //=================================================================
-//                try {
-//                    nfc.write(msg);
-//                    Toast.makeText(TagActivity.this, "Write Success", Toast.LENGTH_SHORT).show();
-//                    mFileName = "";
-//                } catch (Exception e) {
-//                    Toast.makeText(TagActivity.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
-//                }
-                //=================================================================
             }
         });
         //Speech to text listeners
@@ -409,6 +393,8 @@ public class TagActivity extends AppCompatActivity{
     public void onPause(){
         super.onPause();
         writeModeOff();
+        senMan.unregisterListener(sensorListener);
+//        senMan.registerListener(sensorListener, senMan.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
@@ -569,6 +555,9 @@ public class TagActivity extends AppCompatActivity{
                 if (!mFileName.isEmpty()){
                     mFileName = "";
                     Toast.makeText(getApplicationContext(), R.string.recording_erased, Toast.LENGTH_SHORT).show();
+                    Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                    vibrator.vibrate(300);
+
                 }
             }
              acelx = x;
