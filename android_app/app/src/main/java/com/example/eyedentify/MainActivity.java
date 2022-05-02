@@ -6,7 +6,6 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
-import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
@@ -18,6 +17,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.os.Build;
@@ -29,6 +29,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -159,12 +160,19 @@ public class MainActivity extends AppCompatActivity {
 
                         // convert imageFile to bitmap for ML kit
                         Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile.toString());
-                        imageBitmap = rotateBitmap90(imageBitmap);
-                        // pass image bitmap to MLKit class
-                        mlkitResult = MLKit.getTextFromImage(imageBitmap, MainActivity.this); // pass image to MLKit
+                        try {
+                            imageBitmap = rotateImage(imageBitmap, imageFile.toString()); // need to handle IOException
 
-                        // pass image file to CloudSight class
-                        new CloudSight(MainActivity.this, mlkitResult, imageFile);
+                            // pass image bitmap to MLKit class
+                            mlkitResult = MLKit.getTextFromImage(imageBitmap, MainActivity.this); // pass image to MLKit
+
+                            // pass image file to CloudSight class
+                            new CloudSight(MainActivity.this, mlkitResult, imageFile);
+                        } catch (IOException e) {
+                            Log.e("Error Rotating Image", e.getMessage());
+                            Toast.makeText(MainActivity.this, "Image Rotation Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+
 
                     }
                 });
@@ -263,11 +271,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*
-    Rotate bitmap image 90 degree
+    Rotate bitmap image, reference: https://gist.github.com/tomogoma/788e3b775dd611c9226f8e17781a0f0c
      */
-    public static Bitmap rotateBitmap90 (Bitmap imageBitmap){
+    public static Bitmap rotateImage(Bitmap imageBitmap, String path) throws IOException {
+
+        int rotate = 0;
+        ExifInterface exif; // this interface helps get tags about the image's orientation
+        exif = new ExifInterface(path);
+        int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                ExifInterface.ORIENTATION_NORMAL);
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                rotate = 270;
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                rotate = 180;
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                rotate = 90;
+                break;
+        }
         Matrix matrixForRotation = new Matrix();
-        matrixForRotation.postRotate(90); // assuming rotating in clockwise direction
+        matrixForRotation.postRotate(rotate);
         Bitmap rotatedBitmap = Bitmap.createBitmap(imageBitmap, 0,0, imageBitmap.getWidth(),
                 imageBitmap.getHeight(), matrixForRotation, true);
         return rotatedBitmap;
