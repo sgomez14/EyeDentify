@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
@@ -276,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         // pressing back on main_activity closes app
-        finish();
+        this.finish();
     }
 
 }

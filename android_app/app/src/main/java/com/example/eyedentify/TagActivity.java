@@ -394,7 +394,6 @@ public class TagActivity extends AppCompatActivity{
         super.onPause();
         writeModeOff();
         senMan.unregisterListener(sensorListener);
-//        senMan.registerListener(sensorListener, senMan.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
