@@ -547,8 +547,6 @@ public class TagActivity extends AppCompatActivity{
             float delta = acelVal - acelLast;
             shake = shake * shake_const + delta;
 
-            Log.d("shake", "x:" + xdif + "-y:" + ydif + "-z:"+ zdif);
-            //z: 18  y: 12 x: 10
             if (xdif > shake_thresh_x || ydif > shake_thresh_y || zdif > shake_thresh_z){
                 //deleting link to recording filename
                 if (!mFileName.isEmpty()){

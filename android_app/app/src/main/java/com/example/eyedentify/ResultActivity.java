@@ -214,9 +214,9 @@ public class ResultActivity extends AppCompatActivity {
     public void onPause(){
         super.onPause();
         writeModeOff();
-        if(mp.isPlaying())
+        if(mp != null && mp.isPlaying())
             mp.stop();
-        if(textToSpeech.isSpeaking())
+        if(textToSpeech != null && textToSpeech.isSpeaking())
             textToSpeech.stop();
 
     }
