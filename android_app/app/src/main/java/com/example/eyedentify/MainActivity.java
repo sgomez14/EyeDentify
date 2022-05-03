@@ -302,7 +302,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finishAffinity(); //exit the app
-        System.exit(0);
     }
 
 }
