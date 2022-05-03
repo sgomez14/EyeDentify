@@ -301,8 +301,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // pressing back on main_activity closes app
-        finish();
+        finishAffinity(); //exit the app
     }
 
 }

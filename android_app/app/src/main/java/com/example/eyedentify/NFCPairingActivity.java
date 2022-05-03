@@ -164,5 +164,9 @@ public class NFCPairingActivity extends AppCompatActivity {
                             "tagInfo", getIntent().getExtras().getString("tagInfo"))
             );
         }
+        else{
+            startActivity(new Intent(NFCPairingActivity.this, TagActivity.class));
+        }
+        finish();
     }
 }
