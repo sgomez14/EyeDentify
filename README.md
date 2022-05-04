@@ -30,6 +30,12 @@ You need to be connected to the internet.
 You will be prompted to login. Test username is 'hello@gmail.com' and password is 'password.' You can also create your own account. The login screen is below. Toast will appear if there are any errors with logging in.
 
 
+After logging, you will be prompted for several persmissions, such as connecting to the internet, using the camera, recording audio, and saving to the device's memory. Grant these permission requests as they pop up during the app launch.
+
+
 ![Image of EyeDentify Login Screen](https://user-images.githubusercontent.com/30096097/166729639-fc56aefd-f992-4d40-8f7b-870dd25161fe.jpg)
+
+
+
 
 
