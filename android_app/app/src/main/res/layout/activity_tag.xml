@@ -110,6 +110,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="@string/scan_item"
+                    android:textColor="@color/black"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -141,9 +142,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:contentDescription="@string/shake_instruction"
                     android:gravity="center"
                     android:text="@string/add_voice_memo"
-                    android:contentDescription="@string/shake_instruction"
+                    android:textColor="@color/black"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -162,15 +164,18 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/greenstripe" />
+                    android:background="@drawable/greenstripe"
+                    tools:ignore="ImageContrastCheck" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="@string/pair_with_tag"
+                    android:textColor="@color/black"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:ignore="TextContrastCheck" />
 
         </androidx.cardview.widget.CardView>
         <!--        <Button-->

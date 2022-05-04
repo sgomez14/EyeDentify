@@ -27,6 +27,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="@string/scan_item"
+                    android:textColor="@color/black"
                     android:textSize="40sp"
                     android:textStyle="bold" />
 
@@ -63,6 +64,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="@string/tag_item"
+                    android:textColor="@color/black"
                     android:textSize="40sp"
                     android:textStyle="bold" />
 
