@@ -54,10 +54,10 @@ The loading results screen will appear and remain there until the app receives t
 ![Image of the Loading Results Screen](https://user-images.githubusercontent.com/30096097/166741597-da1743a0-994b-4fbc-94aa-328785e387b2.jpg)
 
 
-The TagAcitivty screen will display the results from our computer vision algorithm. The screen is shown below. CloudSight provides results for the "Item Description" and Google MLKit provides OCR results for "Item Keywords."
+The "Tag Editing" screen will display the results from our computer vision algorithm. The screen is shown below. CloudSight provides results for the "Item Description" and Google MLKit provides OCR results for "Item Keywords."
 
 
-![tag_activity](https://user-images.githubusercontent.com/30096097/166743890-18c77d8d-b45c-4d41-bb95-1dfb52ba04dc.jpg)
+![Image of Tag Editing Screen](https://user-images.githubusercontent.com/30096097/166743890-18c77d8d-b45c-4d41-bb95-1dfb52ba04dc.jpg)
 
 
 You can edit the "Item Description" and "Item Keywords" text fields by tapping on them an using the phone's keyword. Alternatively, you can edit the fields with Speech-to-Text (STT). You activate STT by tapping and holding on the field. This will make the phone vibrate and you speak the words you want in the field.
@@ -99,3 +99,22 @@ You can create a tag for an item without first scanning the item with the camera
 You will now see the "Tag Editing" screen. It is the same editing screen as when you get results from the computer vision alogrithms, except there is no image. You edit the information and pair with tag in the same manner as outlined in ["Scanning Your First Item"](https://github.com/sgomez14/EyeDentify/edit/main/README.md#scanning-your-first-item).
 
 ![Image of Tag Editing Screen](https://user-images.githubusercontent.com/30096097/166801246-0362c723-8fea-450d-b39a-ea6610c6e937.jpg)
+
+
+## Reading an NFC Tag with Information
+A user can open the app by tapping their phone's NFC sensor area on a tag that already has information. The app will open to the MainActivity screen, and then they can tap the tag again to get information associated with that tag. The "Tag Info Results" screen will resemble the image below.
+
+If the user is already on the MainActivity screen, then they can scan a tag from there.
+
+Lastly, users can scan another tag while they are on the "Tag Info Results" screen.
+
+![Image of Tag Info Results](https://user-images.githubusercontent.com/30096097/166755315-8c20257b-0a54-4df2-ab36-b60b988171b1.jpg)
+
+
+Users cannot scan a tag when they are on the "Tag Editing " screen, shown below. Doing so displays a Toast prompting the user to go back to the MainActivity screen.
+
+![Image of Tag Editing Screen](https://user-images.githubusercontent.com/30096097/166743890-18c77d8d-b45c-4d41-bb95-1dfb52ba04dc.jpg)
+
+
+
+
