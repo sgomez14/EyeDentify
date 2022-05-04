@@ -1,4 +1,8 @@
 # EyeDentify
+
+<img width="375" alt="eyedentify_logo_black_gold" src="https://user-images.githubusercontent.com/30096097/166806175-25b392e6-c6b6-4f66-aa5b-a37543e48221.PNG">
+
+
 - EyeDentify is an app that allows users to identify objects in their environment by taking pictures. 
 
 - Our app uses computer vision algorithms to generate a vibrant description of the object scanned. 
