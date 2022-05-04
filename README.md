@@ -80,7 +80,7 @@ Now the "Listening to a Tag" screen will show. A Toast will also appear warning 
 
 When the app pairs the information with the tag, a Toast will appear to indicate the pairing is sucessful. Afterwards, the "Tag Info Results" screen will show.
 
-This screen displays a "Play Voice Memo" button if there a voice memo associated with the tag. Otherwise, the button will not be shown. When TalkBack is not activate and there is no voice memo, then the app will use Text-to-Speech (TTS) to annouce what is in the "Item Description" and "Item Keywords" fields. You can edit the information paired with the tag by tapping on the "Edit Tag" button.
+This screen displays a "Play Voice Memo" button if there a voice memo associated with the tag. Otherwise, the button will not be shown. When TalkBack is not activate and there is no voice memo, then the app will use Text-to-Speech (TTS) to annouce what is in the "Item Description" and "Item Keywords" fields. You can edit the information paired with the tag by tapping on the "Edit Tag" button. This will bring you back to the editing screen, where you will need to tap the "Pair with Tag: button again. Place an NFC tag on the phone, and the new information is paired with the tag.
 
 ![Image of Tag Info Results](https://user-images.githubusercontent.com/30096097/166755315-8c20257b-0a54-4df2-ab36-b60b988171b1.jpg)
 
@@ -89,12 +89,13 @@ This completes the app flow when starting with "Scan Item with Camera" button on
 
 
 
+## Create Tag without Scanning Item
+
+You can create a tag for an item without first scanning the item with the camera. On the MainActivity screen, tap on "Tag Item."
+
+![Image Asking User to Scan Item with Camera or to Tag Item](https://user-images.githubusercontent.com/30096097/166740093-512b6e42-268e-466f-ae52-5ce52f73be9f.jpg)
 
 
+You will now see the "Tag Editing" screen. It is the same editing screen as when you get results from the computer vision alogrithms, except there is no image. You edit the information and pair with tag in the same manner as outlined in ["Scanning Your First Item"](https://github.com/sgomez14/EyeDentify/edit/main/README.md#scanning-your-first-item).
 
-
-
-
-
-
-
+![Image of Tag Editing Screen](https://user-images.githubusercontent.com/30096097/166801246-0362c723-8fea-450d-b39a-ea6610c6e937.jpg)
