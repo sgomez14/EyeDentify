@@ -54,8 +54,9 @@ The loading results screen will appear and remain there until the app receives t
 ![Image of the Loading Results Screen](https://user-images.githubusercontent.com/30096097/166741597-da1743a0-994b-4fbc-94aa-328785e387b2.jpg)
 
 
+The TagAcitivty screen will display the results from our computer vision algorithm. The screen is shown below. CloudSight provides results for the "Item Description" and Google MLKit provides OCR results for "Item Keywords."
 
 
-
+![tag_activity](https://user-images.githubusercontent.com/30096097/166743890-18c77d8d-b45c-4d41-bb95-1dfb52ba04dc.jpg)
 
 
