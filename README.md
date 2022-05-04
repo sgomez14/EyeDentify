@@ -60,3 +60,16 @@ The TagAcitivty screen will display the results from our computer vision algorit
 ![tag_activity](https://user-images.githubusercontent.com/30096097/166743890-18c77d8d-b45c-4d41-bb95-1dfb52ba04dc.jpg)
 
 
+You can edit the "Item Description" and "Item Keywords" text fields by tapping on them an using the phone's keyword. Alternatively, you can edit the fields with Speech-to-Text (STT). You activate STT by tapping and holding on the field. This will make the phone vibrate and you speak the words you want in the field.
+
+
+The "Scan Item with Camera" button allows you to retake the photo of the item.
+
+
+The "Add Voice Memo" button enables a user to record a voice memo to pair with the tag. Activate recording by tapping and holding onto the "Add Voice Memo" button. The phone will vibrate and you can commence recording. Letting go of the buttons stops the recording. A Toast will appear to signal that recording ended. To remove the voice recording, simply shake the phone. A Toast will to show on screen to state the memo was removed.
+
+
+The "Pair with Tag" button initiates the tag pairing process. Tap this button to pair information with an NFC tag.
+
+
+
