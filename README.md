@@ -115,9 +115,17 @@ Lastly, users can scan another tag while they are on the "Tag Info Results" scre
 ![Image of Tag Info Results](https://user-images.githubusercontent.com/30096097/166755315-8c20257b-0a54-4df2-ab36-b60b988171b1.jpg)
 
 
-Users cannot scan a tag when they are on the "Tag Editing " screen, shown below. Doing so displays a Toast prompting the user to go back to the MainActivity screen.
+Users cannot scan a tag when they are on the "Tag Editing " screen, shown below. Doing so displays a Toast prompting the user to go back to the MainActivity screen and scan their tag there.
 
 ![Image of Tag Editing Screen](https://user-images.githubusercontent.com/30096097/166743890-18c77d8d-b45c-4d41-bb95-1dfb52ba04dc.jpg)
+
+
+## Changing Languages
+EyeDentify supports five languages, English, Simplified Chinese, Spanish, Korean, and Hindi.
+
+To switch languages, change the language on the device. Then close the app and restart it. This helps reset the locale settings in the app.
+
+
 
 
 
