@@ -72,4 +72,13 @@ The "Add Voice Memo" button enables a user to record a voice memo to pair with t
 The "Pair with Tag" button initiates the tag pairing process. Tap this button to pair information with an NFC tag.
 
 
+Now the "Listening to a Tag" screen will show. A Toast will also appear warning that information that exists on an NFC tag will be overwritten. You can now tap your NFC tag to the back of the phone, which is the typically location of the NFC sensor. Another Toast shows up if there is an error reading the tag. Ultiamtely, this screen will time out after a minute and return to the previous tag editing screen if a tag is not detected.
+
+
+![Image of Listening to a Tag Screen](https://user-images.githubusercontent.com/30096097/166747533-8e797a26-02f9-4076-a205-f51877b85126.jpg)
+
+
+
+
+
 
