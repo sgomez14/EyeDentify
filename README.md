@@ -45,12 +45,12 @@ After logging, you will be prompted for several persmissions, such as connecting
 You will need an NFC tag and any item you wish to tag.
 
 
-After logging in, the MainActivity is the screen that prompts a user to either "Scan Item with Camera" or to "Tag Item." The screen is show below. Tap "Scan Item with Camera."
+After logging in, the MainActivity is the screen that prompts a user to either "Scan Item with Camera" or to "Tag Item." The screen is shown below. Tap "Scan Item with Camera."
 
 ![Image Asking User to Scan Item with Camera or to Tag Item](https://user-images.githubusercontent.com/30096097/166740093-512b6e42-268e-466f-ae52-5ce52f73be9f.jpg)
 
 
-Next will bring up the camera, at which point you can take a picture of your item. The camera interface will prompt to confirm if you want to use the photo. Tap the button that indicates you want to use the picture.
+Next, the app will bring up the camera, at which point you can take a picture of your item. The camera interface will prompt to confirm if you want to use the photo. Tap the button that indicates you want to use the picture.
 
 
 The loading results screen will appear and remain there until the app receives the results from its computer vision algorithms. 
@@ -64,19 +64,19 @@ The "Tag Editing" screen will display the results from our computer vision algor
 ![Image of Tag Editing Screen](https://user-images.githubusercontent.com/30096097/166743890-18c77d8d-b45c-4d41-bb95-1dfb52ba04dc.jpg)
 
 
-You can edit the "Item Description" and "Item Keywords" text fields by tapping on them an using the phone's keyword. Alternatively, you can edit the fields with Speech-to-Text (STT). You activate STT by tapping and holding on the field. This will make the phone vibrate and you speak the words you want in the field.
+You can edit the "Item Description" and "Item Keywords" text fields by tapping on them and using the phone's keyword. Alternatively, you can edit these fields with Speech-to-Text (STT) by tapping and holding on the fields. This will make the phone vibrate as you speak the words you want in the field.
 
 
 The "Scan Item with Camera" button allows you to retake the photo of the item.
 
 
-The "Add Voice Memo" button enables a user to record a voice memo to pair with the tag. Activate recording by tapping and holding onto the "Add Voice Memo" button. The phone will vibrate and you can commence recording. Letting go of the buttons stops the recording. A Toast will appear to signal that recording ended. To remove the voice recording, simply shake the phone. A Toast will to show on screen to state the memo was removed.
+The "Add Voice Memo" button enables a user to record a voice memo to pair with the tag. Activate recording by tapping and holding onto the "Add Voice Memo" button. The phone will vibrate and you can commence a recording. Letting go of the buttons stops the recording along with a vibration signal. A Toast will appear to indicate that recording ended. To remove the voice recording, simply shake the phone. A Toast will appear to state the memo was removed.
 
 
-The "Pair with Tag" button initiates the tag pairing process. Tap this button to pair information with an NFC tag.
+The "Pair with Tag" button initiates the tag pairing process. Tap this button to pair information with an NFC tag. This tag can be a new or used tag.
 
 
-Now the "Listening to a Tag" screen will show. A Toast will also appear warning that information that exists on an NFC tag will be overwritten. You can now tap your NFC tag to the back of the phone, which is the typically location of the NFC sensor. Another Toast shows up if there is an error reading the tag. Ultiamtely, this screen will time out after a minute and return to the previous tag editing screen if a tag is not detected.
+Now the "Listening to a Tag" screen will show. A Toast will also appear warning that information that exists on an NFC tag will be overwritten. You can now tap your NFC tag to the back of the phone, which is the typically the location of the NFC sensor. Another Toast shows up if there is an error reading the tag. Ultiamtely, this screen will time out after a minute, and return to the previous tag editing screen if a tag is not detected.
 
 
 ![Image of Listening to a Tag Screen](https://user-images.githubusercontent.com/30096097/166747533-8e797a26-02f9-4076-a205-f51877b85126.jpg)
@@ -84,7 +84,7 @@ Now the "Listening to a Tag" screen will show. A Toast will also appear warning 
 
 When the app pairs the information with the tag, a Toast will appear to indicate the pairing is sucessful. Afterwards, the "Tag Info Results" screen will show.
 
-This screen displays a "Play Voice Memo" button if there a voice memo associated with the tag. Otherwise, the button will not be shown. When TalkBack is not activate and there is no voice memo, then the app will use Text-to-Speech (TTS) to annouce what is in the "Item Description" and "Item Keywords" fields. You can edit the information paired with the tag by tapping on the "Edit Tag" button. This will bring you back to the editing screen, where you will need to tap the "Pair with Tag: button again. Place an NFC tag on the phone, and the new information is paired with the tag.
+This screen displays a "Play Voice Memo" button if there is a voice memo associated with the tag. Otherwise, the button will not be shown. When TalkBack is not activate and there is no voice memo, then the app will use Text-to-Speech (TTS) to annouce what is in the "Item Description" and "Item Keywords" fields. You can edit the information paired with the tag by tapping on the "Edit Tag" button. This will bring you back to the editing screen, where you will need to tap the "Pair with Tag: button again. Place an NFC tag on the phone, and the new information is paired with the tag.
 
 ![Image of Tag Info Results](https://user-images.githubusercontent.com/30096097/166755315-8c20257b-0a54-4df2-ab36-b60b988171b1.jpg)
 
@@ -115,21 +115,15 @@ Lastly, users can scan another tag while they are on the "Tag Info Results" scre
 ![Image of Tag Info Results](https://user-images.githubusercontent.com/30096097/166755315-8c20257b-0a54-4df2-ab36-b60b988171b1.jpg)
 
 
-Users cannot scan a tag when they are on the "Tag Editing " screen, shown below. Doing so displays a Toast prompting the user to go back to the MainActivity screen and scan their tag there.
+Users cannot scan a tag when they are on the "Tag Editing" screen, shown below. Doing so displays a Toast prompting the user to go back to the MainActivity screen and scan their tag there.
 
 ![Image of Tag Editing Screen](https://user-images.githubusercontent.com/30096097/166743890-18c77d8d-b45c-4d41-bb95-1dfb52ba04dc.jpg)
 
 
 ## Changing Languages
-EyeDentify translates the app into Simplified Chinese, Spanish, Korean, and Hindi.
+EyeDentify is functional in Chinese, Spanish, Korean, and Hindi.
 
 To switch languages, change the language on the device. Then close the app and restart it. This helps reset the locale settings in the app.
 
-The app's Optical Character Recognition (OCR) algorithm currently only detects Latin alphabet based languages. Therefore, OCR will not work for Chinese, Korean, or Hindi. But, the rest of the app will by translated into these languages.  
-
-
 ## Screen Orientation When Taking Pictures
 The app works well when a user takes a pictire in both vertical and horizontal modes. However, the OCR algorithm performs best when the text reads from left to right. Any text where the letters are not left to right, such as a word spelled top to bottom, can be overlooked. 
-
-
-
