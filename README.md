@@ -121,9 +121,11 @@ Users cannot scan a tag when they are on the "Tag Editing " screen, shown below.
 
 
 ## Changing Languages
-EyeDentify supports five languages, English, Simplified Chinese, Spanish, Korean, and Hindi.
+EyeDentify translates the app into Simplified Chinese, Spanish, Korean, and Hindi.
 
 To switch languages, change the language on the device. Then close the app and restart it. This helps reset the locale settings in the app.
+
+The app's Optical Character Recognition (OCR) algorithm currently only detects Latin alphabet based languages. Therefore, OCR will not work for Chinese, Korean, or Hindi. But, the rest of the app will by translated into these languages.  
 
 
 
