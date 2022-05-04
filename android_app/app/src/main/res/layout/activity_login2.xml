@@ -68,6 +68,7 @@
             android:gravity="center"
             android:hapticFeedbackEnabled="true"
             android:text="@string/login_button"
+            android:textColor="@color/black"
             android:textSize="40sp"
             android:textStyle="bold" />
 
@@ -93,6 +94,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="@string/create_button"
+            android:textColor="@color/black"
             android:textSize="40sp"
             android:textStyle="bold" />
 
