@@ -22,3 +22,14 @@ TODO: dependenceis here
 - Spandana Patil
 - Mandy Yao
 - Ze Yu
+
+# Testing Instructions
+## On First App Launch
+
+You need to be connected to the internet.
+You will be prompted to login. Test username is 'hello@gmail.com' and password is 'password.' You can also create your own account. The login screen is below. Toast will appear if there are any errors with logging in.
+
+
+![Image of EyeDentify Login Screen](https://user-images.githubusercontent.com/30096097/166729639-fc56aefd-f992-4d40-8f7b-870dd25161fe.jpg)
+
+
