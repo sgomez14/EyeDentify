@@ -36,6 +36,26 @@ After logging, you will be prompted for several persmissions, such as connecting
 ![Image of EyeDentify Login Screen](https://user-images.githubusercontent.com/30096097/166729639-fc56aefd-f992-4d40-8f7b-870dd25161fe.jpg)
 
 
+## Scanning Your First Item
+
+You will need an NFC tag and any item you wish to tag.
+
+
+After logging in, the MainActivity is the screen that prompts a user to either "Scan Item with Camera" or to "Tag Item." The screen is show below. Tap "Scan Item with Camera."
+
+![Image Asking User to Scan Item with Camera or to Tag Item](https://user-images.githubusercontent.com/30096097/166740093-512b6e42-268e-466f-ae52-5ce52f73be9f.jpg)
+
+
+Next will bring up the camera, at which point you can take a picture of your item. The camera interface will prompt to confirm if you want to use the photo. Tap the button that indicates you want to use the picture.
+
+
+The loading results screen will appear and remain there until the app receives the results from its computer vision algorithms. 
+
+![Image of the Loading Results Screen](https://user-images.githubusercontent.com/30096097/166741597-da1743a0-994b-4fbc-94aa-328785e387b2.jpg)
+
+
+
+
 
 
 
