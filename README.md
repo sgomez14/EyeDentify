@@ -78,6 +78,22 @@ Now the "Listening to a Tag" screen will show. A Toast will also appear warning 
 ![Image of Listening to a Tag Screen](https://user-images.githubusercontent.com/30096097/166747533-8e797a26-02f9-4076-a205-f51877b85126.jpg)
 
 
+When the app pairs the information with the tag, a Toast will appear to indicate the pairing is sucessful. Afterwards, the "Tag Info Results" screen will show.
+
+This screen displays a "Play Voice Memo" button if there a voice memo associated with the tag. Otherwise, the button will not be shown. When TalkBack is not activate and there is no voice memo, then the app will use Text-to-Speech (TTS) to annouce what is in the "Item Description" and "Item Keywords" fields. You can edit the information paired with the tag by tapping on the "Edit Tag" button.
+
+![Image of Tag Info Results](https://user-images.githubusercontent.com/30096097/166755315-8c20257b-0a54-4df2-ab36-b60b988171b1.jpg)
+
+
+This completes the app flow when starting with "Scan Item with Camera" button on MainActivity.
+
+
+
+
+
+
+
+
 
 
 
