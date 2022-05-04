@@ -125,5 +125,7 @@ EyeDentify is functional in Chinese, Spanish, Korean, and Hindi.
 
 To switch languages, change the language on the device. Then close the app and restart it. This helps reset the locale settings in the app.
 
+The app's Optical Character Recognition (OCR) algorithm currently only detects Latin alphabet based languages. Therefore, OCR will not work for Chinese, Korean, or Hindi. But, the rest of the app will by translated into these languages.
+
 ## Screen Orientation When Taking Pictures
 The app works well when a user takes a pictire in both vertical and horizontal modes. However, the OCR algorithm performs best when the text reads from left to right. Any text where the letters are not left to right, such as a word spelled top to bottom, can be overlooked. 
