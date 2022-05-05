@@ -16,10 +16,6 @@
 - This app is designed for users that are blind or have other visual impairments. But, it is useful to both sighted and non-sighted users alike.
 
 
-### Dependencies
-
-TODO: dependenceis here
-
 ### Authors
 - Santiago Gomez
 - Jason Mayfield
