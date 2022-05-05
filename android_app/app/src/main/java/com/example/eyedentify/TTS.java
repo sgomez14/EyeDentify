@@ -2,8 +2,6 @@ package com.example.eyedentify;
 
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
-import android.widget.Toast;
-
 import java.util.Locale;
 
 public class TTS {
