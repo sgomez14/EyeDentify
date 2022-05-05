@@ -14,35 +14,22 @@ import android.os.Parcelable;
 import java.nio.charset.StandardCharsets;
 
 public class NFC {
-    private static NFC instance;
-    private final String ERR_No_Tag = "No Tag Detected";
-    private final String SUCC_W = "Write Success";
-    NfcAdapter adapter;
-    PendingIntent pendingIntent;
-    IntentFilter filters[];
-    boolean writeMode;
-    Tag myTag;
-    String myTagInfo;
-    Context context;
-    private Thread tagDetection;
+    NfcAdapter adapter; //an adapter is necessary
+    Tag myTag;          //tag object
+    String myTagInfo;   //info inside the tag
+    Context context;    //context of the activity where this nfc object is instantiated at
 
     public static NFC makeNFC(Context c){
         return new NFC(c);
     }
     public NFC(Context c){
         adapter = NfcAdapter.getDefaultAdapter(c);
-        if(adapter == null) {
-            instance = null;
-            return;
-        }
+        //getting adapter. If it is null, then that means this device does not support NFC
         context = c;
-
     }
 
     void readIntent(Intent in) {
         String action = in.getAction();
-        String msg;
-//        Toast.makeText(context, "on ReadIntent", Toast.LENGTH_SHORT).show();
         // put log to see what this action is
         if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)
                 || NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)
@@ -59,6 +46,7 @@ public class NFC {
         }
     }
 
+    // return the actual text from the ndef message in the tag
     public String getTagViews(NdefMessage[] m){
         if(m == null || m.length == 0) return null;
         String text = "";
@@ -73,16 +61,17 @@ public class NFC {
         return text;
     }
 
+    //write to the tag
     public void write(String text) throws Exception{
         NdefRecord[] records = {createRecord(text), NdefRecord.createApplicationRecord("com.example.eyedentify") };
         NdefMessage m = new NdefMessage(records);
-
         Ndef ndef = Ndef.get(myTag);
         ndef.connect();
         ndef.writeNdefMessage(m);
         ndef.close();
     }
 
+    //create ndef record
     public NdefRecord createRecord(String text){
         String lang = "en";
         byte[] textBytes = text.getBytes();
