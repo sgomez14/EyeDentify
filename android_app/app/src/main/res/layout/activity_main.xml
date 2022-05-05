@@ -33,17 +33,6 @@
 
         </androidx.cardview.widget.CardView>
 
-        <!--        <Button-->
-        <!--            android:id="@+id/btnScanItem"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="match_parent"-->
-        <!--            android:layout_weight="1"-->
-        <!--            android:background="@drawable/purplestripe"-->
-        <!--            android:isScrollContainer="false"-->
-        <!--            android:text="@string/scan_item"-->
-        <!--            android:textColor="@color/black"-->
-        <!--            android:textSize="34sp"-->
-        <!--            android:layout_margin="5dp" />-->
         <androidx.cardview.widget.CardView
 
             android:id="@+id/cardViewTagItem"
@@ -69,14 +58,4 @@
                     android:textStyle="bold" />
 
         </androidx.cardview.widget.CardView>
-        <!--        <Button-->
-        <!--            android:id="@+id/btnTagItem"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="match_parent"-->
-        <!--            android:layout_weight="1"-->
-        <!--            android:background="@drawable/yellowdiamond"-->
-        <!--            android:text="@string/tag_item"-->
-        <!--            android:textSize="34sp"-->
-        <!--            android:layout_margin="5dp"-->
-        <!--            app:iconGravity="top" />-->
 </LinearLayout>
